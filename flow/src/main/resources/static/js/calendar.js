@@ -493,6 +493,8 @@ function deleteGoalFunc(target, event){
     });
     console.log("sss");
     console.log("sss2");
+    console.log("sss3");
+    console.log("sss4");
 }
 $( document ).ready(function() {
 
