@@ -491,6 +491,8 @@ function deleteGoalFunc(target, event){
             console.log("ERROR: ", e);
         }
     });
+    console.log("sss");
+    console.log("sss2");
 }
 $( document ).ready(function() {
 
