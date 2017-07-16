@@ -45,6 +45,23 @@ public class CalendarController {
         return goal;
     }
 
+    @RequestMapping(value="/calendar/editGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public Goal editGoal(@RequestBody Goal goal, Principal principal) {
+        goalService.save(goal);
+
+        return goal;
+    }
+
+    @RequestMapping(value="/calendar/deleteGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public List<Goal> deleteGoal(@RequestBody Goal goal, Principal principal) {
+        tileService.delete(goal);
+        goalService.delete(goal);
+
+        return goalService.getGoalsList();
+    }
+
     @RequestMapping(value="/calendar/retrieveData/goals", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public List<Goal> retrieveGoals(Principal principal) {

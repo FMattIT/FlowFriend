@@ -1,7 +1,11 @@
 package pl.flow.dao.entities;
 
+import pl.flow.dao.entities.calendar.Goal;
+import pl.flow.dao.entities.calendar.Tile;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Admin on 09.04.2017.
@@ -32,6 +36,12 @@ public class User {
 
     @Column
     private Date dateOfBirth;
+
+    @OneToMany(mappedBy="userId")
+    private List<Goal> listOfGoals;
+
+    @OneToMany(mappedBy="userId")
+    private List<Tile> listOfTiles;
 
     public String getUsername() {
         return username;

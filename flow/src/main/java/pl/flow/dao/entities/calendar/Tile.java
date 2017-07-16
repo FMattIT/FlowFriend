@@ -16,11 +16,11 @@ public class Tile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_tiles__user_id"))
     private User userId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_tiles__goal_id"))
     private Goal goalId;
 

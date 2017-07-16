@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.flow.dao.GoalDao;
 import pl.flow.dao.TileDao;
+import pl.flow.dao.entities.calendar.Goal;
 import pl.flow.dao.entities.calendar.Tile;
 
 import javax.persistence.EntityManager;
@@ -30,4 +31,16 @@ public class TileService {
 
     public List<Tile> getTilesList(){
         return tileDao.getTilesList(); }
+
+    public List<Tile> getTile(Goal goal){
+        return tileDao.getTile(goal);
+    }
+
+    public Tile getTileToMerge(Tile tile){
+        return getTileToMerge(tile);
+    }
+
+    public void delete(Goal goal){
+        tileDao.delete(goal);
+    }
 }

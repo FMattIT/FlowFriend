@@ -23,6 +23,11 @@ public class UserController {
         return "login";
     }
 
+    @RequestMapping("/main")
+    public String main() {
+        return "main";
+    }
+
     @RequestMapping("/")
     public String home() {
         return "hello";

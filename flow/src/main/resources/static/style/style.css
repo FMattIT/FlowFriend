@@ -47,10 +47,21 @@
 }
 
 .bar {
-    width: 250px;
-    height: 60px;
-    background-color: #e67e22;
-    display: none;
+    /*width: 250px;*/
+    /*height: 60px;*/
+    /*background-color: #e67e22;*/
+    /*display: none;*/
+    background: #fff;
+    height: 52px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 2px 2px rgba(0, 0, 0, .15);
+    width: 300px;
+    border-radius: 40px;
+    top: -30px;
+    left: 0;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .15s;
 }
 
 .previous_goal, .next_goal, .previous_date, .next_date {
@@ -106,3 +117,9 @@
     background: url(http://www.pngall.com/wp-content/uploads/2016/04/Red-Cross-Mark-PNG.png) no-repeat;
     background-size: cover;
 }
+
+.disabled {
+    background-color: gray !important;
+    cursor: default !important;
+}
+

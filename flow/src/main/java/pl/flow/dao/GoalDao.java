@@ -23,6 +23,14 @@ public class GoalDao {
         return entityManager.merge(goal);
     }
 
+    public Goal getGoal(Long id){
+        return entityManager.find(Goal.class, id);
+    }
+
     public List<Goal> getGoalsList(){
         return entityManager.createQuery("SELECT g FROM Goal g", Goal.class).getResultList(); }
+
+    public void delete(Goal goal){
+        entityManager.remove(entityManager.merge(goal));
+    }
 }
