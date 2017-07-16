@@ -472,7 +472,7 @@ function saveTileToDB(data) {
 
 function deleteGoalFunc(target, event){
     event.preventDefault();
-
+    console.log("");
     var data = {};
     data["name"]=value[1][Number($(target).parent().parent().find(".slide_goal_id").text())].name;
     data["id"]=value[1][Number($(target).parent().parent().find(".slide_goal_id").text())].id;
@@ -492,7 +492,6 @@ function deleteGoalFunc(target, event){
         }
     });
 }
-
 $( document ).ready(function() {
 
     $('body').on('click', '.slide', function(event) {
