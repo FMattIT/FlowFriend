@@ -282,9 +282,6 @@ function loadGoals(){
         var goal_grip = document.createElement('div');
         goal_grip.className = "goal_grip";
         goal_grip.innerHTML = "<i class='fa fa-arrows-v' aria-hidden='true'></i>";
-        var goal_gear = document.createElement('div');
-        goal_gear.className = "goal_gear";
-        goal_gear.innerHTML="<i class='fa fa-cog' aria-hidden='true'></i>";
         var goal_name = document.createElement('div');
         goal_name.className = "goal_name";
         goal_name.innerHTML = value[1][i].name;
@@ -303,7 +300,6 @@ function loadGoals(){
         var slide = document.createElement('div');
         slide.className = "slide";
         slide.append(goal_grip);
-        slide.append(goal_gear);
         slide.append(goal_name);
         slide.append(options);
         var slide_id = document.createElement('div');
@@ -491,10 +487,6 @@ function deleteGoalFunc(target, event){
             console.log("ERROR: ", e);
         }
     });
-    console.log("sss");
-    console.log("sss2");
-    console.log("sss3");
-    console.log("sss4");
 }
 $( document ).ready(function() {
 
@@ -515,7 +507,7 @@ $( document ).ready(function() {
         event.preventDefault();
 
         var data = {};
-        data["name"]=$('#name').val();
+        data["name"]=$('#name').text();
 
         $.ajax({
             type: "POST",
@@ -531,7 +523,7 @@ $( document ).ready(function() {
                 console.log("ERROR: ", e);
             }
         });
-        $('#sss').popover('hide');
+        $('#myModal').modal('toggle');
     });
 
     $('body').on('submit', '#edit_formek', function(event) {

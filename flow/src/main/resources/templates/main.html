@@ -24,13 +24,14 @@
             <i class="fa fa-plus-circle" aria-hidden="true"></i>
         </button></div>
 
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal animated fadeIn" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
+                        <div id="labelek">Dodaj nowy cel</div>
                         <form id='formek' method='post' th:action='@{/calendar/addGoal}'>
-                            <input type='text' form='formek' id='name'/>
-                            <input type='submit' value='Dodaj cel'/>
+                            <div id='name' contenteditable="true"></div>
+                            <input id="buttonek" type='submit' value='Dodaj cel'/>
                         </form>
                     </div>
                 </div>

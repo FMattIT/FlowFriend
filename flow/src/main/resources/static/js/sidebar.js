@@ -13,5 +13,4 @@ $(document).ready(function () {
     });
 
     $('.list_goals').disableSelection();
-
 });
