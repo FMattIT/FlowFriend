@@ -73,7 +73,7 @@ body {
     vertical-align: middle;
     height: 100%;
     line-height: 75px;
-    width: calc(100% - 300px);
+    width: calc(100% - 225px);
   }
 }
 
@@ -100,6 +100,10 @@ i:hover{
   height: 100%;
   width: 100%;
   border-right: 0;
+}
+
+.fa.fa-plus-circle{
+  font-size: 32px;
 }
 
 .goal_adder{
@@ -168,7 +172,10 @@ i:hover{
   width: 100%;
   height: 80px;
   color: #34495e;
-  border: 1px solid rgba(0, 0, 0, .3);
+  border: 1px solid rgba(0, 0, 0, .3) !important;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 
   &:hover{
     cursor: pointer;
@@ -273,7 +280,7 @@ i:hover{
 }
 
 #goal_settings{
-  width: 225px;
+  width: 75px;
   height: 75px;
   float: left;
 }

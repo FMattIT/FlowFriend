@@ -24,7 +24,7 @@
   border: 1px solid black;
 }
 
-.add_button, .delete_button, .edit_button{
+.delete_button, .edit_button{
   @include font-properties;
   @include align-properties;
   @extend %nowy;

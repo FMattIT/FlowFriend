@@ -286,7 +286,7 @@ function loadGoals(){
         goal_name.className = "goal_name";
         goal_name.innerHTML = value[1][i].name;
         var options = document.createElement('div');
-        options.style.cssText="float: left; width: 6%; height:100%; border-left: 2px solid rgba(0, 0, 0, .3);";
+        options.style.cssText="float: left; width: 6%; height:100%; border-left: 2px solid rgba(0, 0, 0, .3); box-sizing: border-box;";
         var edit_option = document.createElement('div');
         edit_option.className = "edit_option";
         edit_option.innerHTML = "<i class='fa fa-pencil' aria-hidden='true'></i>";
