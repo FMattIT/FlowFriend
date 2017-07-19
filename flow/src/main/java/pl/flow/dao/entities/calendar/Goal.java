@@ -24,6 +24,9 @@ public class Goal {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private Long position;
+
     @OneToMany(mappedBy="goalId")
     private List<Tile> listOfTiles;
 
@@ -49,5 +52,13 @@ public class Goal {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getPosition() {
+        return position;
+    }
+
+    public void setPosition(Long position) {
+        this.position = position;
     }
 }

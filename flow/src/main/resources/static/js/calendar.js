@@ -290,7 +290,6 @@ function loadGoals(){
         var edit_option = document.createElement('div');
         edit_option.className = "edit_option";
         edit_option.innerHTML = "<i class='fa fa-pencil' aria-hidden='true'></i>";
-        edit_option.setAttribute("onclick", "editGoalFunc(this)");
         var delete_option = document.createElement('div');
         delete_option.className = "delete_option";
         delete_option.innerHTML = "<i class='fa fa-trash' aria-hidden='true'></i>";
@@ -307,6 +306,7 @@ function loadGoals(){
         slide_id.innerHTML = i;
         slide_id.className = 'slide_goal_id';
         slide.append(slide_id);
+        slide.setAttribute("data-id", i);
         $(".list_goals").append(slide);
     }
     $(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().find(".goal_name").addClass('selectable');
