@@ -30,7 +30,6 @@ $(document).ready(function () {
         data["id"]=value[1][id].id;
         data["position"]=position;
 
-        console.log(data["position"]);
         $.ajax({
             type: "POST",
             contentType: "application/json",

@@ -74,6 +74,13 @@ function retrieveNewData(month_id, year, goal_init) {
 
 function createNewCalendar(value, month_id, year, goal_init) {
     $(".calendar").html("");
+
+    if (value[1] === undefined || value[1].length == 0) {
+        $(".calendar").html("BRAK CELÓW");
+    }
+    else{
+
+
     var today = new Date();
     var this_month_id = today.getMonth();
     var this_year = today.getFullYear();
@@ -237,30 +244,18 @@ function createNewCalendar(value, month_id, year, goal_init) {
     tick_choice.className = "tick_choice";
     tick_choice.setAttribute("id", "tick");
     tick_choice.setAttribute('onclick', 'onTickClick(this, event)');
-    tick_choice.setAttribute('data-toggle', 'tooltip');
-    tick_choice.setAttribute('data-placement', 'top');
-    tick_choice.setAttribute('title', 'WYKONANO!');
     var yellow_tick_choice = document.createElement('div');
     yellow_tick_choice.className = "yellow_tick_choice";
     yellow_tick_choice.setAttribute("id", "yellow_tick");
     yellow_tick_choice.setAttribute('onclick', 'onYellowTickClick(this, event)');
-    yellow_tick_choice.setAttribute('data-toggle', 'tooltip');
-    yellow_tick_choice.setAttribute('data-placement', 'top');
-    yellow_tick_choice.setAttribute('title', 'WYKONANO AWARYJNIE!');
     var cross_choice = document.createElement('div');
     cross_choice.className = "cross_choice";
     cross_choice.setAttribute("id", "cross");
     cross_choice.setAttribute('onclick', 'onCrossClick(this, event)');
-    cross_choice.setAttribute('data-toggle', 'tooltip');
-    cross_choice.setAttribute('data-placement', 'top');
-    cross_choice.setAttribute('title', 'NIE WYKONANO!');
     var minus_choice = document.createElement('div');
     minus_choice.className = "minus_choice";
     minus_choice.setAttribute("id", "minus");
     minus_choice.setAttribute('onclick', 'onMinusClick(this, event)');
-    minus_choice.setAttribute('data-toggle', 'tooltip');
-    minus_choice.setAttribute('data-placement', 'top');
-    minus_choice.setAttribute('title', 'NIE DZIŚ!');
     bar.append(tick_choice);
     bar.append(yellow_tick_choice);
     bar.append(cross_choice);
@@ -270,21 +265,34 @@ function createNewCalendar(value, month_id, year, goal_init) {
     
     loadGoals();
     loadInfo();
+    }
 }
 
 function loadInfo(){
-    $(".info").html("<ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a href='#general' aria-controls='general' role='tab' data-toggle='tab'>STATYSTYKI</a></li><li role='presentation'><a href='#specific' aria-controls='specific' role='tab' data-toggle='tab'>INFORMACJE O CELU</a></li></ul><div class='tab-content'><div role='tabpanel' class='tab-pane active' id='general'>general</div><div role='tabpanel' class='tab-pane' id='specific'>specific</div></div>");
+    $(".info").html("<ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a class='optionBar' href='#general' aria-controls='general' role='tab' data-toggle='tab'>STATYSTYKI</a></li><li role='presentation'><a href='#specific' aria-controls='specific' role='tab' data-toggle='tab' class='optionBar'>INFORMACJE O CELU</a></li></ul><div class='tab-content'><div role='tabpanel' class='tab-pane active' id='general'>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </div><div role='tabpanel' class='tab-pane' id='specific'>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </div></div>");
+}
+
+function getPosition(s){
+    for (var i = 0; i <= value[1].length-1; i++) {
+
+        if (value[1][i].position == s)
+        {
+            return i;
+            break;
+        }
+    }
 }
 
 function loadGoals(){
     $(".list_goals").html("");
     for (var i = 0; i <= value[1].length-1; i++) {
+        var goal = getPosition(i);
         var goal_grip = document.createElement('div');
         goal_grip.className = "goal_grip";
         goal_grip.innerHTML = "<i class='fa fa-arrows-v' aria-hidden='true'></i>";
         var goal_name = document.createElement('div');
         goal_name.className = "goal_name";
-        goal_name.innerHTML = value[1][i].name;
+        goal_name.innerHTML = value[1][goal].name;
         var options = document.createElement('div');
         options.style.cssText="float: left; width: 6%; height:100%; border-left: 2px solid rgba(0, 0, 0, .3); box-sizing: border-box;";
         var edit_option = document.createElement('div');
@@ -302,11 +310,10 @@ function loadGoals(){
         slide.append(goal_name);
         slide.append(options);
         var slide_id = document.createElement('div');
-        slide_id.style.cssText="display:none;"
-        slide_id.innerHTML = i;
+        slide_id.style.cssText="display:none;";
+        slide_id.innerHTML = goal;
         slide_id.className = 'slide_goal_id';
         slide.append(slide_id);
-        slide.setAttribute("data-id", i);
         $(".list_goals").append(slide);
     }
     $(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().find(".goal_name").addClass('selectable');
@@ -468,7 +475,6 @@ function saveTileToDB(data) {
 
 function deleteGoalFunc(target, event){
     event.preventDefault();
-    console.log("");
     var data = {};
     data["name"]=value[1][Number($(target).parent().parent().find(".slide_goal_id").text())].name;
     data["id"]=value[1][Number($(target).parent().parent().find(".slide_goal_id").text())].id;
@@ -499,7 +505,7 @@ $( document ).ready(function() {
         var id = months.indexOf(month_name);
 
         actual_goal_id.innerHTML = $(this).find('.slide_goal_id').html();
-        createNewCalendar(value, id, year, actual_goal_id.innerHTML);
+        retrieveNewData(id, year, actual_goal_id.innerHTML);
     });
 
 
