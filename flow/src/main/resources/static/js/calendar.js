@@ -264,12 +264,9 @@ function createNewCalendar(value, month_id, year, goal_init) {
     $('.calendar').append(bar);
     
     loadGoals();
-    loadInfo();
+    $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
+        makeChart()
     }
-}
-
-function loadInfo(){
-    $(".info").html("<ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a class='optionBar' href='#general' aria-controls='general' role='tab' data-toggle='tab'>STATYSTYKI</a></li><li role='presentation'><a href='#specific' aria-controls='specific' role='tab' data-toggle='tab' class='optionBar'>INFORMACJE O CELU</a></li></ul><div class='tab-content'><div role='tabpanel' class='tab-pane active' id='general'>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </div><div role='tabpanel' class='tab-pane' id='specific'>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </div></div>");
 }
 
 function getPosition(s){
@@ -293,22 +290,10 @@ function loadGoals(){
         var goal_name = document.createElement('div');
         goal_name.className = "goal_name";
         goal_name.innerHTML = value[1][goal].name;
-        var options = document.createElement('div');
-        options.style.cssText="float: left; width: 6%; height:100%; border-left: 2px solid rgba(0, 0, 0, .3); box-sizing: border-box;";
-        var edit_option = document.createElement('div');
-        edit_option.className = "edit_option";
-        edit_option.innerHTML = "<i class='fa fa-pencil' aria-hidden='true'></i>";
-        var delete_option = document.createElement('div');
-        delete_option.className = "delete_option";
-        delete_option.innerHTML = "<i class='fa fa-trash' aria-hidden='true'></i>";
-        delete_option.setAttribute("onclick", "deleteGoalFunc(this, event)");
-        options.append(edit_option);
-        options.append(delete_option);
         var slide = document.createElement('div');
         slide.className = "slide";
         slide.append(goal_grip);
         slide.append(goal_name);
-        slide.append(options);
         var slide_id = document.createElement('div');
         slide_id.style.cssText="display:none;";
         slide_id.innerHTML = goal;
@@ -514,6 +499,7 @@ $( document ).ready(function() {
 
         var data = {};
         data["name"]=$('#name').text();
+        data["position"]=$('.list_goals').children().length;
 
         $.ajax({
             type: "POST",
@@ -536,13 +522,14 @@ $( document ).ready(function() {
         event.preventDefault();
 
         var data = {};
-        data["name"]=$('#edit_name').val();
+        data["name"]=$('#edit_name').text();
         data["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
+        data["position"]=$(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().index();
 
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/calendar/addGoal",
+            url: "/calendar/editGoal",
             data: JSON.stringify(data),
             dataType: 'json',
             success: function (datassek) {

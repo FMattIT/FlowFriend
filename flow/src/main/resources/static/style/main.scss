@@ -151,7 +151,7 @@ i:hover{
   }
 }
 
-#name{
+#name, #edit_name{
   outline: rgb(32, 32, 32);
   border: 1px solid rgb(211,211,211);
   text-align: left;
@@ -167,7 +167,7 @@ i:hover{
   margin-bottom: 6px;
 }
 
-#labelek{
+#labelek, #edit_labelek{
   text-align: left;
   font-family: Lato;
   font-weight: bold;
@@ -179,7 +179,7 @@ i:hover{
   margin-bottom: 4px;
 }
 
-#buttonek{
+#buttonek, #edit_buttonek{
   width: 100px;
   height: 30px;
   background-color: #34495e;
@@ -241,7 +241,7 @@ i:hover{
 }
 
 .goal_name{
-  width: 86%;
+  width: 92%;
   height: 100%;
   vertical-align: middle;
   text-align: center;

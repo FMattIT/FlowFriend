@@ -15,6 +15,7 @@
     <script type="text/javascript" th:src="@{/js/sidebar.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/style/animate.css}" />
     <script type="text/javascript" th:src="@{/js/calendar.js}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body onload="retrieveNewData(null, null, 0)" >
 <div class="navbar">
@@ -53,7 +54,14 @@
     <div class="calendar_goals">
         <div class="list_goals"></div>
     </div>
-    <div class="info"></div>
+    <div class="info">
+        <ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a class='optionBar' href='#general' aria-controls='general' role='tab' data-toggle='tab'>STATYSTYKI</a></li><li role='presentation'><a href='#specific' aria-controls='specific' role='tab' data-toggle='tab' class='optionBar'>INFORMACJE O CELU</a></li></ul><div class='tab-content'><div role='tabpanel' class='tab-pane active' id='general'><canvas id='myChart'></canvas></div><div role='tabpanel' class='tab-pane' id='specific'><div id='edit_labelek'>Edytuj cel</div>
+        <form id='edit_formek' method='post' th:action='@{/calendar/editGoal}'>
+            <div id='edit_name' contenteditable="true"></div>
+            <input id='edit_buttonek' type='submit' value='Zapisz cel'/>
+        </form>
+    </div></div>
+    </div>
 </div>
 </body>
 </html>
