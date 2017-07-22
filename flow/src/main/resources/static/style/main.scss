@@ -241,7 +241,7 @@ i:hover{
 }
 
 .goal_name{
-  width: 92%;
+  width: 84%;
   height: 100%;
   vertical-align: middle;
   text-align: center;
@@ -259,9 +259,9 @@ i:hover{
   padding-right: 5%;
 }
 
-.edit_option, .delete_option{
-  width: 100%;
-  height: 50%;
+.delete_option{
+  width: 8%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -269,14 +269,15 @@ i:hover{
   font-size: 28px;
   font-family: Montserrat;
   font-weight: bold;
+  border-left: 2px solid rgba(0, 0, 0, .3);
 }
 
 .delete_option{
-  color: #34495e;
+  color: #f44242;
   transition: 0.5s !important;
 
   &:hover{
-    background-color: #34495e;
+    background-color: #f44242;
     color: white;
   }
 }

@@ -52,7 +52,6 @@ years.push(new Date().getFullYear()+1);
 
 function dataRetriever(dane, month_id, year, goal_init) {
     value = dane;
-
     createNewCalendar(value, month_id, year, goal_init);
 }
 
@@ -265,7 +264,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
     
     loadGoals();
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
-        makeChart()
+        // makeChart()
     }
 }
 
@@ -284,28 +283,35 @@ function loadGoals(){
     $(".list_goals").html("");
     for (var i = 0; i <= value[1].length-1; i++) {
         var goal = getPosition(i);
+        if ((typeof(goal) !== 'undefined') && (goal !== null)){
         var goal_grip = document.createElement('div');
         goal_grip.className = "goal_grip";
         goal_grip.innerHTML = "<i class='fa fa-arrows-v' aria-hidden='true'></i>";
         var goal_name = document.createElement('div');
         goal_name.className = "goal_name";
         goal_name.innerHTML = value[1][goal].name;
+        var delete_option = document.createElement('div');
+        delete_option.className = "delete_option";
+        delete_option.innerHTML = "<i class='fa fa-trash' aria-hidden='true'></i>";
+        delete_option.setAttribute("onclick", "deleteGoalFunc(this, event)");
         var slide = document.createElement('div');
         slide.className = "slide";
         slide.append(goal_grip);
         slide.append(goal_name);
+        slide.append(delete_option);
         var slide_id = document.createElement('div');
         slide_id.style.cssText="display:none;";
         slide_id.innerHTML = goal;
         slide_id.className = 'slide_goal_id';
         slide.append(slide_id);
         $(".list_goals").append(slide);
+        }
     }
     $(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().find(".goal_name").addClass('selectable');
 }
 
 function onTickClick(target, event) {
-    // $('.day.active').text("");
+    makeChart();
     $('.day.active').css('backgroundColor', ' #009966');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -332,7 +338,7 @@ function onTickClick(target, event) {
 }
 
 function onYellowTickClick(target, event) {
-    // $('.day.active').text("");
+    makeChart();
     $('.day.active').css('backgroundColor', ' #f1c40f');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -359,7 +365,7 @@ function onYellowTickClick(target, event) {
 }
 
 function onCrossClick(target, event) {
-    // $('.day.active').text("");
+    makeChart();
     $('.day.active').css('backgroundColor', ' #e74c3c');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -386,7 +392,7 @@ function onCrossClick(target, event) {
 }
 
 function onMinusClick(target, event) {
-    // $('.day.active').text("");
+    makeChart();
     $('.day.active').css('backgroundColor', ' #7f8c8d');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -461,9 +467,9 @@ function saveTileToDB(data) {
 function deleteGoalFunc(target, event){
     event.preventDefault();
     var data = {};
-    data["name"]=value[1][Number($(target).parent().parent().find(".slide_goal_id").text())].name;
-    data["id"]=value[1][Number($(target).parent().parent().find(".slide_goal_id").text())].id;
-
+    data["name"]=value[1][Number($(target).parent().find(".slide_goal_id").text())].name;
+    data["id"]=value[1][Number($(target).parent().find(".slide_goal_id").text())].id;
+    $(target).parent().remove();
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -472,7 +478,8 @@ function deleteGoalFunc(target, event){
         dataType: 'json',
         success: function (datassek) {
             console.log("passed");
-            retrieveNewData(null, null, "new")
+            updateSortable();
+            retrieveNewData(null, null, "new");
         },
         error: function (e) {
             console.log("ERROR: ", e);

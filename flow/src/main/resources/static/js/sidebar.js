@@ -13,14 +13,12 @@ function getChoicesCount(choice){
         }
     }
     return counter;
-    // && value[0][i].flag == choice
 }
 
 function makeChart(){
-    console.log(getChoicesCount("TICK"));
-    console.log(getChoicesCount("YELLOWTICK"));
-    console.log(getChoicesCount("CROSS"));
-    console.log(getChoicesCount("MINUS"));
+    var canvas = document.getElementById('general');
+    canvas.innerHTML = '';
+    canvas.innerHTML = "<canvas id='myChart'></canvas>";
     var ctx = document.getElementById('myChart').getContext('2d');
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
@@ -45,6 +43,36 @@ function makeChart(){
     });
 }
 
+function updateSortable(){
+    $('.list_goals').find('.slide').each(function(){
+        var goalId = $(this).find('.slide_goal_id').html();
+        var goalPosition = $(this).index();
+        pos = goalPosition;
+        editGoal(goalId, goalPosition);
+    });
+}
+
+function editGoal(id, position){
+    var data = {};
+    data["name"]=value[1][id].name;
+    data["id"]=value[1][id].id;
+    data["position"]=position;
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/editGoal",
+        data: JSON.stringify(data),
+        dataType: 'json',
+        success: function (dane) {
+            console.log("passed");
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
 $(document).ready(function () {
 
     $('.fa.fa-bars').on('click', function () {
@@ -60,35 +88,9 @@ $(document).ready(function () {
         revert: false,
         handle: '.goal_grip',
         update: function (event, ui) {
-            $(this).find('.slide').each(function(i, el){
-                var goalId = $(this).find('.slide_goal_id').html();
-                var goalPosition = $(this).index();
-                pos = goalPosition;
-                editGoal(goalId, goalPosition);
-            });
+            updateSortable();
         }
     });
-
-    function editGoal(id, position){
-        var data = {};
-        data["name"]=value[1][id].name;
-        data["id"]=value[1][id].id;
-        data["position"]=position;
-
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: "/calendar/editGoal",
-            data: JSON.stringify(data),
-            dataType: 'json',
-            success: function (dane) {
-                console.log("passed");
-            },
-            error: function (e) {
-                console.log("ERROR: ", e);
-            }
-        });
-    }
 
     $('.list_goals').disableSelection();
 
