@@ -4,6 +4,7 @@
 var pos;
 
 function getChoicesCount(choice){
+    retrieveValue();
     var counter = 0;
     for (var i = 0; i <= value[0].length-1; i++) {
 
@@ -43,13 +44,17 @@ function makeChart(){
     });
 }
 
-function updateSortable(){
+function updateSortable(param){
     $('.list_goals').find('.slide').each(function(){
         var goalId = $(this).find('.slide_goal_id').html();
         var goalPosition = $(this).index();
         pos = goalPosition;
         editGoal(goalId, goalPosition);
     });
+
+    if(param!=false){
+        retrieveNewData(null, null, "new");
+    }
 }
 
 function editGoal(id, position){
@@ -88,7 +93,7 @@ $(document).ready(function () {
         revert: false,
         handle: '.goal_grip',
         update: function (event, ui) {
-            updateSortable();
+            updateSortable(false);
         }
     });
 

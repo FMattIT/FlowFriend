@@ -55,6 +55,25 @@ function dataRetriever(dane, month_id, year, goal_init) {
     createNewCalendar(value, month_id, year, goal_init);
 }
 
+function retrieverOfValue(danedane){
+    value=danedane;
+}
+
+function retrieveValue(){
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/retrieveData/tiles",
+        dataType: 'json',
+        success: function (dane) {
+            retrieverOfValue(dane);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
 function retrieveNewData(month_id, year, goal_init) {
 
     $.ajax({
@@ -76,6 +95,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
 
     if (value[1] === undefined || value[1].length == 0) {
         $(".calendar").html("BRAK CELÓW");
+        $(".list_goals").html("BRAK CELÓW");
     }
     else{
 
@@ -264,16 +284,20 @@ function createNewCalendar(value, month_id, year, goal_init) {
     
     loadGoals();
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
-        // makeChart()
+    makeChart();
+    $('.acutal').text("Aktualny wynik: " + getChoicesCount("TICK"));
     }
 }
 
 function getPosition(s){
-    for (var i = 0; i <= value[1].length-1; i++) {
+    for (var p = 0; p <= value[1].length-1; p++) {
 
-        if (value[1][i].position == s)
+        // console.log("position 1:" + value[1][p].position);
+        // console.log("position 2:" + value[1][p].name);
+        // console.log("position 3:" + s);
+        if (value[1][p].position == s)
         {
-            return i;
+            return p;
             break;
         }
     }
@@ -311,7 +335,6 @@ function loadGoals(){
 }
 
 function onTickClick(target, event) {
-    makeChart();
     $('.day.active').css('backgroundColor', ' #009966');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -335,10 +358,11 @@ function onTickClick(target, event) {
 
     saveTileToDB(data);
     event.stopPropagation();
+    makeChart();
+    $('.acutal').text("Aktualny wynik: " + getChoicesCount("TICK"));
 }
 
 function onYellowTickClick(target, event) {
-    makeChart();
     $('.day.active').css('backgroundColor', ' #f1c40f');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -362,10 +386,10 @@ function onYellowTickClick(target, event) {
 
     saveTileToDB(data);
     event.stopPropagation();
+    makeChart();
 }
 
 function onCrossClick(target, event) {
-    makeChart();
     $('.day.active').css('backgroundColor', ' #e74c3c');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -389,10 +413,10 @@ function onCrossClick(target, event) {
 
     saveTileToDB(data);
     event.stopPropagation();
+    makeChart();
 }
 
 function onMinusClick(target, event) {
-    makeChart();
     $('.day.active').css('backgroundColor', ' #7f8c8d');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -416,6 +440,7 @@ function onMinusClick(target, event) {
 
     saveTileToDB(data);
     event.stopPropagation();
+    makeChart();
 }
 
 function GetThisHidden(){
@@ -478,8 +503,7 @@ function deleteGoalFunc(target, event){
         dataType: 'json',
         success: function (datassek) {
             console.log("passed");
-            updateSortable();
-            retrieveNewData(null, null, "new");
+            updateSortable(true);
         },
         error: function (e) {
             console.log("ERROR: ", e);
