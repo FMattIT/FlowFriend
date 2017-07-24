@@ -285,7 +285,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
     loadGoals();
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
     makeChart();
-    $('.acutal').text("Aktualny wynik: " + getChoicesCount("TICK"));
+    $('#actual_counter').text(getChoicesCount("TICK"));
     }
 }
 
@@ -532,6 +532,10 @@ $( document ).ready(function() {
         data["name"]=$('#name').text();
         data["position"]=$('.list_goals').children().length;
 
+        if($('#name').text().length <=14){
+            console.log("Cel musi miec conajmniej 15 znaków!");
+        }
+
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -547,6 +551,7 @@ $( document ).ready(function() {
             }
         });
         $('#myModal').modal('toggle');
+        $('#name').text("");
     });
 
     $('body').on('submit', '#edit_formek', function(event) {

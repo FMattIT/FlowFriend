@@ -31,7 +31,7 @@
                     <div class="modal-body">
                         <div id="labelek">Dodaj nowy cel</div>
                         <form id='formek' method='post' th:action='@{/calendar/addGoal}'>
-                            <div id='name' contenteditable="true"></div>
+                            <div id='name' contenteditable="true" maxlength="170" spellcheck="true"></div>
                             <input id="buttonek" type='submit' value='Dodaj cel'/>
                         </form>
                     </div>
@@ -57,12 +57,27 @@
     <div class="info">
         <ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a class='optionBar' href='#general' aria-controls='general' role='tab' data-toggle='tab'>STATYSTYKI</a></li><li role='presentation'><a href='#specific' aria-controls='specific' role='tab' data-toggle='tab' class='optionBar'>INFORMACJE O CELU</a></li></ul><div class='tab-content'><div role='tabpanel' class='tab-pane active' id='general'><canvas id='myChart'></canvas></div><div role='tabpanel' class='tab-pane' id='specific'><div id='edit_labelek'>Edytuj cel</div>
         <form id='edit_formek' method='post' th:action='@{/calendar/editGoal}'>
-            <div id='edit_name' contenteditable="true"></div>
+            <div id='edit_name' contenteditable="true" maxlength="170" spellcheck="true"></div>
             <input id='edit_buttonek' type='submit' value='Zapisz cel'/>
         </form>
 
-        <div>Najlepszy wynik: 1</div>
-        <div class="acutal">Aktualny wynik: 0</div>
+        <div id="best">Najlepszy wynik: <span id="best_counter">1</span></div>
+        <div id="actual">Aktualny wynik: <span id="actual_counter">0</span></div>
+        <div style="clear: both;"></div>
+
+        <div class="label_options">DNI, W KTÓRYCH CEL NIE OBOWIĄZUJE:</div>
+        <div id="off_options">
+            <div class="off_option">PN</div>
+            <div class="off_option">WT</div>
+            <div class="off_option">ŚR</div>
+            <div class="off_option">CZ</div>
+            <div class="off_option">PT</div>
+            <div class="off_option">SO</div>
+            <div class="off_option">ND</div>
+        </div>
+
+        <div class="label_options">TRZY POWODY, DLACZEGO REALIZUJESZ TEN CEL:</div>
+        <div class="label_options">USTAW PRZYPOMNIENIE:</div>
     </div></div>
     </div>
 </div>

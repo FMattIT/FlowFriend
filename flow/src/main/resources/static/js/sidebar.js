@@ -44,6 +44,7 @@ function makeChart(){
     });
 }
 
+
 function updateSortable(param){
     $('.list_goals').find('.slide').each(function(){
         var goalId = $(this).find('.slide_goal_id').html();
@@ -99,4 +100,15 @@ $(document).ready(function () {
 
     $('.list_goals').disableSelection();
 
+    $("div[contenteditable='true'][maxlength]").on('keydown paste', function (event) {
+        var cntMaxLength = parseInt($(this).attr('maxlength'));
+
+        if ($(this).text().length === cntMaxLength && event.keyCode != 8) {
+            event.preventDefault();
+        }
+    });
+
+    $('.off_option').click(function(){
+       $(this).toggleClass('selectable');
+    });
 });
