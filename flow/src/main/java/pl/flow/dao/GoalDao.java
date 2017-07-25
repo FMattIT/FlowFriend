@@ -28,7 +28,7 @@ public class GoalDao {
     }
 
     public List<Goal> getGoalsList(){
-        return entityManager.createQuery("SELECT g FROM Goal g", Goal.class).getResultList(); }
+        return entityManager.createQuery("SELECT g FROM Goal g ORDER BY g.id ASC", Goal.class).getResultList(); }
 
     public void delete(Goal goal){
         entityManager.remove(entityManager.merge(goal));

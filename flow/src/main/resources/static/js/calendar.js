@@ -90,6 +90,17 @@ function retrieveNewData(month_id, year, goal_init) {
     });
 }
 
+function getGoalId(pos){
+    for (var n = 0; n <= value[1].length-1; n++) {
+
+        if (value[1][n].position == pos)
+        {
+            return n;
+            break;
+        }
+    }
+}
+
 function createNewCalendar(value, month_id, year, goal_init) {
     $(".calendar").html("");
 
@@ -110,11 +121,13 @@ function createNewCalendar(value, month_id, year, goal_init) {
         this_year = year;
     }
 
+
+
     if(goal_init==0){
-    var goal_name = value[1][0].name;
-    var goal_id = 0;
+    var goal_name = value[1][getGoalId(0)].name;
+    var goal_id = getGoalId(0);
     actual_goal.innerHTML = goal_name;
-    actual_goal_id.innerHTML = 0;
+    actual_goal_id.innerHTML = getGoalId(0);
     }
 
     if ((typeof(goal_init) == 'undefined') || (goal_init == null)){
@@ -292,9 +305,6 @@ function createNewCalendar(value, month_id, year, goal_init) {
 function getPosition(s){
     for (var p = 0; p <= value[1].length-1; p++) {
 
-        // console.log("position 1:" + value[1][p].position);
-        // console.log("position 2:" + value[1][p].name);
-        // console.log("position 3:" + s);
         if (value[1][p].position == s)
         {
             return p;
@@ -357,9 +367,9 @@ function onTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    event.stopPropagation();
     makeChart();
-    $('.acutal').text("Aktualny wynik: " + getChoicesCount("TICK"));
+    $('#actual_counter').text(getChoicesCount("TICK"));
+    event.stopPropagation();
 }
 
 function onYellowTickClick(target, event) {
@@ -387,6 +397,7 @@ function onYellowTickClick(target, event) {
     saveTileToDB(data);
     event.stopPropagation();
     makeChart();
+    $('#actual_counter').text(getChoicesCount("TICK"));
 }
 
 function onCrossClick(target, event) {
@@ -414,6 +425,7 @@ function onCrossClick(target, event) {
     saveTileToDB(data);
     event.stopPropagation();
     makeChart();
+    $('#actual_counter').text(getChoicesCount("TICK"));
 }
 
 function onMinusClick(target, event) {
@@ -441,6 +453,7 @@ function onMinusClick(target, event) {
     saveTileToDB(data);
     event.stopPropagation();
     makeChart();
+    $('#actual_counter').text(getChoicesCount("TICK"));
 }
 
 function GetThisHidden(){
@@ -485,7 +498,8 @@ function saveTileToDB(data) {
         },
         error: function (e) {
             console.log("ERROR: ", e);
-        }
+        },
+        async: false
     });
 }
 
@@ -503,7 +517,8 @@ function deleteGoalFunc(target, event){
         dataType: 'json',
         success: function (datassek) {
             console.log("passed");
-            updateSortable(true);
+            updateSortable();
+            retrieveNewData(null, null, "new");
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -644,7 +659,7 @@ function setNextGoal(){
     var year = words[1];
     var id = months.indexOf(month_name);
 
-    createNewCalendar(value, id, year, "nx");
+    retrieveNewData(id, year, "nx");
 }
 
 function setPreviousGoal(){
@@ -654,7 +669,7 @@ function setPreviousGoal(){
     var year = words[1];
     var id = months.indexOf(month_name);
 
-    createNewCalendar(value, id, year, "pr");
+    retrieveNewData(id, year, "pr");
 }
 
 

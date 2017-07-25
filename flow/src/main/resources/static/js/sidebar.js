@@ -45,7 +45,7 @@ function makeChart(){
 }
 
 
-function updateSortable(param){
+function updateSortable(){
     $('.list_goals').find('.slide').each(function(){
         var goalId = $(this).find('.slide_goal_id').html();
         var goalPosition = $(this).index();
@@ -53,9 +53,6 @@ function updateSortable(param){
         editGoal(goalId, goalPosition);
     });
 
-    if(param!=false){
-        retrieveNewData(null, null, "new");
-    }
 }
 
 function editGoal(id, position){
@@ -75,7 +72,8 @@ function editGoal(id, position){
         },
         error: function (e) {
             console.log("ERROR: ", e);
-        }
+        },
+        async: false
     });
 }
 
