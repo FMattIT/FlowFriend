@@ -65,6 +65,7 @@ function retrieveValue(){
         contentType: "application/json",
         url: "/calendar/retrieveData/tiles",
         dataType: 'json',
+        async: false,
         success: function (dane) {
             retrieverOfValue(dane);
         },
@@ -395,9 +396,9 @@ function onYellowTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    event.stopPropagation();
     makeChart();
     $('#actual_counter').text(getChoicesCount("TICK"));
+    event.stopPropagation();
 }
 
 function onCrossClick(target, event) {
@@ -423,9 +424,9 @@ function onCrossClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    event.stopPropagation();
     makeChart();
     $('#actual_counter').text(getChoicesCount("TICK"));
+    event.stopPropagation();
 }
 
 function onMinusClick(target, event) {
@@ -451,9 +452,9 @@ function onMinusClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    event.stopPropagation();
     makeChart();
     $('#actual_counter').text(getChoicesCount("TICK"));
+    event.stopPropagation();
 }
 
 function GetThisHidden(){
@@ -492,14 +493,13 @@ function saveTileToDB(data) {
         url: "/calendar/saveTile",
         data: JSON.stringify(data),
         dataType: 'json',
+        async: false,
         success: function (dane) {
             console.log("passed");
-            value[0].push(dane);
         },
         error: function (e) {
             console.log("ERROR: ", e);
-        },
-        async: false
+        }
     });
 }
 
@@ -547,10 +547,10 @@ $( document ).ready(function() {
         data["name"]=$('#name').text();
         data["position"]=$('.list_goals').children().length;
 
-        if($('#name').text().length <=14){
-            console.log("Cel musi miec conajmniej 15 znaków!");
+        if($('#name').text().length <=0){
+            return;
         }
-
+        else{
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -567,6 +567,7 @@ $( document ).ready(function() {
         });
         $('#myModal').modal('toggle');
         $('#name').text("");
+        }
     });
 
     $('body').on('submit', '#edit_formek', function(event) {
