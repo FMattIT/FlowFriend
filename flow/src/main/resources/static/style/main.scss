@@ -167,7 +167,7 @@ i:hover{
   margin-bottom: 6px;
 }
 
-#labelek, #edit_labelek{
+#labelek, #edit_labelek, .add_error{
   text-align: left;
   font-family: Lato;
   font-weight: bold;
@@ -177,6 +177,13 @@ i:hover{
   height: auto !important;
   line-height: normal !important;
   margin-bottom: 4px;
+}
+
+.add_error{
+  color: rgb(231, 76, 60) !important;
+  display: none;
+  margin-bottom: 0 !important;
+  margin-top: 4px;
 }
 
 #buttonek, #edit_buttonek{

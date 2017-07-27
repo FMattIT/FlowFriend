@@ -541,15 +541,17 @@ $( document ).ready(function() {
 
 
     $('body').on('submit', '#formek', function(event) {
+
         event.preventDefault();
 
         var data = {};
         data["name"]=$('#name').text();
         data["position"]=$('.list_goals').children().length;
 
-        if($('#name').text().length <=0){
+        if($('#name').text().length <=0 || $('#name').text().length>170){
             return;
         }
+
         else{
         $.ajax({
             type: "POST",
@@ -559,14 +561,14 @@ $( document ).ready(function() {
             dataType: 'json',
             success: function (datassek) {
                 console.log("passed");
+                $('#myModal').modal('toggle');
+                $('#name').text("");
                 retrieveNewData(null, null, "new")
             },
             error: function (e) {
                 console.log("ERROR: ", e);
             }
         });
-        $('#myModal').modal('toggle');
-        $('#name').text("");
         }
     });
 

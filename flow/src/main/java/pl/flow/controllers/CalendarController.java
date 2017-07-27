@@ -38,11 +38,16 @@ public class CalendarController {
     @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal addGoal(@RequestBody Goal goal, Principal principal) {
-        User user = usersService.getUserByUsername(principal.getName());
-        goal.setUserId(user);
-        goalService.save(goal);
+        if(goal.getName().length()>170){
+            return null;
+        }
+        else {
+            User user = usersService.getUserByUsername(principal.getName());
+            goal.setUserId(user);
+            goalService.save(goal);
 
-        return goal;
+            return goal;
+        }
     }
 
     @RequestMapping(value="/calendar/editGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")

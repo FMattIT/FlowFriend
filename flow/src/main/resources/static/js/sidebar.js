@@ -77,6 +77,41 @@ function editGoal(id, position){
     });
 }
 
+function addPaste(event, parent){
+    event.preventDefault();
+
+    var clipboardData, pastedData;
+    clipboardData = event.clipboardData || window.clipboardData;
+    pastedData = clipboardData.getData('Text');
+
+    var cntMaxLengthss = parseInt($(parent).attr('maxlength'));
+    $(parent).text(pastedData);
+
+    if (pastedData.length >= cntMaxLengthss) {
+        event.preventDefault();
+        $(parent).parent().find(".add_error").css("display", "block");
+    }
+    else{
+        $(parent).parent().find(".add_error").css("display", "none");
+    }
+}
+
+function addOnType(event, parent){
+        var cntMaxLength = parseInt($(parent).attr('maxlength'));
+
+        if ($(parent).text().length >= cntMaxLength) {
+            if(event.keyCode != 8)
+            {
+                event.preventDefault();
+            }
+            $(parent).parent().find(".add_error").css("display", "block");
+        }
+        else{
+            $(parent).parent().find(".add_error").css("display", "none");
+        }
+}
+
+
 $(document).ready(function () {
 
     $('.fa.fa-bars').on('click', function () {
@@ -98,13 +133,21 @@ $(document).ready(function () {
 
     $('.list_goals').disableSelection();
 
-    $("div[contenteditable='true'][maxlength]").on('keydown paste', function (event) {
+    $("div[contenteditable='true'][maxlength]").on('keydown', function (event) {
         var cntMaxLength = parseInt($(this).attr('maxlength'));
 
-        if ($(this).text().length === cntMaxLength && event.keyCode != 8) {
-            event.preventDefault();
+        if ($(this).text().length >= cntMaxLength) {
+            if(event.keyCode != 8)
+            {
+                event.preventDefault();
+            }
+            $('#add_error').css("display", "block");
+        }
+        else{
+            $('#add_error').css("display", "none");
         }
     });
+
 
     $('.off_option').click(function(){
        $(this).toggleClass('selectable');
