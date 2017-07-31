@@ -580,6 +580,10 @@ $( document ).ready(function() {
         data["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
         data["position"]=$(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().index();
 
+        if($('#edit_name').text().length <=0 || $('#edit_name').text().length>170){
+            return;
+        }
+
         $.ajax({
             type: "POST",
             contentType: "application/json",

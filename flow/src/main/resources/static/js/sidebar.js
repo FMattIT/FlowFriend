@@ -77,42 +77,42 @@ function editGoal(id, position){
     });
 }
 
-function addPaste(event, parent){
-    event.preventDefault();
+function addOnType(event){
+        var cntMaxLength = parseInt($(this).attr('maxlength'));
 
-    var clipboardData, pastedData;
-    clipboardData = event.clipboardData || window.clipboardData;
-    pastedData = clipboardData.getData('Text');
-
-    var cntMaxLengthss = parseInt($(parent).attr('maxlength'));
-    $(parent).text(pastedData);
-
-    if (pastedData.length >= cntMaxLengthss) {
-        event.preventDefault();
-        $(parent).parent().find(".add_error").css("display", "block");
-    }
-    else{
-        $(parent).parent().find(".add_error").css("display", "none");
-    }
-}
-
-function addOnType(event, parent){
-        var cntMaxLength = parseInt($(parent).attr('maxlength'));
-
-        if ($(parent).text().length >= cntMaxLength) {
+        if ($(this).text().length >= cntMaxLength) {
             if(event.keyCode != 8)
             {
                 event.preventDefault();
+                $(this).parent().find(".add_error").css("display", "block");
             }
-            $(parent).parent().find(".add_error").css("display", "block");
         }
         else{
-            $(parent).parent().find(".add_error").css("display", "none");
+            $(this).parent().find(".add_error").css("display", "none");
         }
 }
 
-
 $(document).ready(function () {
+
+    var divek = document.getElementById("name");
+    var secondDivek = document.getElementById("edit_name");
+    divek.addEventListener("blur", addOnType);
+    divek.addEventListener("keyup", addOnType);
+    divek.addEventListener("keydown", addOnType);
+    divek.addEventListener("paste", addOnType);
+    divek.addEventListener("copy", addOnType);
+    divek.addEventListener("cut", addOnType);
+    divek.addEventListener("delete", addOnType);
+    divek.addEventListener("mouseup", addOnType);
+
+    secondDivek.addEventListener("blur", addOnType);
+    secondDivek.addEventListener("keyup", addOnType);
+    secondDivek.addEventListener("keydown", addOnType);
+    secondDivek.addEventListener("paste", addOnType);
+    secondDivek.addEventListener("copy", addOnType);
+    secondDivek.addEventListener("cut", addOnType);
+    secondDivek.addEventListener("delete", addOnType);
+    secondDivek.addEventListener("mouseup", addOnType);
 
     $('.fa.fa-bars').on('click', function () {
         $('.sidebar').toggleClass('active');
