@@ -225,7 +225,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
                 else{
                 var td = document.createElement('td');
                 td.innerHTML = new Date(this_year, this_month_id, 0).getDate()+days-new Date(this_year, this_month_id, 1).getDay()+1;
-                td.className = "day empty";
+                    td.className = "day empty";
                     tr.appendChild(td);
                     table.appendChild(tr);
                     day++
@@ -244,6 +244,11 @@ function createNewCalendar(value, month_id, year, goal_init) {
             td.innerHTML = day;
 
             if((day==new Date().getUTCDate() || day==new Date().getUTCDate()-1 || day==new Date().getUTCDate()-2) && this_month_id==new Date().getMonth()){td.className = "day"; td.setAttribute('onclick', 'onDayClick(this)');}else {td.className = "day disabled";}
+
+                if((new Date().getDate()==1 && this_month_id == today.getMonth()-1 && (td.innerHTML==31 || td.innerHTML==30)) || (new Date().getDate()==2 && this_month_id == today.getMonth()-1 && (td.innerHTML==31)))
+                {
+                    td.className = "day";
+                }
 
             for(var i=0; i<value[0].length; i++){
                  var t= value[1][Number(actual_goal_id.innerHTML)];

@@ -19,7 +19,7 @@ function getChoicesCount(choice){
 function makeChart(){
     var canvas = document.getElementById('general');
     canvas.innerHTML = '';
-    canvas.innerHTML = "<canvas id='myChart'></canvas>";
+    canvas.innerHTML = "<select id='chart_changer'><option>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select><canvas id='myChart'></canvas>";
     var ctx = document.getElementById('myChart').getContext('2d');
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
@@ -81,7 +81,7 @@ function addOnType(event){
         var cntMaxLength = parseInt($(this).attr('maxlength'));
 
         if ($(this).text().length >= cntMaxLength) {
-            if(event.keyCode != 8)
+            if(event.which != 8)
             {
                 event.preventDefault();
                 $(this).parent().find(".add_error").css("display", "block");
