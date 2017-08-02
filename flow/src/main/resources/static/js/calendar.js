@@ -248,6 +248,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
                 if((new Date().getDate()==1 && this_month_id == today.getMonth()-1 && (td.innerHTML==31 || td.innerHTML==30)) || (new Date().getDate()==2 && this_month_id == today.getMonth()-1 && (td.innerHTML==31)))
                 {
                     td.className = "day";
+                    td.setAttribute('onclick', 'onDayClick(this)');
                 }
 
             for(var i=0; i<value[0].length; i++){
@@ -373,8 +374,9 @@ function onTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
+    retrieveActualCount(data);
     makeChart();
-    $('#actual_counter').text(getChoicesCount("TICK"));
+    // $('#actual_counter').text(getChoicesCount("TICK"));
     event.stopPropagation();
 }
 
@@ -401,8 +403,9 @@ function onYellowTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
+    retrieveActualCount(data);
     makeChart();
-    $('#actual_counter').text(getChoicesCount("TICK"));
+    // $('#actual_counter').text(getChoicesCount("TICK"));
     event.stopPropagation();
 }
 
@@ -429,8 +432,9 @@ function onCrossClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
+    retrieveActualCount(data);
     makeChart();
-    $('#actual_counter').text(getChoicesCount("TICK"));
+    // $('#actual_counter').text(getChoicesCount("TICK"));
     event.stopPropagation();
 }
 
@@ -457,8 +461,9 @@ function onMinusClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
+    retrieveActualCount(data);
     makeChart();
-    $('#actual_counter').text(getChoicesCount("TICK"));
+    // $('#actual_counter').text(getChoicesCount("TICK"));
     event.stopPropagation();
 }
 
@@ -489,6 +494,24 @@ function onDayClick(day){
         GetThisHidden();
     }
 
+}
+
+function retrieveActualCount(data){
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/actualCounter",
+        dataType: 'json',
+        async: false,
+        data: JSON.stringify(data),
+        success: function (dane) {
+            console.log(dane);
+            // $('#actual_counter').text(dane);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
 }
 
 function saveTileToDB(data) {

@@ -43,4 +43,8 @@ public class TileService {
     public void delete(Goal goal){
         tileDao.delete(goal);
     }
+
+    public Object getActualCount(Goal goal){
+        return tileDao.getActualCount(goal);
+    }
 }

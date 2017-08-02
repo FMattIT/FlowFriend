@@ -35,6 +35,13 @@ public class CalendarController {
         return "calendar";
     }
 
+    @RequestMapping(value="/calendar/actualCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public Object actualCounter(@RequestBody Tile tile, Principal principal) {
+        Goal goal = tile.getGoalId();
+        return tileService.getActualCount(goal);
+    }
+
     @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal addGoal(@RequestBody Goal goal, Principal principal) {
