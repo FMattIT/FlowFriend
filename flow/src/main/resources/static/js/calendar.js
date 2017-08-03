@@ -376,7 +376,6 @@ function onTickClick(target, event) {
     saveTileToDB(data);
     retrieveActualCount(data);
     makeChart();
-    // $('#actual_counter').text(getChoicesCount("TICK"));
     event.stopPropagation();
 }
 
@@ -405,7 +404,6 @@ function onYellowTickClick(target, event) {
     saveTileToDB(data);
     retrieveActualCount(data);
     makeChart();
-    // $('#actual_counter').text(getChoicesCount("TICK"));
     event.stopPropagation();
 }
 
@@ -434,7 +432,6 @@ function onCrossClick(target, event) {
     saveTileToDB(data);
     retrieveActualCount(data);
     makeChart();
-    // $('#actual_counter').text(getChoicesCount("TICK"));
     event.stopPropagation();
 }
 
@@ -463,7 +460,6 @@ function onMinusClick(target, event) {
     saveTileToDB(data);
     retrieveActualCount(data);
     makeChart();
-    // $('#actual_counter').text(getChoicesCount("TICK"));
     event.stopPropagation();
 }
 
@@ -505,8 +501,7 @@ function retrieveActualCount(data){
         async: false,
         data: JSON.stringify(data),
         success: function (dane) {
-            console.log(dane);
-            // $('#actual_counter').text(dane);
+            $('#actual_counter').text(dane);
         },
         error: function (e) {
             console.log("ERROR: ", e);

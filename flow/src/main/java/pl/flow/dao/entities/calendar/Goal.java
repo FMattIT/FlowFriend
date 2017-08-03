@@ -1,5 +1,6 @@
 package pl.flow.dao.entities.calendar;
 
+import org.hibernate.annotations.ColumnDefault;
 import pl.flow.dao.entities.User;
 
 import javax.persistence.*;
@@ -26,6 +27,9 @@ public class Goal {
 
     @Column
     private Long position;
+
+    @Column
+    private Long max_count;
 
     @OneToMany(mappedBy="goalId")
     private List<Tile> listOfTiles;
@@ -60,5 +64,13 @@ public class Goal {
 
     public void setPosition(Long position) {
         this.position = position;
+    }
+
+    public Long getMax_count() {
+        return max_count;
+    }
+
+    public void setMax_count(Long max_count) {
+        this.max_count = max_count;
     }
 }

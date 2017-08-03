@@ -56,14 +56,21 @@ public class TileDao {
     }
 
     public Object getActualCount(Goal goal){
-        return entityManager.createNativeQuery("SELECT COUNT(*) FROM public.tiles WHERE\n" +
+        return entityManager.createNativeQuery("SELECT COUNT(*) FROM public.tiles\n" +
+                "WHERE EXISTS (SELECT 1 FROM public.tiles WHERE goal_id_id = ? AND flag = 'CROSS') AND\n" +
                 "(\n" +
-                " CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT) > (SELECT CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT) FROM public.tiles WHERE goal_id_id = ? AND flag = 'CROSS' ORDER BY id DESC LIMIT 1)\n" +
+                "  CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT)  > (SELECT CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT) FROM public.tiles WHERE goal_id_id = ? AND flag = 'CROSS' ORDER BY id DESC LIMIT 1)\n" +
                 ")\n" +
+                "AND goal_id_id = ? AND (flag = 'TICK' OR flag = 'YELLOWTICK')\n" +
+                "OR NOT EXISTS (SELECT 1 FROM public.tiles WHERE goal_id_id = ? AND flag = 'CROSS')\n" +
                 "AND goal_id_id = ?\n" +
-                " AND flag = 'TICK'")
+                "AND (flag = 'TICK' OR flag = 'YELLOWTICK')\n" +
+                "\n")
                 .setParameter(1, goal)
                 .setParameter(2, goal)
+                .setParameter(3, goal)
+                .setParameter(4, goal)
+                .setParameter(5, goal)
                 .getSingleResult();
     }
 }
