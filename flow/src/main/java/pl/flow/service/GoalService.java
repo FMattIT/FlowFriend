@@ -37,4 +37,12 @@ public class GoalService {
     public void delete(Goal goal){
         goalDao.delete(goal);
     }
+
+    public Object getMaxCount(Goal goal){
+        return goalDao.getMaxCount(goal);
+    }
+
+    public void updateMaxCount(Goal goal){
+        goalDao.updateMaxCount(goal);
+    }
 }

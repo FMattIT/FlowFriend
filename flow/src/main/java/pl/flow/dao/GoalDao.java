@@ -33,4 +33,14 @@ public class GoalDao {
     public void delete(Goal goal){
         entityManager.remove(entityManager.merge(goal));
     }
+
+    public Object getMaxCount(Goal goal){
+        return entityManager.createNativeQuery("SELECT max_count FROM public.goals WHERE id = ?")
+                .setParameter(1, goal)
+                .getSingleResult();
+    }
+
+    public void updateMaxCount(Goal goal){
+        entityManager.merge(goal);
+    }
 }

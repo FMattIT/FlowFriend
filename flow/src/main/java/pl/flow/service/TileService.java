@@ -47,4 +47,5 @@ public class TileService {
     public Object getActualCount(Goal goal){
         return tileDao.getActualCount(goal);
     }
+
 }

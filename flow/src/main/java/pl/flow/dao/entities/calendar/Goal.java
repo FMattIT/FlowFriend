@@ -29,7 +29,7 @@ public class Goal {
     private Long position;
 
     @Column
-    private Long max_count;
+    private Long max_count = 0L;
 
     @OneToMany(mappedBy="goalId")
     private List<Tile> listOfTiles;

@@ -305,7 +305,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
     loadGoals();
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
     makeChart();
-    $('#actual_counter').text(getChoicesCount("TICK"));
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     }
 }
 
@@ -374,7 +374,7 @@ function onTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    retrieveActualCount(data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart();
     event.stopPropagation();
 }
@@ -402,7 +402,7 @@ function onYellowTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    retrieveActualCount(data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart();
     event.stopPropagation();
 }
@@ -430,7 +430,7 @@ function onCrossClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    retrieveActualCount(data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart();
     event.stopPropagation();
 }
@@ -458,9 +458,26 @@ function onMinusClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    retrieveActualCount(data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart();
     event.stopPropagation();
+}
+
+function retrieveMaxCount(value){
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/maxCounter",
+        dataType: 'json',
+        async: false,
+        data: JSON.stringify(value),
+        success: function (dane) {
+            $('#best_counter').text(dane);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
 }
 
 function GetThisHidden(){
@@ -492,16 +509,17 @@ function onDayClick(day){
 
 }
 
-function retrieveActualCount(data){
+function retrieveActualCount(value){
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/calendar/actualCounter",
         dataType: 'json',
         async: false,
-        data: JSON.stringify(data),
+        data: JSON.stringify(value),
         success: function (dane) {
             $('#actual_counter').text(dane);
+            retrieveMaxCount(value);
         },
         error: function (e) {
             console.log("ERROR: ", e);

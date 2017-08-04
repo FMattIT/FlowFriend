@@ -9,6 +9,7 @@ import pl.flow.dao.entities.calendar.Tile;
 import pl.flow.service.GoalService;
 import pl.flow.service.TileService;
 import pl.flow.service.UsersService;
+import pl.flow.service.UtilsService;
 
 import java.awt.image.TileObserver;
 import java.security.Principal;
@@ -30,6 +31,9 @@ public class CalendarController {
     @Autowired
     TileService tileService;
 
+    @Autowired
+    UtilsService utilsService;
+
     @RequestMapping(value = "/calendar")
     public String home() {
         return "calendar";
@@ -37,9 +41,17 @@ public class CalendarController {
 
     @RequestMapping(value="/calendar/actualCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public Object actualCounter(@RequestBody Tile tile, Principal principal) {
-        Goal goal = tile.getGoalId();
-        return tileService.getActualCount(goal);
+    public Object actualCounter(@RequestBody Goal goal, Principal principal) {
+        Goal cel = goalService.getGoal(goal.getId());
+        return tileService.getActualCount(cel);
+    }
+
+    @RequestMapping(value="/calendar/maxCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public Object maxCounter(@RequestBody Goal goal, Principal principal) {
+        Goal cel = goalService.getGoal(goal.getId());
+        utilsService.updateMaxCount(cel);
+        return goalService.getMaxCount(cel);
     }
 
     @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")

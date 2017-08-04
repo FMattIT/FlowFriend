@@ -73,4 +73,5 @@ public class TileDao {
                 .setParameter(5, goal)
                 .getSingleResult();
     }
+
 }
