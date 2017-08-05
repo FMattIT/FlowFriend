@@ -140,6 +140,11 @@ function createNewCalendar(value, month_id, year, goal_init) {
 
     if ((typeof(goal_init) !== 'undefined') && (goal_init !== null)) {
 
+        if(goal_init=="deleted"){
+            goal_name = value[1][getGoalId(0)].name;
+            goal_id = getGoalId(0);
+        }
+
         if(goal_init=="new"){
             goal_name = value[1][value[1].length-1].name;
             goal_id = value[1].length-1;
@@ -304,7 +309,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
     
     loadGoals();
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
-    makeChart();
+    makeChart($("#chart_changer").val());
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     }
 }
@@ -341,7 +346,6 @@ function loadGoals(){
         slide.append(goal_name);
         slide.append(delete_option);
         var slide_id = document.createElement('div');
-        slide_id.style.cssText="display:none;";
         slide_id.innerHTML = goal;
         slide_id.className = 'slide_goal_id';
         slide.append(slide_id);
@@ -375,7 +379,7 @@ function onTickClick(target, event) {
 
     saveTileToDB(data);
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
-    makeChart();
+    makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
 
@@ -403,7 +407,7 @@ function onYellowTickClick(target, event) {
 
     saveTileToDB(data);
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
-    makeChart();
+    makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
 
@@ -431,7 +435,7 @@ function onCrossClick(target, event) {
 
     saveTileToDB(data);
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
-    makeChart();
+    makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
 
@@ -459,7 +463,7 @@ function onMinusClick(target, event) {
 
     saveTileToDB(data);
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
-    makeChart();
+    makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
 
@@ -559,7 +563,7 @@ function deleteGoalFunc(target, event){
         success: function (datassek) {
             console.log("passed");
             updateSortable();
-            retrieveNewData(null, null, "new");
+            retrieveNewData(null, null, "deleted");
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -605,6 +609,7 @@ $( document ).ready(function() {
                 $('#myModal').modal('toggle');
                 $('#name').text("");
                 retrieveNewData(null, null, "new")
+                $(".add_error").css("display", "none");
             },
             error: function (e) {
                 console.log("ERROR: ", e);
@@ -624,7 +629,7 @@ $( document ).ready(function() {
         if($('#edit_name').text().length <=0 || $('#edit_name').text().length>170){
             return;
         }
-
+        else{
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -634,11 +639,13 @@ $( document ).ready(function() {
             success: function (datassek) {
                 console.log("passed");
                 retrieveNewData(null, null, "new")
+                $(".add_error").css("display", "none");
             },
             error: function (e) {
                 console.log("ERROR: ", e);
             }
         });
+        }
     });
 
 

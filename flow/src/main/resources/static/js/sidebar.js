@@ -3,29 +3,43 @@
  */
 var pos;
 
-function getChoicesCount(choice){
+function getChoicesCount(choice, type){
     retrieveValue();
     var counter = 0;
     for (var i = 0; i <= value[0].length-1; i++) {
 
-        if (value[0][i].goalId.id == value[1][actual_goal_id.innerHTML].id && value[0][i].flag == choice)
-        {
-            counter++;
+        if(type=="one"){
+            var header = $(".actual_date").text();
+            var words = header.split(' ');
+            var month_name = words[0];
+            var year = words[1];
+            var id = months.indexOf(month_name);
+
+            if (value[0][i].goalId.id == value[1][actual_goal_id.innerHTML].id && value[0][i].flag == choice && value[0][i].month == id)
+            {
+                counter++;
+            }
+        }
+        else{
+            if (value[0][i].goalId.id == value[1][actual_goal_id.innerHTML].id && value[0][i].flag == choice)
+            {
+                counter++;
+            }
         }
     }
     return counter;
 }
 
-function makeChart(){
-    var canvas = document.getElementById('general');
+function makeChart(type){
+    var canvas = document.getElementById('canvek');
     canvas.innerHTML = '';
-    canvas.innerHTML = "<select id='chart_changer'><option>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select><canvas id='myChart'></canvas>";
+    canvas.innerHTML = "<canvas id='myChart'></canvas>";
     var ctx = document.getElementById('myChart').getContext('2d');
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [getChoicesCount("TICK"), getChoicesCount("YELLOWTICK"), getChoicesCount("CROSS"), getChoicesCount("MINUS")],
+                data: [getChoicesCount("TICK", type), getChoicesCount("YELLOWTICK", type), getChoicesCount("CROSS", type), getChoicesCount("MINUS", type)],
                 backgroundColor: [
                     "#009966",
                     "#f1c40f",
@@ -81,7 +95,7 @@ function addOnType(event){
         var cntMaxLength = parseInt($(this).attr('maxlength'));
 
         if ($(this).text().length >= cntMaxLength) {
-            if(event.which != 8)
+            if(!(event.which==8 || event.ctrlKey || event.shiftKey || event.button))
             {
                 event.preventDefault();
                 $(this).parent().find(".add_error").css("display", "block");
@@ -90,6 +104,10 @@ function addOnType(event){
         else{
             $(this).parent().find(".add_error").css("display", "none");
         }
+}
+
+function updateMinusDay(day) {
+    
 }
 
 $(document).ready(function () {
