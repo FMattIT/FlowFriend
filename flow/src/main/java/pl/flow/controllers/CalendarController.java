@@ -5,11 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.flow.dao.entities.User;
 import pl.flow.dao.entities.calendar.Goal;
+import pl.flow.dao.entities.calendar.MinusTile;
 import pl.flow.dao.entities.calendar.Tile;
-import pl.flow.service.GoalService;
-import pl.flow.service.TileService;
-import pl.flow.service.UsersService;
-import pl.flow.service.UtilsService;
+import pl.flow.service.*;
 
 import java.awt.image.TileObserver;
 import java.security.Principal;
@@ -34,9 +32,21 @@ public class CalendarController {
     @Autowired
     UtilsService utilsService;
 
+    @Autowired
+    MinusTileService minusTileService;
+
     @RequestMapping(value = "/calendar")
     public String home() {
         return "calendar";
+    }
+
+    @RequestMapping(value="/calendar/updateMinusTile", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public MinusTile updateMinusTile(@RequestBody MinusTile minusTile, Principal principal) {
+        User user = usersService.getUserByUsername(principal.getName());
+        minusTile.setUserId(user);
+        minusTileService.save(minusTile);
+        return minusTile;
     }
 
     @RequestMapping(value="/calendar/actualCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")

@@ -58,7 +58,6 @@ function makeChart(type){
     });
 }
 
-
 function updateSortable(){
     $('.list_goals').find('.slide').each(function(){
         var goalId = $(this).find('.slide_goal_id').html();
@@ -67,6 +66,10 @@ function updateSortable(){
         editGoal(goalId, goalPosition);
     });
 
+}
+
+function putSelectable(target){
+    $(target).toggleClass('selectable');
 }
 
 function editGoal(id, position){
@@ -106,8 +109,35 @@ function addOnType(event){
         }
 }
 
-function updateMinusDay(day) {
-    
+function updateMinusDay(day, target) {
+    var bol = "false";
+    var data={}
+    data["goalId"]=value[1][actual_goal_id.innerHTML];
+
+    for(var i=1; i<=7; i++){
+        if($(':nth-child('+i+')', target.parentNode).hasClass("selectable")){
+            bol="true";
+        }
+        else{
+            bol="false";
+        }
+        data[(':nth-child('+i+')', target.parentNode).attr('id')] = bol;
+    }
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/updateMinusTile",
+        dataType: 'json',
+        async: false,
+        data: JSON.stringify(data),
+        success: function (dane) {
+            console.log("passed");
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
 }
 
 $(document).ready(function () {
@@ -166,8 +196,4 @@ $(document).ready(function () {
         }
     });
 
-
-    $('.off_option').click(function(){
-       $(this).toggleClass('selectable');
-    });
 });

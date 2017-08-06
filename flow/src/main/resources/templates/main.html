@@ -69,13 +69,13 @@
 
         <div class="label_options">DNI, W KTÓRYCH CEL NIE OBOWIĄZUJE:</div>
         <div id="off_options">
-            <div class="off_option" onclick="updateMinusDay(1)">PN</div>
-            <div class="off_option" onclick="updateMinusDay(2)">WT</div>
-            <div class="off_option" onclick="updateMinusDay(3)">ŚR</div>
-            <div class="off_option" onclick="updateMinusDay(4)">CZ</div>
-            <div class="off_option" onclick="updateMinusDay(5)">PT</div>
-            <div class="off_option" onclick="updateMinusDay(6)">SO</div>
-            <div class="off_option" onclick="updateMinusDay(7)">ND</div>
+            <div class="off_option" id="firstDay" onclick="putSelectable(this); updateMinusDay('firstDay', this);">PN</div>
+            <div class="off_option" id="secondDay" onclick="putSelectable(this); updateMinusDay('secondDay', this);">WT</div>
+            <div class="off_option" id="thirdDay" onclick="putSelectable(this); updateMinusDay('thirdDay', this);">ŚR</div>
+            <div class="off_option" id="fourthDay" onclick="putSelectable(this); updateMinusDay('fourthDay', this);">CZ</div>
+            <div class="off_option" id="fifthDay" onclick="putSelectable(this); updateMinusDay('fifthDay', this);">PT</div>
+            <div class="off_option" id="sixthDay" onclick="putSelectable(this); updateMinusDay('sixthDay', this);">SO</div>
+            <div class="off_option" id="seventhDay" onclick="putSelectable(this); updateMinusDay('seventhDay', this);">ND</div>
             <div style="clear: both;"></div>
         </div>
 

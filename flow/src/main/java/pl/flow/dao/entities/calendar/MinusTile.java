@@ -1,16 +1,21 @@
 package pl.flow.dao.entities.calendar;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 import pl.flow.dao.entities.User;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Table;
 
 /**
  * Created by Admin on 05.08.2017.
  */
 
-//@Entity
-//@Table(name = "minus_tiles")
-public class MinusTiles {
+@Entity
+@Table(name = "minus_tiles")
+public class MinusTile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,25 +30,25 @@ public class MinusTiles {
     private Goal goalId;
 
     @Column
-    private boolean firstDay = false;
+    private String firstDay = "false";
 
     @Column
-    private boolean secondDay  = false;
+    private String secondDay = "false";
 
     @Column
-    private boolean thirdDay  = false;
+    private String thirdDay = "false";
 
     @Column
-    private boolean fourthDay = false;
+    private String fourthDay = "false";
 
     @Column
-    private boolean fifthDay = false;
+    private String fifthDay = "false";
 
     @Column
-    private boolean sixthDay = false;
+    private String sixthDay = "false";
 
     @Column
-    private boolean seventhDay = false;
+    private String seventhDay = "false";
 
     public Long getId() {
         return id;
@@ -69,59 +74,59 @@ public class MinusTiles {
         this.goalId = goalId;
     }
 
-    public boolean isFirstDay() {
+    public String getFirstDay() {
         return firstDay;
     }
 
-    public void setFirstDay(boolean firstDay) {
+    public void setFirstDay(String firstDay) {
         this.firstDay = firstDay;
     }
 
-    public boolean isSecondDay() {
+    public String getSecondDay() {
         return secondDay;
     }
 
-    public void setSecondDay(boolean secondDay) {
+    public void setSecondDay(String secondDay) {
         this.secondDay = secondDay;
     }
 
-    public boolean isThirdDay() {
+    public String getThirdDay() {
         return thirdDay;
     }
 
-    public void setThirdDay(boolean thirdDay) {
+    public void setThirdDay(String thirdDay) {
         this.thirdDay = thirdDay;
     }
 
-    public boolean isFourthDay() {
+    public String getFourthDay() {
         return fourthDay;
     }
 
-    public void setFourthDay(boolean fourthDay) {
+    public void setFourthDay(String fourthDay) {
         this.fourthDay = fourthDay;
     }
 
-    public boolean isFifthDay() {
+    public String getFifthDay() {
         return fifthDay;
     }
 
-    public void setFifthDay(boolean fifthDay) {
+    public void setFifthDay(String fifthDay) {
         this.fifthDay = fifthDay;
     }
 
-    public boolean isSixthDay() {
+    public String getSixthDay() {
         return sixthDay;
     }
 
-    public void setSixthDay(boolean sixthDay) {
+    public void setSixthDay(String sixthDay) {
         this.sixthDay = sixthDay;
     }
 
-    public boolean isSeventhDay() {
+    public String getSeventhDay() {
         return seventhDay;
     }
 
-    public void setSeventhDay(boolean seventhDay) {
+    public void setSeventhDay(String seventhDay) {
         this.seventhDay = seventhDay;
     }
 }
