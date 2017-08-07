@@ -7,6 +7,7 @@ import pl.flow.dao.MinusTileDao;
 import pl.flow.dao.entities.calendar.MinusTile;
 
 import javax.persistence.NoResultException;
+import java.util.List;
 
 /**
  * Created by Admin on 06.08.2017.
@@ -21,6 +22,12 @@ public class MinusTileService {
     public void setMinusTileDao(MinusTileDao minusTileDao) {
         this.minusTileDao = minusTileDao;
     }
+
+    public List<MinusTile> getMinusTilesList(){
+        return minusTileDao.getMinusTilesList(); }
+
+    public List<MinusTile> getMinusTilesRealList(){
+        return minusTileDao.getMinusTilesRealList(); }
 
     public MinusTile getMinusTileToMerge(MinusTile minusTile){
         return minusTileDao.getMinusTileToMerge(minusTile);

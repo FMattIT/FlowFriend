@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Admin on 06.08.2017.
@@ -19,6 +20,12 @@ public class MinusTileDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    public List<MinusTile> getMinusTilesList(){
+        return entityManager.createNativeQuery("SELECT first_day, second_day, third_day, fourth_day, fifth_day, sixth_day, seventh_day FROM public.minus_tiles").getResultList(); }
+
+    public List<MinusTile> getMinusTilesRealList(){
+        return entityManager.createQuery("SELECT t FROM MinusTile t, MinusTile.class").getResultList(); }
 
     public MinusTile getMinusTileToMerge(MinusTile minusTile){
         return entityManager.createQuery("SELECT t FROM MinusTile t WHERE t.goalId = ? AND t.userId = ?", MinusTile.class)

@@ -114,14 +114,14 @@ function updateMinusDay(day, target) {
     var data={}
     data["goalId"]=value[1][actual_goal_id.innerHTML];
 
-    for(var i=1; i<=7; i++){
-        if($(':nth-child('+i+')', target.parentNode).hasClass("selectable")){
+    for(var i=0; i<=6; i++){
+        if($(target).parent().find("div").eq(i).hasClass("selectable")){
             bol="true";
         }
         else{
             bol="false";
         }
-        data[(':nth-child('+i+')', target.parentNode).attr('id')] = bol;
+        data[$(target).parent().find("div").eq(i).attr('id')] = bol;
     }
 
     $.ajax({
@@ -133,6 +133,27 @@ function updateMinusDay(day, target) {
         data: JSON.stringify(data),
         success: function (dane) {
             console.log("passed");
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
+function retrieveMinusTiles(){
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/retrieveMinusTiles",
+        dataType: 'json',
+        async: false,
+        success: function (dane) {
+            jQuery.each(dane[0], function(i, val) {
+                // console.log(i + " " + val);
+                if(val=="true"){
+                    $("#off_options").find("div").eq(i).addClass("selectable");
+                }
+            });
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -195,5 +216,7 @@ $(document).ready(function () {
             $('#add_error').css("display", "none");
         }
     });
+
+    retrieveMinusTiles();
 
 });

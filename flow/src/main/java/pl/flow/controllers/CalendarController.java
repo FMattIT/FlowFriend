@@ -40,6 +40,12 @@ public class CalendarController {
         return "calendar";
     }
 
+    @RequestMapping(value="/calendar/retrieveMinusTiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public List<MinusTile> retrieveMinusTiles(Principal principal) {
+        return minusTileService.getMinusTilesList();
+    }
+
     @RequestMapping(value="/calendar/updateMinusTile", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public MinusTile updateMinusTile(@RequestBody MinusTile minusTile, Principal principal) {
