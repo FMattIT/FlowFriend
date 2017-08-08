@@ -9,6 +9,7 @@ import pl.flow.dao.entities.calendar.MinusTile;
 import pl.flow.dao.entities.calendar.Tile;
 import pl.flow.service.*;
 
+import javax.persistence.NoResultException;
 import java.awt.image.TileObserver;
 import java.security.Principal;
 import java.util.List;
@@ -42,8 +43,25 @@ public class CalendarController {
 
     @RequestMapping(value="/calendar/retrieveMinusTiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public List<MinusTile> retrieveMinusTiles(Principal principal) {
-        return minusTileService.getMinusTilesList();
+    public Object retrieveMinusTiles(@RequestBody Goal goal,Principal principal) {
+        Goal cel = goalService.getGoal(goal.getId());
+        try{
+            minusTileService.getMinusTile(cel);
+        }
+        catch (Exception ex){
+            MinusTile minusTile = new MinusTile();
+            minusTile.setFirstDay("false");
+            minusTile.setSecondDay("false");
+            minusTile.setThirdDay("false");
+            minusTile.setFifthDay("false");
+            minusTile.setSixthDay("false");
+            minusTile.setSeventhDay("false");
+            minusTile.setFourthDay("false");
+            minusTile.setGoalId(cel);
+            minusTile.setUserId(cel.getUserId());
+            minusTileService.save(minusTile);
+        }
+        return minusTileService.getMinusTile(cel);
     }
 
     @RequestMapping(value="/calendar/updateMinusTile", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -103,7 +121,10 @@ public class CalendarController {
     @RequestMapping(value="/calendar/deleteGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public List<Goal> deleteGoal(@RequestBody Goal goal, Principal principal) {
+        User user = usersService.getUserByUsername(principal.getName());
+        goal.setUserId(user);
         tileService.delete(goal);
+        minusTileService.delete(goal);
         goalService.delete(goal);
 
         return goalService.getGoalsList();

@@ -1,10 +1,15 @@
 package pl.flow.dao.entities.calendar;
 
-import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 import pl.flow.dao.entities.User;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Table;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Admin on 18.06.2017.
@@ -30,9 +35,6 @@ public class Goal {
 
     @Column
     private Long max_count = 0L;
-
-    @OneToMany(mappedBy="goalId")
-    private List<Tile> listOfTiles;
 
     public Long getId() {
         return id;
@@ -73,4 +75,5 @@ public class Goal {
     public void setMax_count(Long max_count) {
         this.max_count = max_count;
     }
+
 }

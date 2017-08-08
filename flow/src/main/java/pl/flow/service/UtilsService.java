@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.flow.dao.entities.calendar.Goal;
 import pl.flow.dao.entities.calendar.MinusTile;
+import pl.flow.dao.entities.calendar.Tile;
 
 import java.math.BigInteger;
 import java.time.DayOfWeek;
@@ -45,17 +46,76 @@ public class UtilsService {
         }
     }
 
+//    @Scheduled(cron = "0 57 12 * * *")
 //    @Scheduled(fixedDelay = 3000)
     public void checkMinusDays(){
         LocalDateTime l = LocalDateTime.now();
 
-        Long dayOfWeek = l.getLong(ChronoField.DAY_OF_WEEK);
-        Long dayOfMonth = l.getLong(ChronoField.DAY_OF_MONTH);
+        int dayOfWeek = l.getDayOfWeek().getValue()-1;
+        int dayOfMonth = l.getDayOfMonth();
         int month = l.getMonthValue() - 1;
         int year = l.getYear();
 
-        List<MinusTile> list = minusTileService.getMinusTilesRealList();
+//        System.out.print(dayOfWeek);
 
-        System.out.println(month + " " + dayOfMonth + " " + year);
+        List<MinusTile> list = minusTileService.getMinusTilesList();
+        for(MinusTile mt:list){
+            switch (dayOfWeek) {
+                case 0:
+                if(mt.getFirstDay() == "true"){
+                    minusTileLogic(dayOfMonth, mt, month, year);
+                }
+                break;
+
+                case 1:
+                    System.out.print(mt.getSecondDay());
+                    if(mt.getSecondDay().equals("true")){
+                        minusTileLogic(dayOfMonth, mt, month, year);
+                    }
+                    break;
+
+                case 2:
+                    if(mt.getThirdDay() == "true"){
+                        minusTileLogic(dayOfMonth, mt, month, year);
+                    }
+                    break;
+
+                case 3:
+                    if(mt.getFourthDay() == "true"){
+                        minusTileLogic(dayOfMonth, mt, month, year);
+                    }
+                    break;
+
+                case 4:
+                    if(mt.getFifthDay() == "true"){
+                        minusTileLogic(dayOfMonth, mt, month, year);
+                    }
+                    break;
+
+                case 5:
+                    if(mt.getSixthDay() == "true"){
+                        minusTileLogic(dayOfMonth, mt, month, year);
+                    }
+                    break;
+
+                case 6:
+                    if(mt.getSeventhDay() == "true"){
+                        minusTileLogic(dayOfMonth, mt, month, year);
+                    }
+                    break;
+            }
+        }
+
+    }
+
+    public void minusTileLogic(int dayOfMonth, MinusTile mt, int month, int year){
+        Tile tile = new Tile();
+        tile.setDay(String.valueOf(dayOfMonth));
+        tile.setFlag("MINUS");
+        tile.setGoalId(mt.getGoalId());
+        tile.setUserId(mt.getUserId());
+        tile.setMonth(String.valueOf(month));
+        tile.setYear(String.valueOf(year));
+        tileService.save(tile);
     }
 }

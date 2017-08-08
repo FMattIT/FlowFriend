@@ -141,15 +141,20 @@ function updateMinusDay(day, target) {
 }
 
 function retrieveMinusTiles(){
+    var data = {};
+    data["name"]=$('.goal_name').html();
+    data["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
+
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/calendar/retrieveMinusTiles",
         dataType: 'json',
         async: false,
+        data: JSON.stringify(data),
         success: function (dane) {
-            jQuery.each(dane[0], function(i, val) {
-                // console.log(i + " " + val);
+            $("#off_options").find("div").removeClass("selectable");
+            jQuery.each(dane, function(i, val) {
                 if(val=="true"){
                     $("#off_options").find("div").eq(i).addClass("selectable");
                 }
@@ -216,7 +221,5 @@ $(document).ready(function () {
             $('#add_error').css("display", "none");
         }
     });
-
-    retrieveMinusTiles();
 
 });

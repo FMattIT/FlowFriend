@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.flow.dao.GoalDao;
 import pl.flow.dao.MinusTileDao;
+import pl.flow.dao.entities.calendar.Goal;
 import pl.flow.dao.entities.calendar.MinusTile;
 
 import javax.persistence.NoResultException;
@@ -23,11 +24,15 @@ public class MinusTileService {
         this.minusTileDao = minusTileDao;
     }
 
+    public void delete(Goal goal){
+        minusTileDao.delete(goal);
+    }
+
+    public Object getMinusTile(Goal goal){
+        return minusTileDao.getMinusTile(goal); }
+
     public List<MinusTile> getMinusTilesList(){
         return minusTileDao.getMinusTilesList(); }
-
-    public List<MinusTile> getMinusTilesRealList(){
-        return minusTileDao.getMinusTilesRealList(); }
 
     public MinusTile getMinusTileToMerge(MinusTile minusTile){
         return minusTileDao.getMinusTileToMerge(minusTile);

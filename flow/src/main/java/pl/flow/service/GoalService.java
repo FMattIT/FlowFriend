@@ -34,6 +34,9 @@ public class GoalService {
     public List<Goal> getGoalsList(){
         return goalDao.getGoalsList(); }
 
+    public List<Goal> getUserGoalsList(User user){
+        return goalDao.getUserGoalsList(user); }
+
     public void delete(Goal goal){
         goalDao.delete(goal);
     }

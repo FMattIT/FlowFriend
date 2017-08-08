@@ -29,25 +29,25 @@ public class MinusTile {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_tiles__goal_id"))
     private Goal goalId;
 
-    @Column
+    @Column(nullable = false)
     private String firstDay = "false";
 
-    @Column
+    @Column(nullable = false)
     private String secondDay = "false";
 
-    @Column
+    @Column(nullable = false)
     private String thirdDay = "false";
 
-    @Column
+    @Column(nullable = false)
     private String fourthDay = "false";
 
-    @Column
+    @Column(nullable = false)
     private String fifthDay = "false";
 
-    @Column
+    @Column(nullable = false)
     private String sixthDay = "false";
 
-    @Column
+    @Column(nullable = false)
     private String seventhDay = "false";
 
     public Long getId() {
