@@ -27,12 +27,17 @@ public class TileDao {
     }
 
     public Tile getTileToMerge(Tile tile){
+        try{
         return entityManager.createQuery("SELECT t FROM Tile t WHERE t.day = ? AND t.month = ? AND t.year = ? AND t.goalId = ? AND t.userId = ?", Tile.class)
                 .setParameter(1, tile.getDay())
                 .setParameter(2, tile.getMonth())
                 .setParameter(3, tile.getYear())
                 .setParameter(4, tile.getGoalId())
                 .setParameter(5, tile.getUserId()).getSingleResult();
+        }
+        catch(Exception x){
+            return null;
+        }
     }
 
     public Tile save(Tile tile){
@@ -40,7 +45,7 @@ public class TileDao {
             tile.setId(getTileToMerge(tile).getId());
             return entityManager.merge(tile);
         }
-        catch(NoResultException e){
+        catch(Exception e){
             entityManager.persist(tile);
         }
         return tile;

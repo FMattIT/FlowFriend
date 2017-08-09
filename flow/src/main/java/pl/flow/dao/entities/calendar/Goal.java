@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Table;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +35,10 @@ public class Goal {
     private Long position;
 
     @Column
-    private Long max_count = 0L;
+    private Long maxCount = 0L;
+
+    @Column
+    private Date createDate;
 
     public Long getId() {
         return id;
@@ -68,12 +72,19 @@ public class Goal {
         this.position = position;
     }
 
-    public Long getMax_count() {
-        return max_count;
+    public Long getMaxCount() {
+        return maxCount;
     }
 
-    public void setMax_count(Long max_count) {
-        this.max_count = max_count;
+    public void setMaxCount(Long maxCount) {
+        this.maxCount = maxCount;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 }
