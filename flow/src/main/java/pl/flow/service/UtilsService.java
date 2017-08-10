@@ -38,14 +38,12 @@ public class UtilsService {
     @Autowired
     MinusTileService minusTileService;
 
-    public void updateMaxCount(Goal goal){
-        Long actual_count = ((BigInteger) tileService.getActualCount(goal)).longValue();
-        Long max_count =  ((BigInteger) goalService.getMaxCount(goal)).longValue();
+    @Autowired
+    GoalMaxCountService goalMaxCountService;
 
-        if(actual_count>max_count){
-            goal.setMaxCount(actual_count);
-            goalService.updateMaxCount(goal);
-        }
+    @Scheduled(fixedDelay = 3000)
+    public void updateMaxCount(){
+        System.out.print((goalMaxCountService.getTheBiggestMaxCount()).getMax_count());
     }
 
 //    @Scheduled(cron = "01 00 00 * * *")
@@ -132,7 +130,7 @@ public class UtilsService {
         List<Goal> goals = goalService.getGoalsList();
         for(Goal g: goals){
             LocalDateTime ldt = LocalDateTime.ofInstant(g.getCreateDate().toInstant(), ZoneId.systemDefault());
-                if(! (ldt.getDayOfMonth()-3 == uncheckedDayOfMonth)){
+                if(ldt.getDayOfMonth()-3 != uncheckedDayOfMonth && ldt.getMonthValue()-1 != month && ldt.getYear() != year){
                 Tile t = new Tile();
                 t.setMonth(String.valueOf(month));
                 t.setYear(String.valueOf(year));

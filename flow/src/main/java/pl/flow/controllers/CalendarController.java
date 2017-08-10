@@ -12,6 +12,7 @@ import pl.flow.service.*;
 import javax.persistence.NoResultException;
 import java.awt.image.TileObserver;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -80,13 +81,13 @@ public class CalendarController {
         return tileService.getActualCount(cel);
     }
 
-    @RequestMapping(value="/calendar/maxCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public Object maxCounter(@RequestBody Goal goal, Principal principal) {
-        Goal cel = goalService.getGoal(goal.getId());
-        utilsService.updateMaxCount(cel);
-        return goalService.getMaxCount(cel);
-    }
+//    @RequestMapping(value="/calendar/maxCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+//    @ResponseBody
+//    public Object maxCounter(@RequestBody Goal goal, Principal principal) {
+//        Goal cel = goalService.getGoal(goal.getId());
+//        utilsService.updateMaxCount(cel);
+//        return goalService.getMaxCount(cel);
+//    }
 
     @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
@@ -97,6 +98,7 @@ public class CalendarController {
         else {
             User user = usersService.getUserByUsername(principal.getName());
             goal.setUserId(user);
+            goal.setCreateDate(new Date());
             goalService.save(goal);
 
             return goal;
@@ -112,6 +114,7 @@ public class CalendarController {
         else {
             User user = usersService.getUserByUsername(principal.getName());
             goal.setUserId(user);
+            goal.setCreateDate((goalService.getGoal(goal.getId())).getCreateDate());
             goalService.save(goal);
 
             return goal;

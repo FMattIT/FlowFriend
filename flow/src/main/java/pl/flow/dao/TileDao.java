@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -41,14 +42,30 @@ public class TileDao {
     }
 
     public Tile save(Tile tile){
-        try{
-            tile.setId(getTileToMerge(tile).getId());
-            return entityManager.merge(tile);
+        LocalDateTime l = LocalDateTime.now();
+
+        int dayOfMonth = l.getDayOfMonth();
+        int month = l.getMonthValue() - 1;
+        int year = l.getYear();
+
+        int tileDayOfMonth = Integer.parseInt(tile.getDay());
+        int tileMonth = Integer.parseInt(tile.getMonth());
+        int tileYear = Integer.parseInt(tile.getYear());
+
+        if((tileDayOfMonth == dayOfMonth || tileDayOfMonth == dayOfMonth-1 || tileDayOfMonth == dayOfMonth-2) && tileMonth==month && tileYear == year) {
+
+            try {
+                tile.setId(getTileToMerge(tile).getId());
+                return entityManager.merge(tile);
+            } catch (Exception e) {
+                entityManager.persist(tile);
+            }
+            return tile;
+
         }
-        catch(Exception e){
-            entityManager.persist(tile);
+        else{
+            return null;
         }
-        return tile;
     }
 
     public List<Tile> getTilesList(){

@@ -468,22 +468,22 @@ function onMinusClick(target, event) {
     event.stopPropagation();
 }
 
-function retrieveMaxCount(value){
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/calendar/maxCounter",
-        dataType: 'json',
-        async: false,
-        data: JSON.stringify(value),
-        success: function (dane) {
-            $('#best_counter').text(dane);
-        },
-        error: function (e) {
-            console.log("ERROR: ", e);
-        }
-    });
-}
+// function retrieveMaxCount(value){
+//     $.ajax({
+//         type: "POST",
+//         contentType: "application/json",
+//         url: "/calendar/maxCounter",
+//         dataType: 'json',
+//         async: false,
+//         data: JSON.stringify(value),
+//         success: function (dane) {
+//             $('#best_counter').text(dane);
+//         },
+//         error: function (e) {
+//             console.log("ERROR: ", e);
+//         }
+//     });
+// }
 
 function GetThisHidden(){
     $(".bar").removeClass('zoomIn');
@@ -524,7 +524,7 @@ function retrieveActualCount(value){
         data: JSON.stringify(value),
         success: function (dane) {
             $('#actual_counter').text(dane);
-            retrieveMaxCount(value);
+            // retrieveMaxCount(value);
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -545,6 +545,9 @@ function saveTileToDB(data) {
         },
         error: function (e) {
             console.log("ERROR: ", e);
+            if((typeof(dane) == 'undefined') || (dane == null)){
+                console.log("blad wprowadzenia kafelka")
+            }
         }
     });
 }
