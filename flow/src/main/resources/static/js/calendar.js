@@ -310,7 +310,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
     loadGoals();
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
     makeChart($("#chart_changer").val());
-    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
+    // retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     retrieveMinusTiles();
     }
 }
@@ -379,7 +379,7 @@ function onTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
@@ -407,7 +407,7 @@ function onYellowTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
@@ -435,7 +435,7 @@ function onCrossClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
@@ -463,27 +463,12 @@ function onMinusClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
-    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
 
-// function retrieveMaxCount(value){
-//     $.ajax({
-//         type: "POST",
-//         contentType: "application/json",
-//         url: "/calendar/maxCounter",
-//         dataType: 'json',
-//         async: false,
-//         data: JSON.stringify(value),
-//         success: function (dane) {
-//             $('#best_counter').text(dane);
-//         },
-//         error: function (e) {
-//             console.log("ERROR: ", e);
-//         }
-//     });
-// }
+
 
 function GetThisHidden(){
     $(".bar").removeClass('zoomIn');
@@ -514,7 +499,29 @@ function onDayClick(day){
 
 }
 
-function retrieveActualCount(value){
+function retrieveMaxCount(value, data){
+    var newData = {
+        "goal": value,
+        "tile": data
+    };
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/maxCounter",
+        dataType: 'json',
+        async: false,
+        data: JSON.stringify(newData),
+        success: function (dane) {
+            // $('#best_counter').text(dane);
+            console.log(dane);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
+function retrieveActualCount(value, data){
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -524,7 +531,7 @@ function retrieveActualCount(value){
         data: JSON.stringify(value),
         success: function (dane) {
             $('#actual_counter').text(dane);
-            // retrieveMaxCount(value);
+            retrieveMaxCount(value, data);
         },
         error: function (e) {
             console.log("ERROR: ", e);

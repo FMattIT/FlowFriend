@@ -52,7 +52,7 @@ public class TileDao {
         int tileMonth = Integer.parseInt(tile.getMonth());
         int tileYear = Integer.parseInt(tile.getYear());
 
-        if((tileDayOfMonth == dayOfMonth || tileDayOfMonth == dayOfMonth-1 || tileDayOfMonth == dayOfMonth-2) && tileMonth==month && tileYear == year) {
+//        if((tileDayOfMonth == dayOfMonth || tileDayOfMonth == dayOfMonth-1 || tileDayOfMonth == dayOfMonth-2) && tileMonth==month && tileYear == year) {
 
             try {
                 tile.setId(getTileToMerge(tile).getId());
@@ -62,10 +62,10 @@ public class TileDao {
             }
             return tile;
 
-        }
-        else{
-            return null;
-        }
+//        }
+//        else{
+//            return null;
+//        }
     }
 
     public List<Tile> getTilesList(){

@@ -41,7 +41,7 @@ public class UtilsService {
     @Autowired
     GoalMaxCountService goalMaxCountService;
 
-    @Scheduled(fixedDelay = 3000)
+//    @Scheduled(fixedDelay = 3000)
     public void updateMaxCount(){
         System.out.print((goalMaxCountService.getTheBiggestMaxCount()).getMax_count());
     }
