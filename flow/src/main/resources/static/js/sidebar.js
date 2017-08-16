@@ -30,6 +30,49 @@ function getChoicesCount(choice, type){
     return counter;
 }
 
+function makeAreChart(){
+    var canvas1 = document.getElementById('area_chart');
+    canvas1.innerHTML = '';
+    canvas1.innerHTML = "<canvas id='myChart1'></canvas>";
+    var ctx1= document.getElementById('myChart1').getContext('2d');
+    var chartek = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: [2, 4, 6, 4, 5, 7, 9, 11, 10, 12, 14, 12, 10, 8, 10],
+                label: "cel",
+                backgroundColor: "rgba(46, 204, 113, .3)",
+                borderColor: "rgb(46, 204, 113)",
+                fill: true
+            }],
+
+            labels: [
+                'PN',
+                'WT',
+                'ŚR',
+                'CZ',
+                'PT',
+                'SB',
+                'ND',
+                'PN',
+                'WT',
+                'ŚR',
+                'CZ',
+                'PT',
+                'SB',
+                'ND',
+                'PN',
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Siła celu - budowa!'
+            }
+        }
+    });
+}
+
 function makeChart(type){
     var canvas = document.getElementById('canvek');
     canvas.innerHTML = '';

@@ -42,9 +42,9 @@ public class UtilsService {
     GoalMaxCountService goalMaxCountService;
 
 //    @Scheduled(fixedDelay = 3000)
-    public void updateMaxCount(){
-        System.out.print((goalMaxCountService.getTheBiggestMaxCount()).getMax_count());
-    }
+//    public void updateMaxCount(){
+//        System.out.print((goalMaxCountService.getTheBiggestMaxCount()).getMax_count());
+//    }
 
 //    @Scheduled(cron = "01 00 00 * * *")
 //    @Scheduled(fixedDelay = 3000)

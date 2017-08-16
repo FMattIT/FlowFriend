@@ -310,6 +310,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
     loadGoals();
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
     makeChart($("#chart_changer").val());
+        makeAreChart();
     // retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     retrieveMinusTiles();
     }

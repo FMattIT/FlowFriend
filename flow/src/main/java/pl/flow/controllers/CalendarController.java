@@ -13,7 +13,9 @@ import pl.flow.service.*;
 
 import javax.persistence.NoResultException;
 import java.awt.image.TileObserver;
+import java.math.BigInteger;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -98,17 +100,26 @@ public class CalendarController {
         LocalDateTime localDateTime = LocalDateTime.now();
         Tile tilek = mapper.convertValue(goalAndTile.get("tile"), Tile.class);
         Goal cel = goalService.getGoal(celek.getId());
-//        int actual = (int) tileService.getActualCount(cel);
-//        Long max = goalMaxCountService.getTheBiggestMaxCount().getMax_count();
-        GoalMaxCount sssss = goalMaxCountService.getTheBiggestMaxCount();
+        BigInteger actual_big = (BigInteger) tileService.getActualCount(cel);
+        int actual = actual_big.intValue();
+        int max = goalMaxCountService.getTheBiggestMaxCount(cel).getMax_count().intValue();
+        GoalMaxCount sssss = goalMaxCountService.getTheBiggestMaxCount(cel);
         LocalDateTime ldt = LocalDateTime.ofInstant(sssss.getDate().toInstant(), ZoneId.systemDefault());
-        System.out.print(tilek.getFlag());
+        User user = usersService.getUserByUsername(principal.getName());
 //        if(max>=actual){
-//
+//            System.out.print("Max wiekszy/rowny aktual! brak aktualizacji");
 //        }
-//        else if(actual>max){
-//            System.out.print("Aktualizacja maxa!");
+//        else if(actual>max && (tilek.getFlag().equals("TICK") || tilek.getFlag().equals("YELLOWTICK"))){
+//            GoalMaxCount newMaxCount = new GoalMaxCount();
+//            LocalDate date = LocalDate.of(Integer.parseInt(tilek.getYear()), Integer.parseInt(tilek.getMonth()), Integer.parseInt(tilek.getDay()));
+//            newMaxCount.setDate(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+//            newMaxCount.setGoalId(cel);
+//            newMaxCount.setMax_count(Long.valueOf(actual));
+//            newMaxCount.setUserId(user);
+//            goalMaxCountService.save(newMaxCount);
+//            System.out.print("Aktualizacja...");
 //        }
+        System.out.print((int)goalMaxCountService.getBiggerValues(tilek, cel)-1);
         return tileService.getActualCount(cel);
     }
 
