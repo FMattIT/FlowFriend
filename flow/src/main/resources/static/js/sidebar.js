@@ -152,6 +152,24 @@ function addOnType(event){
         }
 }
 
+function addOnTypeKeyDown(event){
+    var cntMaxLength = parseInt($(this).attr('maxlength'));
+
+    event = event || window.event;
+
+    if ($(this).text().length >= cntMaxLength) {
+        if(!(event.which==8))
+        {
+            event.preventDefault();
+            $(this).parent().find(".add_error").css("display", "block");
+        }
+    }
+    else{
+        $(this).parent().find(".add_error").css("display", "none");
+    }
+    //!(event.which==8 || (event.ctrlKey && (event.which == 65)) || (event.ctrlKey && (event.which == 67)) || (event.ctrlKey && (event.which == 86)))
+}
+
 function updateMinusDay(day, target) {
     var bol = "false";
     var data={}
@@ -215,7 +233,7 @@ $(document).ready(function () {
     var secondDivek = document.getElementById("edit_name");
     divek.addEventListener("blur", addOnType);
     divek.addEventListener("keyup", addOnType);
-    divek.addEventListener("keydown", addOnType);
+    divek.addEventListener("keydown", addOnTypeKeyDown);
     divek.addEventListener("paste", addOnType);
     divek.addEventListener("copy", addOnType);
     divek.addEventListener("cut", addOnType);
@@ -224,7 +242,7 @@ $(document).ready(function () {
 
     secondDivek.addEventListener("blur", addOnType);
     secondDivek.addEventListener("keyup", addOnType);
-    secondDivek.addEventListener("keydown", addOnType);
+    secondDivek.addEventListener("keydown", addOnTypeKeyDown);
     secondDivek.addEventListener("paste", addOnType);
     secondDivek.addEventListener("copy", addOnType);
     secondDivek.addEventListener("cut", addOnType);

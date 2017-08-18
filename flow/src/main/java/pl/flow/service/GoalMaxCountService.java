@@ -30,10 +30,26 @@ public class GoalMaxCountService {
         return goalMaxCountDao.save(goalMaxCount);
     }
 
-    public GoalMaxCount getTheBiggestMaxCount(Goal goal){
-        return goalMaxCountDao.getTheBiggestMaxCount(goal); }
+    public void add(GoalMaxCount goalMaxCount){
+        goalMaxCountDao.add(goalMaxCount);
+    }
+
+    public GoalMaxCount getTheBiggestMaxCount(Tile tile, Goal goal){
+        return goalMaxCountDao.getTheBiggestMaxCount(tile, goal); }
 
     public Object getBiggerValues(Tile tile, Goal goal){
         return goalMaxCountDao.getBiggerValues(tile, goal);
+    }
+
+    public Object getSmallerValues(Tile tile, Goal goal){
+        return goalMaxCountDao.getSmallerValues(tile, goal);
+    }
+
+    public void deleteSmallerValues(Tile tile, Goal goal){
+        goalMaxCountDao.deleteSmallerValues(tile, goal);
+    }
+
+    public void deleteBiggerValues(Tile tile, Goal goal){
+        goalMaxCountDao.deleteBiggerValues(tile, goal);
     }
 }
