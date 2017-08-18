@@ -52,8 +52,27 @@ years.push(new Date().getFullYear()+1);
 
 function dataRetriever(dane, month_id, year, goal_init) {
     value = dane;
-
     createNewCalendar(value, month_id, year, goal_init);
+}
+
+function retrieverOfValue(danedane){
+    value=danedane;
+}
+
+function retrieveValue(){
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/retrieveData/tiles",
+        dataType: 'json',
+        async: false,
+        success: function (dane) {
+            retrieverOfValue(dane);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
 }
 
 function retrieveNewData(month_id, year, goal_init) {
@@ -72,8 +91,27 @@ function retrieveNewData(month_id, year, goal_init) {
     });
 }
 
+function getGoalId(pos){
+    for (var n = 0; n <= value[1].length-1; n++) {
+
+        if (value[1][n].position == pos)
+        {
+            return n;
+            break;
+        }
+    }
+}
+
 function createNewCalendar(value, month_id, year, goal_init) {
     $(".calendar").html("");
+
+    if (value[1] === undefined || value[1].length == 0) {
+        $(".calendar").html("BRAK CELÓW");
+        $(".list_goals").html("BRAK CELÓW");
+    }
+    else{
+
+
     var today = new Date();
     var this_month_id = today.getMonth();
     var this_year = today.getFullYear();
@@ -84,11 +122,13 @@ function createNewCalendar(value, month_id, year, goal_init) {
         this_year = year;
     }
 
+
+
     if(goal_init==0){
-    var goal_name = value[1][0].name;
-    var goal_id = 0;
+    var goal_name = value[1][getGoalId(0)].name;
+    var goal_id = getGoalId(0);
     actual_goal.innerHTML = goal_name;
-    actual_goal_id.innerHTML = 0;
+    actual_goal_id.innerHTML = getGoalId(0);
     }
 
     if ((typeof(goal_init) == 'undefined') || (goal_init == null)){
@@ -99,6 +139,11 @@ function createNewCalendar(value, month_id, year, goal_init) {
     }
 
     if ((typeof(goal_init) !== 'undefined') && (goal_init !== null)) {
+
+        if(goal_init=="deleted"){
+            goal_name = value[1][getGoalId(0)].name;
+            goal_id = getGoalId(0);
+        }
 
         if(goal_init=="new"){
             goal_name = value[1][value[1].length-1].name;
@@ -185,7 +230,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
                 else{
                 var td = document.createElement('td');
                 td.innerHTML = new Date(this_year, this_month_id, 0).getDate()+days-new Date(this_year, this_month_id, 1).getDay()+1;
-                td.className = "day empty";
+                    td.className = "day empty";
                     tr.appendChild(td);
                     table.appendChild(tr);
                     day++
@@ -204,6 +249,12 @@ function createNewCalendar(value, month_id, year, goal_init) {
             td.innerHTML = day;
 
             if((day==new Date().getUTCDate() || day==new Date().getUTCDate()-1 || day==new Date().getUTCDate()-2) && this_month_id==new Date().getMonth()){td.className = "day"; td.setAttribute('onclick', 'onDayClick(this)');}else {td.className = "day disabled";}
+
+                if((new Date().getDate()==1 && this_month_id == today.getMonth()-1 && (td.innerHTML==31 || td.innerHTML==30)) || (new Date().getDate()==2 && this_month_id == today.getMonth()-1 && (td.innerHTML==31)))
+                {
+                    td.className = "day";
+                    td.setAttribute('onclick', 'onDayClick(this)');
+                }
 
             for(var i=0; i<value[0].length; i++){
                  var t= value[1][Number(actual_goal_id.innerHTML)];
@@ -237,30 +288,18 @@ function createNewCalendar(value, month_id, year, goal_init) {
     tick_choice.className = "tick_choice";
     tick_choice.setAttribute("id", "tick");
     tick_choice.setAttribute('onclick', 'onTickClick(this, event)');
-    tick_choice.setAttribute('data-toggle', 'tooltip');
-    tick_choice.setAttribute('data-placement', 'top');
-    tick_choice.setAttribute('title', 'WYKONANO!');
     var yellow_tick_choice = document.createElement('div');
     yellow_tick_choice.className = "yellow_tick_choice";
     yellow_tick_choice.setAttribute("id", "yellow_tick");
     yellow_tick_choice.setAttribute('onclick', 'onYellowTickClick(this, event)');
-    yellow_tick_choice.setAttribute('data-toggle', 'tooltip');
-    yellow_tick_choice.setAttribute('data-placement', 'top');
-    yellow_tick_choice.setAttribute('title', 'WYKONANO AWARYJNIE!');
     var cross_choice = document.createElement('div');
     cross_choice.className = "cross_choice";
     cross_choice.setAttribute("id", "cross");
     cross_choice.setAttribute('onclick', 'onCrossClick(this, event)');
-    cross_choice.setAttribute('data-toggle', 'tooltip');
-    cross_choice.setAttribute('data-placement', 'top');
-    cross_choice.setAttribute('title', 'NIE WYKONANO!');
     var minus_choice = document.createElement('div');
     minus_choice.className = "minus_choice";
     minus_choice.setAttribute("id", "minus");
     minus_choice.setAttribute('onclick', 'onMinusClick(this, event)');
-    minus_choice.setAttribute('data-toggle', 'tooltip');
-    minus_choice.setAttribute('data-placement', 'top');
-    minus_choice.setAttribute('title', 'NIE DZIŚ!');
     bar.append(tick_choice);
     bar.append(yellow_tick_choice);
     bar.append(cross_choice);
@@ -269,55 +308,56 @@ function createNewCalendar(value, month_id, year, goal_init) {
     $('.calendar').append(bar);
     
     loadGoals();
-    loadInfo();
+    $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
+    makeChart($("#chart_changer").val());
+        makeAreChart();
+    // retrieveActualCount(value[1][actual_goal_id.innerHTML]);
+    retrieveMinusTiles();
+    }
 }
 
-function loadInfo(){
-    $(".info").html("<ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a href='#general' aria-controls='general' role='tab' data-toggle='tab'>STATYSTYKI</a></li><li role='presentation'><a href='#specific' aria-controls='specific' role='tab' data-toggle='tab'>INFORMACJE O CELU</a></li></ul><div class='tab-content'><div role='tabpanel' class='tab-pane active' id='general'>general</div><div role='tabpanel' class='tab-pane' id='specific'>specific</div></div>");
+function getPosition(s){
+    for (var p = 0; p <= value[1].length-1; p++) {
+
+        if (value[1][p].position == s)
+        {
+            return p;
+            break;
+        }
+    }
 }
 
 function loadGoals(){
     $(".list_goals").html("");
     for (var i = 0; i <= value[1].length-1; i++) {
+        var goal = getPosition(i);
+        if ((typeof(goal) !== 'undefined') && (goal !== null)){
         var goal_grip = document.createElement('div');
         goal_grip.className = "goal_grip";
         goal_grip.innerHTML = "<i class='fa fa-arrows-v' aria-hidden='true'></i>";
-        var goal_gear = document.createElement('div');
-        goal_gear.className = "goal_gear";
-        goal_gear.innerHTML="<i class='fa fa-cog' aria-hidden='true'></i>";
         var goal_name = document.createElement('div');
         goal_name.className = "goal_name";
-        goal_name.innerHTML = value[1][i].name;
-        var options = document.createElement('div');
-        options.style.cssText="float: left; width: 6%; height:100%; border-left: 2px solid rgba(0, 0, 0, .3);";
-        var edit_option = document.createElement('div');
-        edit_option.className = "edit_option";
-        edit_option.innerHTML = "<i class='fa fa-pencil' aria-hidden='true'></i>";
-        edit_option.setAttribute("onclick", "editGoalFunc(this)");
+        goal_name.innerHTML = value[1][goal].name;
         var delete_option = document.createElement('div');
         delete_option.className = "delete_option";
         delete_option.innerHTML = "<i class='fa fa-trash' aria-hidden='true'></i>";
         delete_option.setAttribute("onclick", "deleteGoalFunc(this, event)");
-        options.append(edit_option);
-        options.append(delete_option);
         var slide = document.createElement('div');
         slide.className = "slide";
         slide.append(goal_grip);
-        slide.append(goal_gear);
         slide.append(goal_name);
-        slide.append(options);
+        slide.append(delete_option);
         var slide_id = document.createElement('div');
-        slide_id.style.cssText="display:none;"
-        slide_id.innerHTML = i;
+        slide_id.innerHTML = goal;
         slide_id.className = 'slide_goal_id';
         slide.append(slide_id);
         $(".list_goals").append(slide);
+        }
     }
     $(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().find(".goal_name").addClass('selectable');
 }
 
 function onTickClick(target, event) {
-    // $('.day.active').text("");
     $('.day.active').css('backgroundColor', ' #009966');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -340,11 +380,12 @@ function onTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
+    makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
 
 function onYellowTickClick(target, event) {
-    // $('.day.active').text("");
     $('.day.active').css('backgroundColor', ' #f1c40f');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -367,11 +408,12 @@ function onYellowTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
+    makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
 
 function onCrossClick(target, event) {
-    // $('.day.active').text("");
     $('.day.active').css('backgroundColor', ' #e74c3c');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -394,11 +436,12 @@ function onCrossClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
+    makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
 
 function onMinusClick(target, event) {
-    // $('.day.active').text("");
     $('.day.active').css('backgroundColor', ' #7f8c8d');
     $('.day.active').css('backgroundSize', 'cover');
     $('.day.active').css('border', '0');
@@ -421,8 +464,12 @@ function onMinusClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
+    makeChart($("#chart_changer").val());
     event.stopPropagation();
 }
+
+
 
 function GetThisHidden(){
     $(".bar").removeClass('zoomIn');
@@ -453,16 +500,21 @@ function onDayClick(day){
 
 }
 
-function saveTileToDB(data) {
+function retrieveMaxCount(value, data){
+    var newData = {
+        "goal": value,
+        "tile": data
+    };
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/calendar/saveTile",
-        data: JSON.stringify(data),
+        url: "/calendar/maxCounter",
         dataType: 'json',
+        async: false,
+        data: JSON.stringify(newData),
         success: function (dane) {
-            console.log("passed");
-            value[0].push(dane);
+            // $('#best_counter').text(dane);
+            console.log(dane);
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -470,13 +522,50 @@ function saveTileToDB(data) {
     });
 }
 
+function retrieveActualCount(value, data){
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/actualCounter",
+        dataType: 'json',
+        async: false,
+        data: JSON.stringify(value),
+        success: function (dane) {
+            $('#actual_counter').text(dane);
+            retrieveMaxCount(value, data);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
+function saveTileToDB(data) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/saveTile",
+        data: JSON.stringify(data),
+        dataType: 'json',
+        async: false,
+        success: function (dane) {
+            console.log("passed");
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+            if((typeof(dane) == 'undefined') || (dane == null)){
+                console.log("blad wprowadzenia kafelka")
+            }
+        }
+    });
+}
+
 function deleteGoalFunc(target, event){
     event.preventDefault();
-    console.log("");
     var data = {};
-    data["name"]=value[1][Number($(target).parent().parent().find(".slide_goal_id").text())].name;
-    data["id"]=value[1][Number($(target).parent().parent().find(".slide_goal_id").text())].id;
-
+    data["name"]=value[1][Number($(target).parent().find(".slide_goal_id").text())].name;
+    data["id"]=value[1][Number($(target).parent().find(".slide_goal_id").text())].id;
+    $(target).parent().remove();
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -485,7 +574,8 @@ function deleteGoalFunc(target, event){
         dataType: 'json',
         success: function (datassek) {
             console.log("passed");
-            retrieveNewData(null, null, "new")
+            updateSortable();
+            retrieveNewData(null, null, "deleted");
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -503,16 +593,23 @@ $( document ).ready(function() {
         var id = months.indexOf(month_name);
 
         actual_goal_id.innerHTML = $(this).find('.slide_goal_id').html();
-        createNewCalendar(value, id, year, actual_goal_id.innerHTML);
+        retrieveNewData(id, year, actual_goal_id.innerHTML);
     });
 
 
     $('body').on('submit', '#formek', function(event) {
+
         event.preventDefault();
 
         var data = {};
-        data["name"]=$('#name').val();
+        data["name"]=$('#name').text();
+        data["position"]=$('.list_goals').children().length;
 
+        if($('#name').text().length <=0 || $('#name').text().length>170){
+            return;
+        }
+
+        else{
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -521,36 +618,46 @@ $( document ).ready(function() {
             dataType: 'json',
             success: function (datassek) {
                 console.log("passed");
+                $('#myModal').modal('toggle');
+                $('#name').text("");
                 retrieveNewData(null, null, "new")
+                $(".add_error").css("display", "none");
             },
             error: function (e) {
                 console.log("ERROR: ", e);
             }
         });
-        $('#sss').popover('hide');
+        }
     });
 
     $('body').on('submit', '#edit_formek', function(event) {
         event.preventDefault();
 
         var data = {};
-        data["name"]=$('#edit_name').val();
+        data["name"]=$('#edit_name').text();
         data["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
+        data["position"]=$(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().index();
 
+        if($('#edit_name').text().length <=0 || $('#edit_name').text().length>170){
+            return;
+        }
+        else{
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/calendar/addGoal",
+            url: "/calendar/editGoal",
             data: JSON.stringify(data),
             dataType: 'json',
             success: function (datassek) {
                 console.log("passed");
                 retrieveNewData(null, null, "new")
+                $(".add_error").css("display", "none");
             },
             error: function (e) {
                 console.log("ERROR: ", e);
             }
         });
+        }
     });
 
 
@@ -619,7 +726,7 @@ function setNextGoal(){
     var year = words[1];
     var id = months.indexOf(month_name);
 
-    createNewCalendar(value, id, year, "nx");
+    retrieveNewData(id, year, "nx");
 }
 
 function setPreviousGoal(){
@@ -629,7 +736,7 @@ function setPreviousGoal(){
     var year = words[1];
     var id = months.indexOf(month_name);
 
-    createNewCalendar(value, id, year, "pr");
+    retrieveNewData(id, year, "pr");
 }
 
 

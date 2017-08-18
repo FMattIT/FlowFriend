@@ -1,6 +1,7 @@
 package pl.flow.dao;
 
 import org.springframework.stereotype.Repository;
+import pl.flow.dao.entities.User;
 import pl.flow.dao.entities.calendar.Goal;
 
 import javax.persistence.EntityManager;
@@ -28,9 +29,15 @@ public class GoalDao {
     }
 
     public List<Goal> getGoalsList(){
-        return entityManager.createQuery("SELECT g FROM Goal g", Goal.class).getResultList(); }
+        return entityManager.createQuery("SELECT g FROM Goal g ORDER BY g.id ASC", Goal.class).getResultList(); }
+
+    public List<Goal> getUserGoalsList(User user){
+        return entityManager.createNativeQuery("SELECT * FROM public.goals WHERE user_id_id=?")
+                .setParameter(1, user)
+                .getResultList(); }
 
     public void delete(Goal goal){
         entityManager.remove(entityManager.merge(goal));
     }
+
 }

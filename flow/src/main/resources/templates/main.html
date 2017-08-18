@@ -8,36 +8,39 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar.css}" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script type="text/javascript" th:src="@{/js/sidebar.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/style/animate.css}" />
     <script type="text/javascript" th:src="@{/js/calendar.js}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body onload="retrieveNewData(null, null, 0)" >
 <div class="navbar">
     <div id="left"><i class="fa fa-bars" aria-hidden="true"></i></div>
     <div id="goal_settings">
-        <div class="goal_setting"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        <div class="goal_setting">
             <i class="fa fa-plus-circle" aria-hidden="true"></i>
-        </button></div>
+        </div>
 
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal animated fadeIn" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
+                        <div id="labelek">Dodaj nowy cel</div>
                         <form id='formek' method='post' th:action='@{/calendar/addGoal}'>
-                            <input type='text' form='formek' id='name'/>
-                            <input type='submit' value='Dodaj cel'/>
+                            <div id="name" contenteditable="true" maxlength="170" spellcheck="true"></div>
+                            <input id="buttonek" type='submit' value='Dodaj cel'/>
+                            <div class="add_error">Maksymalna ilość znaków wynosi 170!</div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="center">FlowFriend</div>
+    <div id="center">FF</div>
     <div id="right"></div>
 </div>
 <div class="sidebar">
@@ -52,7 +55,37 @@
     <div class="calendar_goals">
         <div class="list_goals"></div>
     </div>
-    <div class="info"></div>
+    <div class="info">
+        <ul class='nav nav-tabs' role='tablist'><li role='presentation' class='active'><a class='optionBar' href='#general' aria-controls='general' role='tab' data-toggle='tab'>STATYSTYKI</a></li><li role='presentation'><a href='#specific' aria-controls='specific' role='tab' data-toggle='tab' class='optionBar'>INFORMACJE O CELU</a></li></ul><div class='tab-content'><div role='tabpanel' class='tab-pane active' id='general'><select id='chart_changer' onchange="makeChart($(this).val())"><option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select><div id="canvek"><canvas id='myChart'></canvas></div><div id="area_chart"><canvas id='myChart1'></canvas></div></div><div role='tabpanel' class='tab-pane' id='specific'><div id='edit_labelek'>Edytuj cel</div>
+        <form id='edit_formek' method='post' th:action='@{/calendar/editGoal}'>
+            <div id='edit_name' contenteditable="true" maxlength="170" spellcheck="true"></div>
+            <input id='edit_buttonek' type='submit' value='Zapisz cel'/>
+            <div class="add_error">Maksymalna ilość znaków wynosi 170!</div>
+        </form>
+
+        <div id="best">Najlepszy wynik: <span id="best_counter">0</span></div>
+        <div id="actual">Aktualny wynik: <span id="actual_counter">0</span></div>
+        <div style="clear: both;"></div>
+
+        <div class="label_options">DNI, W KTÓRYCH CEL NIE OBOWIĄZUJE:</div>
+        <div id="off_options">
+            <div class="off_option" id="firstDay" onclick="putSelectable(this); updateMinusDay('firstDay', this);">PN</div>
+            <div class="off_option" id="secondDay" onclick="putSelectable(this); updateMinusDay('secondDay', this);">WT</div>
+            <div class="off_option" id="thirdDay" onclick="putSelectable(this); updateMinusDay('thirdDay', this);">ŚR</div>
+            <div class="off_option" id="fourthDay" onclick="putSelectable(this); updateMinusDay('fourthDay', this);">CZ</div>
+            <div class="off_option" id="fifthDay" onclick="putSelectable(this); updateMinusDay('fifthDay', this);">PT</div>
+            <div class="off_option" id="sixthDay" onclick="putSelectable(this); updateMinusDay('sixthDay', this);">SO</div>
+            <div class="off_option" id="seventhDay" onclick="putSelectable(this); updateMinusDay('seventhDay', this);">ND</div>
+            <div style="clear: both;"></div>
+        </div>
+
+        <div class="label_options">KORZYŚCI Z REALIZACJI CELU::</div>
+        <div class="label_options">KONSEKWENCJE NIE WYKONANIA CELU:</div>
+        <div data-editable="editable" data-name="main-content">
+            <h1>content</h1>
+        </div>
+    </div></div>
+    </div>
 </div>
 </body>
 </html>

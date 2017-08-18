@@ -73,7 +73,7 @@ body {
     vertical-align: middle;
     height: 100%;
     line-height: 75px;
-    width: calc(100% - 300px);
+    width: calc(100% - 225px);
   }
 }
 
@@ -84,14 +84,44 @@ i:hover{
 .calendar {
   float: left;
   width: 500px;
+  margin-right: 6px !important;
 }
 
 .info, .calendar_goals{
-  width: calc((100% - 500px) / 2);
+  width: calc((100% - 512px) / 2);
   height: 713px;
   background-color: white;
   float: left;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
+}
+
+.info{
+  margin-left: 6px !important;
+}
+
+.optionBar{
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.tab-pane{
+  margin: 2% !important;
+  font-family: Montserrat !important;
+  font-size: 14px !important;
+  color: #e74c3c !important;
+}
+
+.nav>li>a:focus, .nav>li>a:hover{
+  background-color: white !important;
+
+  &:hover{
+    color: #337ab7 !important;
+  }
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+  color: #1abc9c !important;
 }
 
 .list_goals{
@@ -99,6 +129,11 @@ i:hover{
   overflow-x: hidden;
   height: 100%;
   width: 100%;
+  border-right: 0;
+}
+
+.fa.fa-plus-circle{
+  font-size: 32px;
 }
 
 .goal_adder{
@@ -121,38 +156,81 @@ i:hover{
   }
 }
 
-  input[type=text]{
-    width: 75%;
-    height: 40px;
-    margin-left: 20px;
-    outline: #27ae60 solid thick;
-    padding: 0px 10px;
-    font-family: Roboto;
-    font-size: 20px;
-  }
+#name, #edit_name{
+  outline: rgb(32, 32, 32);
+  border: 1px solid rgb(211,211,211);
+  //height: 35px;
+  height: auto !important;
+  text-align: left;
+  font-size: 14px;
+  line-height: 19px;
+  padding: 8px 8px;
+  border-radius: 1%;
+  width: 100%;
+  font-family: "Open Sans","Helvetica",Arial,sans-serif;
+  color: black;
+  margin-bottom: 6px;
+}
 
-  input[type=submit]{
-    display: inline-block !important;
-    width: 20%;
-    height: 50px;
-    background-color: #27ae60;
-    color: white;
-    font-size: 18px;
-    font-family: Montserrat;
-    font-weight: bold;
-    text-align: center;
-    line-height: 40px;
-    margin: 0 auto;
-    border: none;
-    outline: none;
-  }
+#chart_changer{
+  outline: none;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 20px;
+  height: auto;
+  padding: 3px;
+  color: rgb(41, 128, 185);
+  font-weight: bold;
+  display: block;
+}
 
+//#name{
+//  overflow: hidden !important;
+//  resize: none;
+//}
+
+#labelek, #edit_labelek, .add_error{
+  text-align: left;
+  font-family: Lato;
+  font-weight: bold;
+  font-size: 14px;
+  color: #5c5c5c;
+  width: auto !important;
+  height: auto !important;
+  line-height: normal !important;
+  margin-bottom: 4px;
+}
+
+.add_error{
+  color: rgb(231, 76, 60) !important;
+  display: none;
+  margin-bottom: 0 !important;
+  margin-top: 4px;
+}
+
+#buttonek, #edit_buttonek{
+  width: 100px;
+  height: 30px;
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+  line-height: normal !important;
+  border: none;
+  font-family: Montserrat;
+  font-size: 14px;
+  display: block;
+  margin-left: 0;
+}
 
 .slide{
   width: 100%;
   height: 80px;
   color: #34495e;
-  border: 1px solid rgba(0, 0, 0, .3);
+  border: 1px solid rgba(0, 0, 0, .3) !important;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 
   &:hover{
     cursor: pointer;
@@ -192,23 +270,14 @@ i:hover{
   }
 }
 
-.goal_gear{
-  width: 8%;
+
+#canvek, #area_chart{
+  width: 100%;
   height: 100%;
-  font-size: 28px;
-  font-family: Montserrat;
-  font-weight: bold;
-  float: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: normal !important;
-  text-align: center;
-  border-right: 2px solid rgba(0, 0, 0, .3);
 }
 
 .goal_name{
-  width: 78%;
+  width: 84%;
   height: 100%;
   vertical-align: middle;
   text-align: center;
@@ -226,9 +295,9 @@ i:hover{
   padding-right: 5%;
 }
 
-.edit_option, .delete_option{
-  width: 100%;
-  height: 50%;
+.delete_option{
+  width: 8%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -236,14 +305,19 @@ i:hover{
   font-size: 28px;
   font-family: Montserrat;
   font-weight: bold;
+  border-left: 2px solid rgba(0, 0, 0, .3);
+}
+
+.slide_goal_id{
+  display: none;
 }
 
 .delete_option{
-  color: #34495e;
+  color: #f44242;
   transition: 0.5s !important;
 
   &:hover{
-    background-color: #34495e;
+    background-color: #f44242;
     color: white;
   }
 }
@@ -267,12 +341,12 @@ i:hover{
   width: calc(100% - 155px);
   height: calc(100% - 155px);
   margin: 40px;
-  background-color: #90A09A;
+  //background-color: #90A09A;
   float: left;
 }
 
 #goal_settings{
-  width: 225px;
+  width: 75px;
   height: 75px;
   float: left;
 }
@@ -333,4 +407,107 @@ textarea{
   border-top-color: white !important;
 }
 
+#best, #actual{
+  width: 50%;
+  height: auto;
+  text-transform: uppercase;
+  font-size: 28px;
+  float: left;
+  font-family: Montserrat;
+  line-height: 28px;
+  color: #2c3e50;
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid #2c3e50;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.off_option{
+  background-color: white;
+  color: #7f8c8d;
+  border: 2px solid #7f8c8d;
+  vertical-align: middle;
+  width: 60px;
+  height: 60px;
+  //float: left;
+  margin: 3px;
+  font-family: Montserrat;
+  font-size: 26px;
+  display: inline-block;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  &:hover{
+    cursor: pointer;
+  }
+
+  &.selectable{
+    background-color: #7f8c8d;
+    color: white;
+    border: 0;
+  }
+}
+
+#off_options{
+  margin: 0 auto;
+  text-align: center;
+}
+
+.label_options{
+  width: auto;
+  height: auto;
+  text-align: center;
+  font-family: Montserrat;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+
+[data-editable] iframe,
+[data-editable] image,
+[data-editable] [data-ce-tag=img],
+[data-editable] img,
+[data-editable] video {
+  clear: both;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+
+/* Left align */
+[data-editable] .align-left {
+  clear: initial;
+  float: left;
+  margin-right: 0.5em;
+}
+
+/* Right align */
+[data-editable].align-right {
+  clear: initial;
+  float: right;
+  margin-left: 0.5em;
+}
+
+/* Alignment styles for text in editable regions */
+[data-editable] .text-center {
+  text-align: center;
+}
+
+[data-editable] .text-left {
+  text-align: left;
+}
+
+[data-editable] .text-right {
+  text-align: right;
+}
+
+.author {
+  font-style: italic;
+  font-weight: bold;
+}
 

@@ -37,10 +37,15 @@ public class TileService {
     }
 
     public Tile getTileToMerge(Tile tile){
-        return getTileToMerge(tile);
+        return tileDao.getTileToMerge(tile);
     }
 
     public void delete(Goal goal){
         tileDao.delete(goal);
     }
+
+    public Object getActualCount(Goal goal){
+        return tileDao.getActualCount(goal);
+    }
+
 }
