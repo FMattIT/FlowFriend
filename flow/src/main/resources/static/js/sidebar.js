@@ -229,6 +229,12 @@ function retrieveMinusTiles(){
 
 $(document).ready(function () {
 
+    var editor = new MediumEditor('.editable', {
+        placeholderText: 'Kliknij aby napisac...',
+        static: true,
+        align: 'center'
+    });
+
     var divek = document.getElementById("name");
     var secondDivek = document.getElementById("edit_name");
     divek.addEventListener("blur", addOnType);

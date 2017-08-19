@@ -16,6 +16,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style/animate.css}" />
     <script type="text/javascript" th:src="@{/js/calendar.js}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.2/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.2/css/medium-editor.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.2/css/themes/beagle.min.css" />
 </head>
 <body onload="retrieveNewData(null, null, 0)" >
 <div class="navbar">
@@ -79,7 +82,12 @@
             <div style="clear: both;"></div>
         </div>
 
-        <div class="label_options">KORZYŚCI Z REALIZACJI CELU::</div>
+        <div class="label_options">KORZYŚCI Z REALIZACJI CELU:</div>
+        <ul id="listOfStaff">
+            <li class="editable"></li>
+            <li class="editable"></li>
+            <li class="editable"></li>
+        </ul>
         <div class="label_options">KONSEKWENCJE NIE WYKONANIA CELU:</div>
         <div data-editable="editable" data-name="main-content">
             <h1>content</h1>
