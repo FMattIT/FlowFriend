@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pl.flow.dao.entities.User;
 import pl.flow.service.UsersService;
 
+import java.math.BigInteger;
+
 /**
  * Created by Admin on 21.04.2017.
  */
@@ -42,8 +44,24 @@ public class UserController {
     public String createAccount(@ModelAttribute(value="user") User user) {
 
         if(user != null){
+            int sss = ((BigInteger) usersService.checkIfUserExistsByLogin(user.getUsername())).intValue();
+            int sss1 = ((BigInteger) usersService.checkIfUserExistsByEmail(user.getEmail())).intValue();
+            if(sss == 1)
+            {
+                System.out.println("User exists by username!");
+            }
+            if(sss1 == 1){
+                System.out.println("User exists by email!");
+            }
+            if(user.getPassword().equals(user.getConfirmPassword())){
+            user.setAuthority("USER");
+            user.setEnabled(true);
             usersService.create(user);
             return "redirect:/";
+            }
+            else{
+                System.out.println("Passwords dont match!");
+            }
         }
 
         return "register";

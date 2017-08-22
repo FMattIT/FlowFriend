@@ -24,6 +24,11 @@ form {
 .form-control, .btn {
   width: 80% !important;
   margin: 3px auto !important;
+  font-family: 'Encode Sans', sans-serif !important;
+}
+
+.btn {
+  margin-top: 16px !important;
 }
 
 .form-control {
@@ -33,7 +38,13 @@ form {
 }
 
 h1 {
-  padding-bottom: 20px;
+  padding-bottom: 20px !important;
+  font-family: 'Encode Sans', sans-serif !important;
+}
+
+h3 {
+  font-family: 'Encode Sans', sans-serif !important;
+  font-size: 18px !important;
 }
 
 .error_wall {
@@ -48,3 +59,9 @@ h1 {
   font-size: 18px;
   font-weight: bold;
 }
+
+//select {
+//  float: left !important;
+//  width: 30% !important;
+//  margin: 3px auto !important;
+//}

@@ -25,6 +25,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String confirmPassword;
+
     @Column
     private String email;
 
@@ -97,5 +100,13 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
