@@ -42,34 +42,24 @@ public class UserController {
 
     @RequestMapping(value="/register/checkData", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public User checkLogin(@RequestBody User user, Principal principal) {
+    public String checkLogin(@RequestBody User user, Principal principal) {
         int amountOfUsersByLogin = ((BigInteger) usersService.checkIfUserExistsByLogin(user.getUsername())).intValue();
         int amountOfUsersByEmail = ((BigInteger) usersService.checkIfUserExistsByEmail(user.getEmail())).intValue();
 
-        return user;
+        return "{\"login\":"+amountOfUsersByLogin+", \"email\":"+amountOfUsersByEmail+"}";
     }
 
     @RequestMapping(value="/createaccount", method= RequestMethod.POST)
     public String createAccount(@ModelAttribute(value="user") User user) {
+        int amountOfUsersByLogin = ((BigInteger) usersService.checkIfUserExistsByLogin(user.getUsername())).intValue();
+        int amountOfUsersByEmail = ((BigInteger) usersService.checkIfUserExistsByEmail(user.getEmail())).intValue();
 
         if(user != null){
-            int sss = ((BigInteger) usersService.checkIfUserExistsByLogin(user.getUsername())).intValue();
-            int sss1 = ((BigInteger) usersService.checkIfUserExistsByEmail(user.getEmail())).intValue();
-            if(sss == 1)
-            {
-                System.out.println("User exists by username!");
-            }
-            if(sss1 == 1){
-                System.out.println("User exists by email!");
-            }
-            if(user.getPassword().equals(user.getConfirmPassword())){
+            if(user.getPassword().equals(user.getConfirmPassword()) && amountOfUsersByLogin == 0 && amountOfUsersByEmail == 0){
             user.setAuthority("USER");
             user.setEnabled(true);
             usersService.create(user);
             return "redirect:/";
-            }
-            else{
-                System.out.println("Passwords dont match!");
             }
         }
 

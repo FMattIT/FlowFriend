@@ -104,10 +104,17 @@ function getGoalId(pos){
 
 function createNewCalendar(value, month_id, year, goal_init) {
     $(".calendar").html("");
+    $(".calendar").css("display", "block")
+    $(".calendar_goals").css("display", "block")
+    $(".info").css("display", "block")
+    $("#pant").removeClass("filler");
 
     if (value[1] === undefined || value[1].length == 0) {
-        $(".calendar").html("BRAK CELÓW");
-        $(".list_goals").html("BRAK CELÓW");
+        $(".calendar").css("display", "none")
+        $(".calendar_goals").css("display", "none")
+        $(".info").css("display", "none")
+
+        $("#pant").addClass("filler");
     }
     else{
 

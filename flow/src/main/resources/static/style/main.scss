@@ -81,6 +81,20 @@ i:hover{
   cursor: pointer;
 }
 
+.filler {
+  display: flex !important;
+  justify-content:center;
+  align-content:center;
+  flex-direction:column; /* column | row */
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
+  text-align: center;
+  font-family: 'Encode Sans', sans-serif !important;
+  font-weight: bold;
+  font-size: 80px;
+}
+
 .calendar {
   float: left;
   width: 500px;
