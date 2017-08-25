@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title>Kalendarz celów!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/main.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar.css}" />
@@ -45,11 +45,19 @@
         </div>
     </div>
     <div id="center">FF</div>
-    <div id="right"></div>
+    <div id="right">
+        <div class="dropdown">
+            <i style="font-size: 40px; margin-right: 20px;" class="fa fa-cog" aria-hidden="true"></i>
+            <i  style="font-size: 40px; margin-right: 40px;" class="fa fa-user-circle-o dropdown-toggle" aria-hidden="true" id="userDropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+            <ul class="dropdown-menu text-center" aria-labelledby="userDropDownMenu">
+                <li><a><form th:action="@{/logout}" method="post"><input id="logoutInput" type="submit" value="Wyloguj się!"/></form></a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 <div class="sidebar">
-    <div class="element"><i class="fa fa-home" aria-hidden="true"></i></div>
-    <div class="element"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></div>
+    <a style="color: #34495e !important;" th:href="@{http://localhost:8080/}"><div class="element"><i class="fa fa-home" aria-hidden="true"></i></div></a>
+    <a style="color: #34495e !important;" th:href="@{http://localhost:8080/main}"><div class="element"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></div></a>
     <div class="element"><i class="fa fa-calendar" aria-hidden="true"></i></div>
     <div class="element"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></div>
 </div>
