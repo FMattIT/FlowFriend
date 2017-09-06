@@ -158,6 +158,7 @@ public class CalendarController {
     @RequestMapping(value="/calendar/editGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal editGoal(@RequestBody Goal goal, Principal principal) {
+        goal.setName(goalService.getGoal(goal.getId()).getName());
         if(goal.getName().length()>170){
             return null;
         }

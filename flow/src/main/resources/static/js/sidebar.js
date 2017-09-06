@@ -227,13 +227,38 @@ function retrieveMinusTiles(){
     });
 }
 
+
 $(document).ready(function () {
 
     var editor = new MediumEditor('.editable', {
-        placeholderText: 'Kliknij aby napisac...',
-        static: true,
-        align: 'center'
+        placeholder: {
+            /* This example includes the default options for placeholder,
+             if nothing is passed this is what it used */
+            text: 'Kliknij aby napisac...',
+            hideOnClick: true
+        },
     });
+
+    editor.subscribe('blur', function (event, editable) {
+        var data = {};
+        data["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
+        data[$(editable).attr('db')]=$(editable).text();
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/calendar/editGoal",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (datassek) {
+                console.log("passed");
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+            }
+        });
+    });
+
 
     var divek = document.getElementById("name");
     var secondDivek = document.getElementById("edit_name");

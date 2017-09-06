@@ -38,6 +38,24 @@ public class Goal {
     @Column
     private Date createDate;
 
+    @Column
+    private String firstAdvantage;
+
+    @Column
+    private String secondAdvantage;
+
+    @Column
+    private String thirdAdvantage;
+
+    @Column
+    private String firstConsequence;
+
+    @Column
+    private String secondConsequence;
+
+    @Column
+    private String thirdConsequence;
+
     public Long getId() {
         return id;
     }
@@ -76,5 +94,53 @@ public class Goal {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getFirstAdvantage() {
+        return firstAdvantage;
+    }
+
+    public void setFirstAdvantage(String firstAdvantage) {
+        this.firstAdvantage = firstAdvantage;
+    }
+
+    public String getSecondAdvantage() {
+        return secondAdvantage;
+    }
+
+    public void setSecondAdvantage(String secondAdvantage) {
+        this.secondAdvantage = secondAdvantage;
+    }
+
+    public String getThirdAdvantage() {
+        return thirdAdvantage;
+    }
+
+    public void setThirdAdvantage(String thirdAdvantage) {
+        this.thirdAdvantage = thirdAdvantage;
+    }
+
+    public String getFirstConsequence() {
+        return firstConsequence;
+    }
+
+    public void setFirstConsequence(String firstConsequence) {
+        this.firstConsequence = firstConsequence;
+    }
+
+    public String getSecondConsequence() {
+        return secondConsequence;
+    }
+
+    public void setSecondConsequence(String secondConsequence) {
+        this.secondConsequence = secondConsequence;
+    }
+
+    public String getThirdConsequence() {
+        return thirdConsequence;
+    }
+
+    public void setThirdConsequence(String thirdConsequence) {
+        this.thirdConsequence = thirdConsequence;
     }
 }
