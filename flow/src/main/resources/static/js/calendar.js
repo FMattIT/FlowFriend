@@ -320,6 +320,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
         makeAreChart();
     // retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     retrieveMinusTiles();
+    loadAdvAndCons(actual_goal_id.innerHTML);
     }
 }
 
@@ -332,6 +333,22 @@ function getPosition(s){
             break;
         }
     }
+}
+
+function loadAdvAndCons(goalId) {
+    $("#firstAdvantage").html(value[1][goalId].firstAdvantage);
+    $("#secondAdvantage").html(value[1][goalId].secondAdvantage);
+    $("#thirdAdvantage").html(value[1][goalId].thirdAdvantage);
+    $("#firstConsequence").html(value[1][goalId].firstConsequence);
+    $("#secondConsequence").html(value[1][goalId].secondConsequence);
+    $("#thirdConsequence").html(value[1][goalId].thirdConsequence);
+
+    $("#firstAdvantage").attr("data-placeholder", "");
+    $("#secondAdvantage").attr("data-placeholder", "");
+    $("#thirdAdvantage").attr("data-placeholder", "");
+    $("#firstConsequence").attr("data-placeholder", "");
+    $("#secondConsequence").attr("data-placeholder", "");
+    $("#thirdConsequence").attr("data-placeholder", "");
 }
 
 function loadGoals(){

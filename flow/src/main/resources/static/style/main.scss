@@ -369,12 +369,16 @@ i:hover{
 .goal_setting{
   width: 75px;
   height: 75px;
-  line-height: 75px;
+  line-height: 88px;
   text-align: center;
   vertical-align: middle;
   font-size: 32px;
   color: #34495e;
   float: left;
+}
+
+.fa-plus-circle:before {
+  font-size: 50px !important;
 }
 
 textarea{

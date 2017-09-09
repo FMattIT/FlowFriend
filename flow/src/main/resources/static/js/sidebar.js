@@ -108,7 +108,7 @@ function updateSortable(){
         pos = goalPosition;
         editGoal(goalId, goalPosition);
     });
-
+    loadAdvAndCons(actual_goal_id.innerHTML);
 }
 
 function putSelectable(target){
@@ -116,10 +116,17 @@ function putSelectable(target){
 }
 
 function editGoal(id, position){
+    retrieveValue();
     var data = {};
     data["name"]=value[1][id].name;
     data["id"]=value[1][id].id;
     data["position"]=position;
+    data["firstAdvantage"]=value[1][id].firstAdvantage;
+    data["secondAdvantage"]=value[1][id].secondAdvantage;
+    data["thirdAdvantage"]=value[1][id].thirdAdvantage;
+    data["firstConsequence"]=value[1][id].firstConsequence;
+    data["secondConsequence"]=value[1][id].secondConsequence;
+    data["thirdConsequence"]=value[1][id].thirdConsequence;
 
     $.ajax({
         type: "POST",
@@ -242,7 +249,13 @@ $(document).ready(function () {
     editor.subscribe('blur', function (event, editable) {
         var data = {};
         data["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
-        data[$(editable).attr('db')]=$(editable).text();
+        data["firstAdvantage"]=$("#firstAdvantage").html();
+        data["secondAdvantage"]=$("#secondAdvantage").html();
+        data["thirdAdvantage"]=$("#thirdAdvantage").html();
+        data["firstConsequence"]=$("#firstConsequence").html();
+        data["secondConsequence"]=$("#secondConsequence").html();
+        data["thirdConsequence"]=$("#thirdConsequence").html();
+        data["position"]=$(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().index();
 
         $.ajax({
             type: "POST",
