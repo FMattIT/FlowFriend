@@ -31,6 +31,23 @@ function getChoicesCount(choice, type){
 }
 
 function makeAreChart(){
+    var trytytki;
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/returnStrengths",
+        dataType: 'json',
+        success: function (dane) {
+            console.log("passed");
+            trytytki = dane;
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        },
+        async: false
+    });
+    console.log(trytytki);
+
     var canvas1 = document.getElementById('area_chart');
     canvas1.innerHTML = '';
     canvas1.innerHTML = "<canvas id='myChart1'></canvas>";
@@ -39,35 +56,36 @@ function makeAreChart(){
         type: 'line',
         data: {
             datasets: [{
-                data: [2, 4, 6, 4, 5, 7, 9, 11, 10, 12, 14, 12, 10, 8, 10],
-                label: "cel",
+                data: [100, 200, 300, 400, 500, 600],
+                label: value[1][actual_goal_id.innerHTML].name,
                 backgroundColor: "rgba(46, 204, 113, .3)",
                 borderColor: "rgb(46, 204, 113)",
                 fill: true
             }],
 
             labels: [
-                'PN',
-                'WT',
-                'ŚR',
-                'CZ',
-                'PT',
-                'SB',
-                'ND',
-                'PN',
-                'WT',
-                'ŚR',
-                'CZ',
-                'PT',
-                'SB',
-                'ND',
-                'PN',
+                trytytki[0].strength,
+                trytytki[1].strength,
+                trytytki[2].strength
             ]
         },
         options: {
             title: {
                 display: true,
                 text: 'Siła celu - budowa!'
+            }, scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Sila"
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Sierpien"
+                    }
+                }]
             }
         }
     });

@@ -403,7 +403,7 @@ function onTickClick(target, event) {
     data["month"]=id;
     data["year"]=year;
 
-    saveTileToDB(data);
+    saveTileToDB(data, 100);
     retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
     event.stopPropagation();
@@ -431,7 +431,7 @@ function onYellowTickClick(target, event) {
     data["month"]=id;
     data["year"]=year;
 
-    saveTileToDB(data);
+    saveTileToDB(data, 50);
     retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
     event.stopPropagation();
@@ -459,7 +459,7 @@ function onCrossClick(target, event) {
     data["month"]=id;
     data["year"]=year;
 
-    saveTileToDB(data);
+    saveTileToDB(data, -50);
     retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
     event.stopPropagation();
@@ -487,7 +487,7 @@ function onMinusClick(target, event) {
     data["month"]=id;
     data["year"]=year;
 
-    saveTileToDB(data);
+    saveTileToDB(data, 0);
     retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
     event.stopPropagation();
@@ -564,7 +564,7 @@ function retrieveActualCount(value, data){
     });
 }
 
-function saveTileToDB(data) {
+function saveTileToDB(data, strength) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -580,6 +580,33 @@ function saveTileToDB(data) {
             if((typeof(dane) == 'undefined') || (dane == null)){
                 console.log("blad wprowadzenia kafelka")
             }
+        }
+    });
+
+    var day = data.day;
+    var header = $(".actual_date").text();
+    var words = header.split(' ');
+    var month_name = words[0];
+    var year = words[1];
+    var id = months.indexOf(month_name);
+
+    var dataData = {};
+    dataData["date"]=year+"-"+id+"-"+day;
+    dataData["goalId"]=value[1][actual_goal_id.innerHTML];
+    dataData["strength"]=strength;
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/saveStrength",
+        data: JSON.stringify(dataData),
+        dataType: 'json',
+        async: false,
+        success: function (dane) {
+            console.log("passed");
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
         }
     });
 }

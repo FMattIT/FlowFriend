@@ -8,6 +8,9 @@ import java.util.Date;
 /**
  * Created by Admin on 16.08.2017.
  */
+
+@Entity
+@Table(name = "goals_strengths")
 public class GoalStrength {
 
     @Id

@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.flow.dao.entities.User;
-import pl.flow.dao.entities.calendar.Goal;
-import pl.flow.dao.entities.calendar.GoalMaxCount;
-import pl.flow.dao.entities.calendar.MinusTile;
-import pl.flow.dao.entities.calendar.Tile;
+import pl.flow.dao.entities.calendar.*;
 import pl.flow.service.*;
 
 import javax.persistence.NoResultException;
@@ -45,6 +42,9 @@ public class CalendarController {
 
     @Autowired
     GoalMaxCountService goalMaxCountService;
+
+    @Autowired
+    GoalStrengthService goalStrengthService;
 
     @RequestMapping(value = "/calendar")
     public String home() {
@@ -203,5 +203,21 @@ public class CalendarController {
         tile.setUserId(user);
         tileService.save(tile);
         return tile;
+    }
+
+    @RequestMapping(value="/calendar/saveStrength", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public GoalStrength saveStrength(@RequestBody GoalStrength goalStrength, Principal principal) {
+        User user = usersService.getUserByUsername(principal.getName());
+        goalStrength.setUserId(user);
+        goalStrength.setStrength(Long.parseLong(goalStrengthService.getPreviousGoalStrength(goalStrength).toString())+goalStrength.getStrength());
+        goalStrengthService.save(goalStrength);
+        return goalStrength;
+    }
+
+    @RequestMapping(value="/calendar/returnStrengths", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public List<GoalStrength> returnStrengths(Principal principal) {
+        return goalStrengthService.getGoalStrengthsList();
     }
 }
