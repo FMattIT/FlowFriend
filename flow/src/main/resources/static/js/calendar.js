@@ -406,6 +406,7 @@ function onTickClick(target, event) {
     saveTileToDB(data, 100);
     retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
+    makeAreChart();
     event.stopPropagation();
 }
 
@@ -434,6 +435,7 @@ function onYellowTickClick(target, event) {
     saveTileToDB(data, 50);
     retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
+    makeAreChart();
     event.stopPropagation();
 }
 
@@ -462,6 +464,7 @@ function onCrossClick(target, event) {
     saveTileToDB(data, -50);
     retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
+    makeAreChart();
     event.stopPropagation();
 }
 
@@ -490,6 +493,7 @@ function onMinusClick(target, event) {
     saveTileToDB(data, 0);
     retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
     makeChart($("#chart_changer").val());
+    makeAreChart();
     event.stopPropagation();
 }
 

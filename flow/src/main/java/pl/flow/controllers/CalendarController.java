@@ -217,7 +217,7 @@ public class CalendarController {
 
     @RequestMapping(value="/calendar/returnStrengths", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public List<GoalStrength> returnStrengths(Principal principal) {
-        return goalStrengthService.getGoalStrengthsList();
+    public List<GoalStrength> returnStrengths(@RequestBody Goal goal, Principal principal) {
+        return goalStrengthService.getGoalStrengthsList(goal);
     }
 }

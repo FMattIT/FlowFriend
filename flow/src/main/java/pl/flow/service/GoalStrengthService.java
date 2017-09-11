@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.flow.dao.GoalStrengthDao;
 import pl.flow.dao.MinusTileDao;
+import pl.flow.dao.entities.calendar.Goal;
 import pl.flow.dao.entities.calendar.GoalStrength;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class GoalStrengthService {
         return goalStrengthDao.getPreviousGoalStrength(goalStrength);
     }
 
-    public List<GoalStrength> getGoalStrengthsList() {
-        return goalStrengthDao.getGoalStrengthsList();
+    public List<GoalStrength> getGoalStrengthsList(Goal goal) {
+        return goalStrengthDao.getGoalStrengthsList(goal);
     }
 }

@@ -32,10 +32,14 @@ function getChoicesCount(choice, type){
 
 function makeAreChart(){
     var trytytki;
+    var celek={};
+    celek["name"]=value[1][Number(actual_goal_id.innerHTML)].name;
+    celek["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/calendar/returnStrengths",
+        data: JSON.stringify(celek),
         dataType: 'json',
         success: function (dane) {
             console.log("passed");
@@ -46,17 +50,12 @@ function makeAreChart(){
         },
         async: false
     });
-    console.log(trytytki);
 
-    var canvas1 = document.getElementById('area_chart');
-    canvas1.innerHTML = '';
-    canvas1.innerHTML = "<canvas id='myChart1'></canvas>";
-    var ctx1= document.getElementById('myChart1').getContext('2d');
-    var chartek = new Chart(ctx1, {
+    var variable={
         type: 'line',
         data: {
             datasets: [{
-                data: [100, 200, 300, 400, 500, 600],
+                data: [],
                 label: value[1][actual_goal_id.innerHTML].name,
                 backgroundColor: "rgba(46, 204, 113, .3)",
                 borderColor: "rgb(46, 204, 113)",
@@ -64,9 +63,6 @@ function makeAreChart(){
             }],
 
             labels: [
-                trytytki[0].strength,
-                trytytki[1].strength,
-                trytytki[2].strength
             ]
         },
         options: {
@@ -88,7 +84,18 @@ function makeAreChart(){
                 }]
             }
         }
-    });
+    }
+
+    for(var i=0; i<trytytki.length; i++){
+        variable.data.datasets[0].data.push(trytytki[i].strength);
+        variable.data.labels.push(Number(new Date(trytytki[i].date).getUTCDate()))
+    }
+
+    var canvas1 = document.getElementById('area_chart');
+    canvas1.innerHTML = '';
+    canvas1.innerHTML = "<canvas id='myChart1'></canvas>";
+    var ctx1= document.getElementById('myChart1').getContext('2d');
+    var chartek = new Chart(ctx1, variable);
 }
 
 function makeChart(type){

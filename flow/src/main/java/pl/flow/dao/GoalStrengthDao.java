@@ -30,10 +30,15 @@ public class GoalStrengthDao {
     }
 
     public Object getPreviousGoalStrength(GoalStrength goalStrength){
-        return entityManager.createNativeQuery("SELECT strength FROM public.goals_strengths WHERE goal_id_id=? AND user_id_id=? AND date=? ORDER BY date ASC LIMIT 1")
+        try{
+            return entityManager.createNativeQuery("SELECT strength FROM public.goals_strengths WHERE goal_id_id=? AND user_id_id=? AND date<=? ORDER BY date DESC LIMIT 1")
                 .setParameter(1, goalStrength.getGoalId())
                 .setParameter(2, goalStrength.getUserId())
                 .setParameter(3, goalStrength.getDate()).getSingleResult();
+        }
+        catch(Exception exception){
+            return 0;
+        }
     }
 
     public GoalStrength save(GoalStrength goalStrength){
@@ -47,6 +52,7 @@ public class GoalStrengthDao {
         return goalStrength;
     }
 
-    public List<GoalStrength> getGoalStrengthsList(){
-        return entityManager.createQuery("SELECT g FROM GoalStrength g ORDER BY g.id ASC", GoalStrength.class).getResultList(); }
+    public List<GoalStrength> getGoalStrengthsList(Goal goal){
+        return entityManager.createQuery("SELECT g FROM GoalStrength g WHERE g.goalId=? ORDER BY g.id ASC", GoalStrength.class)
+                .setParameter(1, goal).getResultList(); }
 }
