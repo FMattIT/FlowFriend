@@ -262,6 +262,8 @@ function retrieveMinusTiles(){
 
 $(document).ready(function () {
 
+    $('.list_goals').perfectScrollbar();
+
     var editor = new MediumEditor('.editable', {
         placeholder: {
             /* This example includes the default options for placeholder,
