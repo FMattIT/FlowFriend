@@ -629,7 +629,7 @@ function deleteGoalFunc(target, event){
         dataType: 'json',
         success: function (datassek) {
             console.log("passed");
-            updateSortable();
+            updateSortable("delete");
             retrieveNewData(null, null, "deleted");
         },
         error: function (e) {

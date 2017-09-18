@@ -126,14 +126,16 @@ function makeChart(type){
     });
 }
 
-function updateSortable(){
+function updateSortable(zmienna){
     $('.list_goals').find('.slide').each(function(){
         var goalId = $(this).find('.slide_goal_id').html();
         var goalPosition = $(this).index();
         pos = goalPosition;
         editGoal(goalId, goalPosition);
     });
-    loadAdvAndCons(actual_goal_id.innerHTML);
+    if(zmienna!="delete"){
+        loadAdvAndCons(actual_goal_id.innerHTML);
+    }
 }
 
 function putSelectable(target){
@@ -262,7 +264,7 @@ function retrieveMinusTiles(){
 
 $(document).ready(function () {
 
-    $('.list_goals').perfectScrollbar();
+    // $('.list_goals').perfectScrollbar();
 
     var editor = new MediumEditor('.editable', {
         placeholder: {
