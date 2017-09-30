@@ -48,4 +48,7 @@ public class TileService {
         return tileDao.getActualCount(goal);
     }
 
+    public Object getMaxCount(Goal goal){
+        return tileDao.getMaxCount(goal);
+    }
 }

@@ -12,6 +12,8 @@ import javax.persistence.NoResultException;
 import java.awt.image.TileObserver;
 import java.math.BigInteger;
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -39,9 +41,6 @@ public class CalendarController {
 
     @Autowired
     MinusTileService minusTileService;
-
-    @Autowired
-    GoalMaxCountService goalMaxCountService;
 
     @Autowired
     GoalStrengthService goalStrengthService;
@@ -87,6 +86,8 @@ public class CalendarController {
     @ResponseBody
     public Object actualCounter(@RequestBody Goal goal, Principal principal) {
         Goal cel = goalService.getGoal(goal.getId());
+        int p = Integer.parseInt(tileService.getMaxCount(cel).toString());
+        System.out.print(p);
         return tileService.getActualCount(cel);
     }
 
@@ -99,43 +100,6 @@ public class CalendarController {
         Tile tilek = mapper.convertValue(goalAndTile.get("tile"), Tile.class);
         Goal cel = goalService.getGoal(celek.getId());
         BigInteger actual_big = (BigInteger) tileService.getActualCount(cel);
-        int actual = actual_big.intValue();
-        int max = goalMaxCountService.getTheBiggestMaxCount(tilek, cel).getMax_count().intValue();
-        GoalMaxCount sssss = goalMaxCountService.getTheBiggestMaxCount(tilek, cel);
-        LocalDate ldt = new java.sql.Date(sssss.getDate().getTime()).toLocalDate();
-        User user = usersService.getUserByUsername(principal.getName());
-
-        int biggerValues = ((BigInteger) goalMaxCountService.getBiggerValues(tilek, cel)).intValue();
-        int smallerValues = ((BigInteger) goalMaxCountService.getSmallerValues(tilek, cel)).intValue();
-
-        if(max>=actual){
-            System.out.println("Max wiekszy/rowny aktual! brak aktualizacji");
-        }
-        else if(actual>max && (tilek.getFlag().equals("TICK") || tilek.getFlag().equals("YELLOWTICK"))){
-            GoalMaxCount newMaxCount = new GoalMaxCount();
-            LocalDate date = LocalDate.of(Integer.parseInt(tilek.getYear()), Integer.parseInt(tilek.getMonth()), Integer.parseInt(tilek.getDay()));
-            newMaxCount.setDate(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            newMaxCount.setGoalId(cel);
-            newMaxCount.setMax_count(Long.valueOf(actual));
-            newMaxCount.setUserId(user);
-            goalMaxCountService.save(newMaxCount);
-            System.out.println("Aktualizacja...");
-        }
-
-        if(biggerValues>smallerValues){
-            goalMaxCountService.deleteSmallerValues(tilek, cel);
-            System.out.println("Should delete smaller values.");
-        }
-        else if(biggerValues<=smallerValues){
-            goalMaxCountService.deleteBiggerValues(tilek, cel);
-            System.out.println("Should delete bigger values.");
-        }
-
-        LocalDate date = LocalDate.of(Integer.parseInt(tilek.getYear()), Integer.parseInt(tilek.getMonth()), Integer.parseInt(tilek.getDay()));
-        System.out.println(java.sql.Date.valueOf(date));
-
-        System.out.println("Bigger values: " + biggerValues);
-        System.out.println("Smaller values: " + smallerValues);
         return tileService.getActualCount(cel);
     }
 
@@ -201,6 +165,15 @@ public class CalendarController {
     public Tile saveTile(@RequestBody Tile tile, Principal principal) {
         User user = usersService.getUserByUsername(principal.getName());
         tile.setUserId(user);
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyyy-mm-dd");
+        String date_s = tile.getYear() + "-" + tile.getMonth() + "-" + tile.getDay();
+        Date data = null;
+        try {
+            data = dt1.parse(date_s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tile.setDate(data);
         tileService.save(tile);
         return tile;
     }

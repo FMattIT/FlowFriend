@@ -255,7 +255,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
             var td = document.createElement('td');
             td.innerHTML = day;
 
-            if((day==new Date().getUTCDate() || day==new Date().getUTCDate()-1 || day==new Date().getUTCDate()-2) && this_month_id==new Date().getMonth()){td.className = "day"; td.setAttribute('onclick', 'onDayClick(this)');}else {td.className = "day disabled";}
+            if((day==new Date().getUTCDate() || day==new Date().getUTCDate()-1 || day==new Date().getUTCDate()-2) && this_month_id==new Date().getMonth()){td.className = "day"; td.setAttribute('onclick', 'onDayClick(this)');}else {td.className = "day"; td.setAttribute('onclick', 'onDayClick(this)');}
 
                 if((new Date().getDate()==1 && this_month_id == today.getMonth()-1 && (td.innerHTML==31 || td.innerHTML==30)) || (new Date().getDate()==2 && this_month_id == today.getMonth()-1 && (td.innerHTML==31)))
                 {
