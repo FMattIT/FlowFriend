@@ -55,4 +55,9 @@ public class GoalStrengthDao {
     public List<GoalStrength> getGoalStrengthsList(Goal goal){
         return entityManager.createQuery("SELECT g FROM GoalStrength g WHERE g.goalId=? ORDER BY g.id, g.date ASC", GoalStrength.class)
                 .setParameter(1, goal).getResultList(); }
+
+    public void deleteRows(Goal goal){
+        entityManager.createNativeQuery("DELETE FROM public.goals_strengths WHERE goal_id_id=?")
+                .setParameter(1, goal).executeUpdate();
+    }
 }

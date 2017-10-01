@@ -50,6 +50,11 @@ public class CalendarController {
         return "calendar";
     }
 
+    @RequestMapping(value = "/original")
+    public String original() {
+        return "original";
+    }
+
     @RequestMapping(value="/calendar/retrieveMinusTiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Object retrieveMinusTiles(@RequestBody Goal goal,Principal principal) {
@@ -86,21 +91,14 @@ public class CalendarController {
     @ResponseBody
     public Object actualCounter(@RequestBody Goal goal, Principal principal) {
         Goal cel = goalService.getGoal(goal.getId());
-        int p = Integer.parseInt(tileService.getMaxCount(cel).toString());
-        System.out.print(p);
         return tileService.getActualCount(cel);
     }
 
     @RequestMapping(value="/calendar/maxCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public Object maxCounter(@RequestBody LinkedHashMap<String, Object> goalAndTile, Principal principal) {
-        ObjectMapper mapper = new ObjectMapper();
-        Goal celek = mapper.convertValue(goalAndTile.get("goal"), Goal.class);
-        LocalDateTime localDateTime = LocalDateTime.now();
-        Tile tilek = mapper.convertValue(goalAndTile.get("tile"), Tile.class);
-        Goal cel = goalService.getGoal(celek.getId());
-        BigInteger actual_big = (BigInteger) tileService.getActualCount(cel);
-        return tileService.getActualCount(cel);
+    public Object maxCounter(@RequestBody Goal goal, Principal principal) {
+        Goal cel = goalService.getGoal(goal.getId());
+        return tileService.getMaxCount(cel);
     }
 
     @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -122,7 +120,6 @@ public class CalendarController {
     @RequestMapping(value="/calendar/editGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal editGoal(@RequestBody Goal goal, Principal principal) {
-        goal.setName(goalService.getGoal(goal.getId()).getName());
         if(goal.getName().length()>170){
             return null;
         }
@@ -141,6 +138,7 @@ public class CalendarController {
     public List<Goal> deleteGoal(@RequestBody Goal goal, Principal principal) {
         User user = usersService.getUserByUsername(principal.getName());
         goal.setUserId(user);
+        goalStrengthService.deleteRows(goal);
         tileService.delete(goal);
         minusTileService.delete(goal);
         goalService.delete(goal);

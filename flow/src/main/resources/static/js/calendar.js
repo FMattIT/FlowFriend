@@ -255,7 +255,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
             var td = document.createElement('td');
             td.innerHTML = day;
 
-            if((day==new Date().getUTCDate() || day==new Date().getUTCDate()-1 || day==new Date().getUTCDate()-2) && this_month_id==new Date().getMonth()){td.className = "day"; td.setAttribute('onclick', 'onDayClick(this)');}else {td.className = "day"; td.setAttribute('onclick', 'onDayClick(this)');}
+            if((day==new Date().getUTCDate() || day==new Date().getUTCDate()-1 || day==new Date().getUTCDate()-2) && this_month_id==new Date().getMonth()){td.className = "day"; td.setAttribute('onclick', 'onDayClick(this)');}else {td.className = "day disabled";}
 
                 if((new Date().getDate()==1 && this_month_id == today.getMonth()-1 && (td.innerHTML==31 || td.innerHTML==30)) || (new Date().getDate()==2 && this_month_id == today.getMonth()-1 && (td.innerHTML==31)))
                 {
@@ -318,7 +318,7 @@ function createNewCalendar(value, month_id, year, goal_init) {
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
     makeChart($("#chart_changer").val());
         makeAreChart();
-    // retrieveActualCount(value[1][actual_goal_id.innerHTML]);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     retrieveMinusTiles();
     loadAdvAndCons(actual_goal_id.innerHTML);
     }
@@ -404,7 +404,7 @@ function onTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data, 100);
-    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart($("#chart_changer").val());
     makeAreChart();
     event.stopPropagation();
@@ -433,7 +433,7 @@ function onYellowTickClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data, 50);
-    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart($("#chart_changer").val());
     makeAreChart();
     event.stopPropagation();
@@ -462,7 +462,7 @@ function onCrossClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data, -50);
-    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart($("#chart_changer").val());
     makeAreChart();
     event.stopPropagation();
@@ -491,7 +491,7 @@ function onMinusClick(target, event) {
     data["year"]=year;
 
     saveTileToDB(data, 0);
-    retrieveActualCount(value[1][actual_goal_id.innerHTML], data);
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart($("#chart_changer").val());
     makeAreChart();
     event.stopPropagation();
@@ -528,20 +528,16 @@ function onDayClick(day){
 
 }
 
-function retrieveMaxCount(value, data){
-    var newData = {
-        "goal": value,
-        "tile": data
-    };
+function retrieveMaxCount(value){
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/calendar/maxCounter",
         dataType: 'json',
         async: false,
-        data: JSON.stringify(newData),
+        data: JSON.stringify(value),
         success: function (dane) {
-            // $('#best_counter').text(dane);
+            $('#best_counter').text(dane);
             console.log(dane);
         },
         error: function (e) {
@@ -550,7 +546,7 @@ function retrieveMaxCount(value, data){
     });
 }
 
-function retrieveActualCount(value, data){
+function retrieveActualCount(value){
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -560,7 +556,7 @@ function retrieveActualCount(value, data){
         data: JSON.stringify(value),
         success: function (dane) {
             $('#actual_counter').text(dane);
-            retrieveMaxCount(value, data);
+            retrieveMaxCount(value);
         },
         error: function (e) {
             console.log("ERROR: ", e);

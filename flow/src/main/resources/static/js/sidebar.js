@@ -322,11 +322,7 @@ $(document).ready(function () {
     secondDivek.addEventListener("delete", addOnType);
     secondDivek.addEventListener("mouseup", addOnType);
 
-    $('.fa.fa-bars').on('click', function () {
-        $('.sidebar').toggleClass('active');
-    });
-
-    $('.fa.fa-plus-circle').on('click', function () {
+    $('#circle-element').on('click', function () {
         $('#myModal').modal('show');
     });
 

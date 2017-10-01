@@ -34,4 +34,8 @@ public class GoalStrengthService {
     public List<GoalStrength> getGoalStrengthsList(Goal goal) {
         return goalStrengthDao.getGoalStrengthsList(goal);
     }
+
+    public void deleteRows(Goal goal){
+        goalStrengthDao.deleteRows(goal);
+    }
 }

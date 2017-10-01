@@ -97,21 +97,26 @@ public class TileDao {
     }
 
     public Object getMaxCount(Goal goal){
-        return entityManager.createNativeQuery("select cnt from(select distinct on (goal_id_id, user_id_id) scg.*\n" +
-                "from (select goal_id_id, user_id_id, flag, count(*) as cnt,\n" +
-                "             min(date), max(date)\n" +
-                "      from (select public.tiles.*,\n" +
-                "                   row_number() over (partition by goal_id_id, user_id_id, flag order by date) as seqnum_scg,\n" +
-                "                   row_number() over (partition by goal_id_id, user_id_id order by date) as seqnum_sc\n" +
-                "            from public.tiles\n" +
-                "           ) t\n" +
-                "      where flag = 'TICK'\n" +
-                "      AND goal_id_id=?\n" +
-                "      group by goal_id_id, user_id_id, flag, (seqnum_sc - seqnum_scg)\n" +
-                "     ) scg\n" +
-                "order by goal_id_id, user_id_id, cnt desc) as cnt")
-                .setParameter(1, goal)
-                .getSingleResult();
+        try{
+            return entityManager.createNativeQuery("select cnt from(select distinct on (goal_id_id, user_id_id) scg.*\n" +
+                    "from (select goal_id_id, user_id_id, flag, count(*) as cnt,\n" +
+                    "             min(date), max(date)\n" +
+                    "      from (select public.tiles.*,\n" +
+                    "                   row_number() over (partition by goal_id_id, user_id_id, flag order by date) as seqnum_scg,\n" +
+                    "                   row_number() over (partition by goal_id_id, user_id_id order by date) as seqnum_sc\n" +
+                    "            from public.tiles\n" +
+                    "           ) t\n" +
+                    "      where flag = 'TICK'\n" +
+                    "      AND goal_id_id=?\n" +
+                    "      group by goal_id_id, user_id_id, flag, (seqnum_sc - seqnum_scg)\n" +
+                    "     ) scg\n" +
+                    "order by goal_id_id, user_id_id, cnt desc) as cnt")
+                    .setParameter(1, goal)
+                    .getSingleResult();
+        }
+        catch(Exception e){
+            return 0;
+        }
     }
 
 }

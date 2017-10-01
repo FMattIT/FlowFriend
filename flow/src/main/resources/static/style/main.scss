@@ -10,15 +10,10 @@ body {
   background-color: #f8f8f8;
   color: #34495e;
   border-right: 1px solid #ececec;
-  opacity: 0;
-  overflow: hidden;
+  opacity: 1;
+  overflow: visible;
   transition: ease 0.5s;
   float:left;
-
-  &.active{
-    opacity: 1;
-    overflow: visible;
-  }
 }
 
 .element {
@@ -144,10 +139,6 @@ i:hover{
   height: 100%;
   width: 100%;
   border-right: 0;
-}
-
-.fa.fa-plus-circle{
-  font-size: 32px;
 }
 
 .goal_adder{
@@ -374,10 +365,6 @@ i:hover{
   font-size: 32px;
   color: #34495e;
   float: left;
-}
-
-.fa-plus-circle:before {
-  font-size: 50px !important;
 }
 
 textarea{
