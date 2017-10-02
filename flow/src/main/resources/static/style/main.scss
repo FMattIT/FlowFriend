@@ -34,6 +34,20 @@ body {
   }
 }
 
+.circleElement{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  font-family: Montserrat;
+  line-height: 100%;
+  border: 5px solid #34495e;
+  -webkit-border-radius:50%;
+  -moz-border-radius:50%;
+  border-radius:50%;
+  margin: 0 auto;
+}
+
 .navbar{
   width:100%;
   height: 75px;
@@ -99,7 +113,7 @@ i:hover{
 
 .info, .calendar_goals{
   width: calc((100% - 512px) / 2);
-  height: 713px;
+  height: 793px;
   background-color: white;
   float: left;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
@@ -344,7 +358,7 @@ i:hover{
 
 .cont{
   width: calc(100% - 155px);
-  height: calc(100% - 155px);
+  height: calc(100% - 55px);
   margin: 40px;
   //background-color: #90A09A;
   float: left;
@@ -410,22 +424,6 @@ textarea{
 
 .tooltip-arrow{
   border-top-color: white !important;
-}
-
-#best, #actual{
-  width: 50%;
-  height: auto;
-  text-transform: uppercase;
-  font-size: 28px;
-  float: left;
-  font-family: Montserrat;
-  line-height: 28px;
-  color: #2c3e50;
-  font-weight: bold;
-  text-align: center;
-  border: 2px solid #2c3e50;
-  padding: 10px;
-  margin-top: 10px;
 }
 
 .off_option{
@@ -535,5 +533,25 @@ textarea{
   background: none !important;
   font-size: 16px !important;
   font-family: 'Encode Sans', sans-serif !important;
+}
+
+#newActualCounter, #newBestCounter{
+  width: 250px;
+  height: 80px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.counterLabel{
+  font-family: Montserrat;
+  font-size: 20px;
+  line-height: 80px;
+}
+
+#newACounter, #newBCounter{
+  font-family: Montserrat;
+  font-size: 34px;
+  line-height: 80px;
 }
 

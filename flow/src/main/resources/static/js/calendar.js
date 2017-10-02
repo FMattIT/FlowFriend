@@ -360,6 +360,7 @@ function loadGoals(){
         goal_grip.className = "goal_grip";
         goal_grip.innerHTML = "<i class='fa fa-arrows-v' aria-hidden='true'></i>";
         var goal_name = document.createElement('div');
+        var goal_name_span = document.createElement('span');
         goal_name.className = "goal_name";
         goal_name.innerHTML = value[1][goal].name;
         var delete_option = document.createElement('div');
@@ -537,7 +538,7 @@ function retrieveMaxCount(value){
         async: false,
         data: JSON.stringify(value),
         success: function (dane) {
-            $('#best_counter').text(dane);
+            $('#newBCounter').text(dane);
             console.log(dane);
         },
         error: function (e) {
@@ -555,7 +556,7 @@ function retrieveActualCount(value){
         async: false,
         data: JSON.stringify(value),
         success: function (dane) {
-            $('#actual_counter').text(dane);
+            $('#newACounter').text(dane);
             retrieveMaxCount(value);
         },
         error: function (e) {

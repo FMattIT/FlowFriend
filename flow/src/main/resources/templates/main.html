@@ -53,6 +53,7 @@
     <div class="element"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></div>
     <div class="element"><i class="fa fa-cog" aria-hidden="true"></i></div>
     <div class="element"><i class="fa fa-user-circle-o dropdown-toggle" aria-hidden="true" id="userDropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i></div>
+    <!--<div class="element"><div class="circleElement"><i class="fa fa-cog" aria-hidden="true"></i></div></div>-->
 </div>
 
 <!--<ul class="dropdown-menu text-center" aria-labelledby="userDropDownMenu">-->
@@ -76,7 +77,12 @@
 
 <div class="cont">
     <div id="pant" style="display: none;">BRAK CELÓW! <br /> KLIKNIJ <i style="font-size: 80px;" class="fa fa-plus-circle" aria-hidden="true"></i> ABY DODAĆ NOWY! </div>
-    <div class="calendar"></div>
+    <div style="float:left;">
+        <div class="calendar"></div>
+        <div style="clear: both;"></div>
+        <div id="newActualCounter" style="float: left;"><span id="newACounter">0</span> &nbsp;&nbsp; <span class="counterLabel">TWÓJ WYNIK</span></div>
+        <div id="newBestCounter" style="float: left;"><span id="newBCounter">0</span> &nbsp;&nbsp; <span class="counterLabel">TWÓJ REKORD</span></div>
+    </div>
     <div class="calendar_goals">
         <div class="list_goals"></div>
     </div>
@@ -87,10 +93,6 @@
             <input id='edit_buttonek' type='submit' value='Zapisz cel'/>
             <div class="add_error">Maksymalna ilość znaków wynosi 170!</div>
         </form>
-
-        <div id="best">Najlepszy wynik: <span id="best_counter">0</span></div>
-        <div id="actual">Aktualny wynik: <span id="actual_counter">0</span></div>
-        <div style="clear: both;"></div>
 
         <div class="label_options">DNI, W KTÓRYCH CEL NIE OBOWIĄZUJE:</div>
         <div id="off_options">
@@ -120,6 +122,7 @@
         </div>
     </div>
     </div>
+
 </div>
 </body>
 </html>
