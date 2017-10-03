@@ -555,3 +555,22 @@ textarea{
   line-height: 80px;
 }
 
+.paneElement {
+  width: 100%;
+  height: 158px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 20px;
+}
+
+.smallPaneElement {
+  width: 25%;
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+  float: left;
+  font-size: 60px;
+  padding-top: 50px;
+}

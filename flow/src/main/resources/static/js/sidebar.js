@@ -278,6 +278,7 @@ $(document).ready(function () {
     editor.subscribe('blur', function (event, editable) {
         var data = {};
         data["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
+        data["name"]=value[1][Number(actual_goal_id.innerHTML)].name;
         data["firstAdvantage"]=$("#firstAdvantage").html();
         data["secondAdvantage"]=$("#secondAdvantage").html();
         data["thirdAdvantage"]=$("#thirdAdvantage").html();
