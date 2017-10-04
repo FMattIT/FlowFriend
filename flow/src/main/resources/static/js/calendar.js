@@ -704,6 +704,11 @@ $( document ).ready(function() {
                 console.log("passed");
                 retrieveNewData(null, null, "new")
                 $(".add_error").css("display", "none");
+                $('#edit_buttonek_second').toggle();
+                $('#edit_buttonek').toggle();
+                $('#edit_name').toggleClass("namik");
+                $('#edit_name').toggleClass("namikTheSecond");
+                $('#edit_name').removeAttr("contenteditable");
             },
             error: function (e) {
                 console.log("ERROR: ", e);

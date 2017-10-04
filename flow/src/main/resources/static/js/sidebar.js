@@ -302,7 +302,6 @@ $(document).ready(function () {
         });
     });
 
-
     var divek = document.getElementById("name");
     var secondDivek = document.getElementById("edit_name");
     divek.addEventListener("blur", addOnType);
@@ -352,5 +351,21 @@ $(document).ready(function () {
             $('#add_error').css("display", "none");
         }
     });
+
+    $('#edit_buttonek_second').on('click', function () {
+        $('#edit_buttonek_second').toggle();
+        $('#edit_buttonek').toggle();
+        $('#edit_name').toggleClass("namik");
+        $('#edit_name').toggleClass("namikTheSecond");
+        $('#edit_name').attr("contenteditable", "true");
+    });
+
+    $('#deletik').on('click', function () {
+        deleteGoalFunc(target, event)
+    });
+
+    $('#edit_name').toggleClass("namik");
+    $('#edit_name').toggleClass("namikTheSecond");
+    $('#edit_name').removeAttr("contenteditable");
 
 });

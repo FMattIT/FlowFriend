@@ -175,7 +175,7 @@ i:hover{
   }
 }
 
-#name, #edit_name{
+#name{
   outline: rgb(32, 32, 32);
   border: 1px solid rgb(211,211,211);
   //height: 35px;
@@ -190,6 +190,8 @@ i:hover{
   color: black;
   margin-bottom: 6px;
 }
+
+//, #edit_name
 
 #chart_changer{
   outline: none;
@@ -228,7 +230,7 @@ i:hover{
   margin-top: 4px;
 }
 
-#buttonek, #edit_buttonek{
+#buttonek{
   width: 100px;
   height: 30px;
   background-color: #34495e;
@@ -240,6 +242,83 @@ i:hover{
   font-size: 14px;
   display: block;
   margin-left: 0;
+}
+
+#edit_buttonek{
+  width: 150px;
+  height: 50px;
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+  line-height: normal !important;
+  border: none;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: bold;
+  display: none;
+  float: left;
+  margin-right: 20px;
+}
+
+#edit_buttonek_second{
+  width: 150px;
+  height: 50px;
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+  line-height: normal !important;
+  border: none;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  float: left;
+  margin-right: 20px;
+}
+
+#deletik{
+  width: 150px;
+  height: 50px;
+  background-color: #FC221E;
+  color: white;
+  text-align: center;
+  line-height: normal !important;
+  border: none;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  float: left;
+}
+
+#przyciski{
+  margin: 0 auto;
+  height: 50px;
+  width: 320px;
+}
+
+.namik{
+  outline: rgb(32, 32, 32);
+  border: 1px solid rgb(211,211,211);
+  height: auto !important;
+  text-align: left;
+  font-size: 14px;
+  line-height: 19px;
+  padding: 8px 8px;
+  border-radius: 1%;
+  width: 100%;
+  font-family: "Open Sans","Helvetica",Arial,sans-serif;
+  color: black;
+  margin-bottom: 6px;
+}
+
+.namikTheSecond{
+  font-size: 18px;
+}
+
+#newEditLabel{
+  font-weight: bold;
+  font-size: 24px;
 }
 
 .slide{
@@ -563,6 +642,7 @@ textarea{
   text-align: center;
   font-family: Montserrat;
   font-size: 20px;
+  padding: 25px 50px 5px 50px;
 }
 
 .smallPaneElement {
