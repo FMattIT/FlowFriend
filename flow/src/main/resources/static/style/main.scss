@@ -191,7 +191,9 @@ i:hover{
   margin-bottom: 6px;
 }
 
-//, #edit_name
+#edit_name{
+  margin-bottom: 6px;
+}
 
 #chart_changer{
   outline: none;
@@ -314,6 +316,7 @@ i:hover{
 
 .namikTheSecond{
   font-size: 18px;
+  word-wrap:break-word;
 }
 
 #newEditLabel{
@@ -512,13 +515,11 @@ textarea{
   vertical-align: middle;
   width: 60px;
   height: 60px;
-  //float: left;
+  line-height: 60px;
   margin: 3px;
   font-family: Montserrat;
   font-size: 26px;
   display: inline-block;
-  flex-direction: column;
-  justify-content: center;
   text-align: center;
 
   &:hover{
@@ -544,8 +545,7 @@ textarea{
   font-family: Montserrat;
   color: #2c3e50;
   font-weight: bold;
-  margin-top: 10px;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 
@@ -636,7 +636,7 @@ textarea{
 
 .paneElement {
   width: 100%;
-  height: 158px;
+  min-height: 158px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
   margin: 0 auto;
   text-align: center;

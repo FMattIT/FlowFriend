@@ -361,11 +361,10 @@ $(document).ready(function () {
     });
 
     $('#deletik').on('click', function () {
-        deleteGoalFunc(target, event)
+        deleteGoalFunc($(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')"));
     });
 
-    $('#edit_name').toggleClass("namik");
-    $('#edit_name').toggleClass("namikTheSecond");
-    $('#edit_name').removeAttr("contenteditable");
+    // $('#edit_name').toggleClass("namik");
+    // $('#edit_name').toggleClass("namikTheSecond");
 
 });

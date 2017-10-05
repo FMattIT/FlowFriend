@@ -26,7 +26,12 @@ public class MinusTileDao {
         MinusTile minusTile = new MinusTile();
         minusTile.setGoalId(goal);
         minusTile.setUserId(goal.getUserId());
-        entityManager.remove(getMinusTileToMerge(minusTile));
+        try{
+            entityManager.remove(getMinusTileToMerge(minusTile));
+        }
+        catch(Exception e){
+            System.out.print("No minus tiles to delete.");
+        }
     }
 
     public Object getMinusTile(Goal goal){

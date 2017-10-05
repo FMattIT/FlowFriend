@@ -315,11 +315,11 @@ function createNewCalendar(value, month_id, year, goal_init) {
     $('.calendar').append(bar);
     
     loadGoals();
-    $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
-    makeChart($("#chart_changer").val());
-        makeAreChart();
-    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     retrieveMinusTiles();
+    $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
+    // makeChart($("#chart_changer").val());
+    //     makeAreChart();
+    retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     loadAdvAndCons(actual_goal_id.innerHTML);
     }
 }
@@ -613,10 +613,12 @@ function saveTileToDB(data, strength) {
 }
 
 function deleteGoalFunc(target, event){
-    event.preventDefault();
+    // event.preventDefault();
     var data = {};
-    data["name"]=value[1][Number($(target).parent().find(".slide_goal_id").text())].name;
-    data["id"]=value[1][Number($(target).parent().find(".slide_goal_id").text())].id;
+    // data["name"]=value[1][Number($(target).parent().find(".slide_goal_id").text())].name;
+    // data["id"]=value[1][Number($(target).parent().find(".slide_goal_id").text())].id;
+    data["name"]=value[1][Number($(target).text())].name;
+    data["id"]=value[1][Number($(target).text())].id;
     $(target).parent().remove();
     $.ajax({
         type: "POST",
@@ -690,7 +692,7 @@ $( document ).ready(function() {
         data["id"]=value[1][Number(actual_goal_id.innerHTML)].id;
         data["position"]=$(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().index();
 
-        if($('#edit_name').text().length <=0 || $('#edit_name').text().length>170){
+        if($('#edit_name').text().length <=0 || $('#edit_name').text().length>169){
             return;
         }
         else{
