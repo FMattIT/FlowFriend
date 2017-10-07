@@ -47,14 +47,6 @@ public class Goal {
     @Column
     private String thirdAdvantage;
 
-    @Column
-    private String firstConsequence;
-
-    @Column
-    private String secondConsequence;
-
-    @Column
-    private String thirdConsequence;
 
     public Long getId() {
         return id;
@@ -118,29 +110,5 @@ public class Goal {
 
     public void setThirdAdvantage(String thirdAdvantage) {
         this.thirdAdvantage = thirdAdvantage;
-    }
-
-    public String getFirstConsequence() {
-        return firstConsequence;
-    }
-
-    public void setFirstConsequence(String firstConsequence) {
-        this.firstConsequence = firstConsequence;
-    }
-
-    public String getSecondConsequence() {
-        return secondConsequence;
-    }
-
-    public void setSecondConsequence(String secondConsequence) {
-        this.secondConsequence = secondConsequence;
-    }
-
-    public String getThirdConsequence() {
-        return thirdConsequence;
-    }
-
-    public void setThirdConsequence(String thirdConsequence) {
-        this.thirdConsequence = thirdConsequence;
     }
 }

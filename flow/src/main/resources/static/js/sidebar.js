@@ -151,9 +151,6 @@ function editGoal(id, position){
     data["firstAdvantage"]=value[1][id].firstAdvantage;
     data["secondAdvantage"]=value[1][id].secondAdvantage;
     data["thirdAdvantage"]=value[1][id].thirdAdvantage;
-    data["firstConsequence"]=value[1][id].firstConsequence;
-    data["secondConsequence"]=value[1][id].secondConsequence;
-    data["thirdConsequence"]=value[1][id].thirdConsequence;
 
     $.ajax({
         type: "POST",
@@ -282,9 +279,6 @@ $(document).ready(function () {
         data["firstAdvantage"]=$("#firstAdvantage").html();
         data["secondAdvantage"]=$("#secondAdvantage").html();
         data["thirdAdvantage"]=$("#thirdAdvantage").html();
-        data["firstConsequence"]=$("#firstConsequence").html();
-        data["secondConsequence"]=$("#secondConsequence").html();
-        data["thirdConsequence"]=$("#thirdConsequence").html();
         data["position"]=$(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')").parent().index();
 
         $.ajax({
@@ -362,6 +356,41 @@ $(document).ready(function () {
 
     $('#deletik').on('click', function () {
         deleteGoalFunc($(".slide_goal_id:contains('"+actual_goal_id.innerHTML+"')"));
+    });
+
+    $('#add_adv_buttonek').on('click', function () {
+        var count = $(".listOfStaff li").length;
+        console.log(count);
+        if(count==1){
+            $(".listOfStaff").append('<li class="editable" id="secondAdvantage"></li>');
+            editor.addElements('.editable');
+            $("#przyciskiSecond").css("width", "260px")
+            $("#add_adv_buttonek").css("margin-right", "20px")
+            $('#delete_adv_buttonek').toggle();
+        }
+        else if (count==2){
+            $(".listOfStaff").append('<li class="editable" id="thirdAdvantage"></li>');
+            editor.addElements('.editable');
+            $("#przyciskiSecond").css("width", "120px")
+            $('#add_adv_buttonek').toggle();
+        }
+    });
+
+    $('#delete_adv_buttonek').on('click', function () {
+        var count = $(".listOfStaff li").length;
+        console.log(count);
+        if(count==3){
+            $("#thirdAdvantage").remove();
+            $("#przyciskiSecond").css("width", "260px")
+            $("#add_adv_buttonek").css("margin-right", "20px")
+            $('#add_adv_buttonek').toggle();
+        }
+        else if (count==2){
+            $("#secondAdvantage").remove();
+            $("#przyciskiSecond").css("width", "120px")
+            $("#add_adv_buttonek").css("margin-right", "0px")
+            $('#delete_adv_buttonek').toggle();
+        }
     });
 
     // $('#edit_name').toggleClass("namik");

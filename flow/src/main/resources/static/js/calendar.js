@@ -336,19 +336,21 @@ function getPosition(s){
 }
 
 function loadAdvAndCons(goalId) {
+    var firstAdvantage = value[1][goalId].firstAdvantage;
+    var secondAdvantage = value[1][goalId].secondAdvantage;
+    var thirdAdvantage = value[1][goalId].thirdAdvantage;
+
     $("#firstAdvantage").html(value[1][goalId].firstAdvantage);
+
+    function isBlank(secondAdvantage) {
+        return (!str || /^\s*$/.test(str));
+    }
     $("#secondAdvantage").html(value[1][goalId].secondAdvantage);
     $("#thirdAdvantage").html(value[1][goalId].thirdAdvantage);
-    $("#firstConsequence").html(value[1][goalId].firstConsequence);
-    $("#secondConsequence").html(value[1][goalId].secondConsequence);
-    $("#thirdConsequence").html(value[1][goalId].thirdConsequence);
 
     $("#firstAdvantage").attr("data-placeholder", "");
     $("#secondAdvantage").attr("data-placeholder", "");
     $("#thirdAdvantage").attr("data-placeholder", "");
-    $("#firstConsequence").attr("data-placeholder", "");
-    $("#secondConsequence").attr("data-placeholder", "");
-    $("#thirdConsequence").attr("data-placeholder", "");
 }
 
 function loadGoals(){
