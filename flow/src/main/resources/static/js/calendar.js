@@ -336,21 +336,40 @@ function getPosition(s){
 }
 
 function loadAdvAndCons(goalId) {
+    retrieveValue();
     var firstAdvantage = value[1][goalId].firstAdvantage;
     var secondAdvantage = value[1][goalId].secondAdvantage;
     var thirdAdvantage = value[1][goalId].thirdAdvantage;
+    var tablica = [firstAdvantage, secondAdvantage, thirdAdvantage]
 
-    $("#firstAdvantage").html(value[1][goalId].firstAdvantage);
+    tablica.forEach()
 
-    function isBlank(secondAdvantage) {
-        return (!str || /^\s*$/.test(str));
+    function returnValuesss(element, index, array){
+
     }
-    $("#secondAdvantage").html(value[1][goalId].secondAdvantage);
-    $("#thirdAdvantage").html(value[1][goalId].thirdAdvantage);
 
-    $("#firstAdvantage").attr("data-placeholder", "");
-    $("#secondAdvantage").attr("data-placeholder", "");
-    $("#thirdAdvantage").attr("data-placeholder", "");
+    if(secondAdvantage)
+    {
+        $(".listOfStaff").html('<li class="editable" id="firstAdvantage" data-placeholder=""></li><li class="editable" id="secondAdvantage" data-placeholder=""></li>');
+        $("#firstAdvantage").html(firstAdvantage);
+        $("#secondAdvantage").html(secondAdvantage);
+    }
+    else{
+        $(".listOfStaff").html('<li class="editable" id="firstAdvantage" data-placeholder=""></li>');
+        $("#firstAdvantage").html(firstAdvantage);
+    }
+
+    if(thirdAdvantage)
+    {
+        $(".listOfStaff").html('<li class="editable" id="firstAdvantage" data-placeholder=""></li><li class="editable" id="secondAdvantage" data-placeholder=""></li><li class="editable" id="thirdAdvantage" data-placeholder=""></li>');
+        $("#firstAdvantage").html(firstAdvantage);
+        $("#secondAdvantage").html(secondAdvantage);
+        $("#thirdAdvantage").html(thirdAdvantage);
+    }
+    else{
+        $(".listOfStaff").html('<li class="editable" id="firstAdvantage" data-placeholder=""></li>');
+        $("#firstAdvantage").html(firstAdvantage);
+    }
 }
 
 function loadGoals(){
@@ -499,7 +518,6 @@ function onMinusClick(target, event) {
     makeAreChart();
     event.stopPropagation();
 }
-
 
 
 function GetThisHidden(){
@@ -788,6 +806,8 @@ function setNextGoal(){
     var id = months.indexOf(month_name);
 
     retrieveNewData(id, year, "nx");
+    //"nx"
+    //getGoalId(value[1][actual_goal_id.innerHTML].position)
 }
 
 function setPreviousGoal(){
@@ -798,6 +818,7 @@ function setPreviousGoal(){
     var id = months.indexOf(month_name);
 
     retrieveNewData(id, year, "pr");
+    //"pr"
 }
 
 

@@ -393,7 +393,10 @@ $(document).ready(function () {
         }
     });
 
-    // $('#edit_name').toggleClass("namik");
-    // $('#edit_name').toggleClass("namikTheSecond");
+    $(document).click(function(event) {
+        if(!$(event.target).closest('.day').length) {
+            GetThisHidden();
+        }
+    });
 
 });
