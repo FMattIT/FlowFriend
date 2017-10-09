@@ -416,7 +416,7 @@ i:hover{
 }
 
 .goal_name{
-  width: 84%;
+  width: 92%;
   height: 100%;
   vertical-align: middle;
   text-align: center;
@@ -434,31 +434,8 @@ i:hover{
   padding-right: 5%;
 }
 
-.delete_option{
-  width: 8%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  font-size: 28px;
-  font-family: Montserrat;
-  font-weight: bold;
-  border-left: 2px solid rgba(0, 0, 0, .3);
-}
-
 .slide_goal_id{
   display: none;
-}
-
-.delete_option{
-  color: #f44242;
-  transition: 0.5s !important;
-
-  &:hover{
-    background-color: #f44242;
-    color: white;
-  }
 }
 
 .edit_option{
@@ -674,21 +651,33 @@ textarea{
 
 .paneElement {
   width: 100%;
-  min-height: 158px;
+  min-height: 25%;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
   margin: 0 auto;
   text-align: center;
   font-family: Montserrat;
   font-size: 20px;
-  padding: 25px 50px 5px 50px;
+  padding: 40px 50px 5px 50px;
+}
+
+.paneElementOptions {
+  width: 100%;
+  height: 25%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 20px;
 }
 
 .smallPaneElement {
   width: 25%;
+  color: #34495e;
   height: 100%;
   line-height: 100%;
   text-align: center;
   float: left;
-  font-size: 60px;
-  padding-top: 50px;
+  font-size: 80px;
+  padding-top: 8%;
+  border-right: 1px solid #34495e;
 }

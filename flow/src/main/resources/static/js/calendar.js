@@ -384,15 +384,10 @@ function loadGoals(){
         var goal_name_span = document.createElement('span');
         goal_name.className = "goal_name";
         goal_name.innerHTML = value[1][goal].name;
-        var delete_option = document.createElement('div');
-        delete_option.className = "delete_option";
-        delete_option.innerHTML = "<i class='fa fa-trash' aria-hidden='true'></i>";
-        delete_option.setAttribute("onclick", "deleteGoalFunc(this, event)");
         var slide = document.createElement('div');
         slide.className = "slide";
         slide.append(goal_grip);
         slide.append(goal_name);
-        slide.append(delete_option);
         var slide_id = document.createElement('div');
         slide_id.innerHTML = goal;
         slide_id.className = 'slide_goal_id';
