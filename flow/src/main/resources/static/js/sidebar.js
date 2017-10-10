@@ -105,6 +105,11 @@ function makeChart(type){
     var ctx = document.getElementById('myChart').getContext('2d');
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
+        options:{
+            legend:{
+                display: false
+            }
+        },
         data: {
             datasets: [{
                 data: [getChoicesCount("TICK", type), getChoicesCount("YELLOWTICK", type), getChoicesCount("CROSS", type), getChoicesCount("MINUS", type)],
@@ -391,6 +396,24 @@ $(document).ready(function () {
             $("#add_adv_buttonek").css("margin-right", "0px")
             $('#delete_adv_buttonek').toggle();
         }
+    });
+
+    $('.fa.fa-info-circle').on('click', function () {
+        $('#infoinfo').css("display", "block");
+        $('#infopiechart').css("display", "none");
+        $('#infoareachart').css("display", "none");
+    });
+
+    $('.fa.fa-pie-chart').on('click', function () {
+        $('#infoinfo').css("display", "none");
+        $('#infopiechart').css("display", "block");
+        $('#infoareachart').css("display", "none");
+    });
+
+    $('.fa.fa-line-chart').on('click', function () {
+        $('#infoinfo').css("display", "none");
+        $('#infopiechart').css("display", "none");
+        $('#infoareachart').css("display", "block");
     });
 
     $(document).click(function(event) {

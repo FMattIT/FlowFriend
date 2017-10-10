@@ -69,54 +69,70 @@
     <div class="calendar_goals">
         <div class="list_goals"></div>
     </div>
+
     <div class="info">
-        <div class="paneElement" >
-            <div id="newEditLabel">NAZWA CELU:</div>
-            <form id='edit_formek' method='post' th:action='@{/calendar/editGoal}'>
-            <div id='edit_name' class="namikTheSecond" maxlength="170" spellcheck="true"></div>
-                <div id="przyciski">
-                    <input id='edit_buttonek' type='submit' value='ZAPISZ'/>
-                    <input id='edit_buttonek_second' type='button' value='EDYTUJ'/>
-                    <input id='deletik' type='button' value='USUŃ'/>
-                </div>
-            <div class="add_error">Maksymalna ilość znaków wynosi 170!</div>
-            </form>
-        </div>
 
-        <div class="paneElement">
-            <div class="label_options">DNI, W KTÓRYCH CEL NIE OBOWIĄZUJE:</div>
-                <div id="off_options">
-                    <div class="off_option" id="firstDay" onclick="putSelectable(this); updateMinusDay('firstDay', this);">PN</div>
-                    <div class="off_option" id="secondDay" onclick="putSelectable(this); updateMinusDay('secondDay', this);">WT</div>
-                    <div class="off_option" id="thirdDay" onclick="putSelectable(this); updateMinusDay('thirdDay', this);">ŚR</div>
-                    <div class="off_option" id="fourthDay" onclick="putSelectable(this); updateMinusDay('fourthDay', this);">CZ</div>
-                    <div class="off_option" id="fifthDay" onclick="putSelectable(this); updateMinusDay('fifthDay', this);">PT</div>
-                    <div class="off_option" id="sixthDay" onclick="putSelectable(this); updateMinusDay('sixthDay', this);">SO</div>
-                    <div class="off_option" id="seventhDay" onclick="putSelectable(this); updateMinusDay('seventhDay', this);">ND</div>
-                        <div style="clear: both;">
+        <div id="infoinfo" style="width: 100%; height: 80%; display: block;">
+            <div class="paneElement" >
+                <div id="newEditLabel">NAZWA CELU:</div>
+                <form id='edit_formek' method='post' th:action='@{/calendar/editGoal}'>
+                <div id='edit_name' class="namikTheSecond" maxlength="170" spellcheck="true"></div>
+                    <div id="przyciski">
+                        <input id='edit_buttonek' type='submit' value='ZAPISZ'/>
+                        <input id='edit_buttonek_second' type='button' value='EDYTUJ'/>
+                        <input id='deletik' type='button' value='USUŃ'/>
+                    </div>
+                <div class="add_error">Maksymalna ilość znaków wynosi 170!</div>
+                </form>
+            </div>
+
+            <div class="paneElement">
+                <div class="label_options">DNI, W KTÓRYCH CEL NIE OBOWIĄZUJE:</div>
+                    <div id="off_options">
+                        <div class="off_option" id="firstDay" onclick="putSelectable(this); updateMinusDay('firstDay', this);">PN</div>
+                        <div class="off_option" id="secondDay" onclick="putSelectable(this); updateMinusDay('secondDay', this);">WT</div>
+                        <div class="off_option" id="thirdDay" onclick="putSelectable(this); updateMinusDay('thirdDay', this);">ŚR</div>
+                        <div class="off_option" id="fourthDay" onclick="putSelectable(this); updateMinusDay('fourthDay', this);">CZ</div>
+                        <div class="off_option" id="fifthDay" onclick="putSelectable(this); updateMinusDay('fifthDay', this);">PT</div>
+                        <div class="off_option" id="sixthDay" onclick="putSelectable(this); updateMinusDay('sixthDay', this);">SO</div>
+                        <div class="off_option" id="seventhDay" onclick="putSelectable(this); updateMinusDay('seventhDay', this);">ND</div>
+                            <div style="clear: both;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="paneElement">
+                <div class="label_options">KORZYŚCI Z REALIZACJI CELU:</div>
+                    <ul class="listOfStaff">
+                        <li class="editable" id="firstAdvantage" data-placeholder="">Tutaj wpisz...</li>
+                    </ul>
+                <div id="przyciskiSecond">
+                    <input id="add_adv_buttonek" type='button' value='DODAJ'/>
+                    <input id="delete_adv_buttonek" type='button' value='USUŃ'/>
                 </div>
             </div>
         </div>
 
-        <div class="paneElement">
-            <div class="label_options">KORZYŚCI Z REALIZACJI CELU:</div>
-                <ul class="listOfStaff">
-                    <li class="editable" id="firstAdvantage" data-placeholder="">Tutaj wpisz...</li>
-                </ul>
-            <div id="przyciskiSecond">
-                <input id="add_adv_buttonek" type='button' value='DODAJ'/>
-                <input id="delete_adv_buttonek" type='button' value='USUŃ'/>
-            </div>
+        <div id="infopiechart" style="width: 100%; height: 80%; display: none; padding: 4% 7% 7% 7%;">
+            <select id='chart_changer' onchange="makeChart($(this).val())">
+                <option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option>
+                <option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option>
+            </select>
+            <div id="canvek"><canvas id='myChart'></canvas></div>
+        </div>
+
+        <div id="infoareachart" style="width: 100%; height: 80%; display: none;">
+            <div id="area_chart"><canvas id='myChart1'></canvas></div>
         </div>
 
         <div class="paneElementOptions">
+            <div class="smallPaneElement"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
             <div class="smallPaneElement"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
             <div class="smallPaneElement"><i class="fa fa-line-chart" aria-hidden="true"></i></div>
-            <div class="smallPaneElement"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
             <div class="smallPaneElement"><i class="fa fa-sticky-note" aria-hidden="true"></i></div>
         </div>
-
     </div>
+
 
 </div>
 </body>

@@ -200,12 +200,14 @@ i:hover{
   margin: 0 auto;
   text-align: center;
   font-family: Montserrat;
-  font-size: 20px;
+  font-size: 18px;
   height: auto;
   padding: 3px;
-  color: rgb(41, 128, 185);
+  color: #34495e;
   font-weight: bold;
   display: block;
+  border: 2px solid #34495e;
+  margin-bottom: 10px;
 }
 
 //#name{
@@ -651,18 +653,18 @@ textarea{
 
 .paneElement {
   width: 100%;
-  min-height: 25%;
+  height: calc(100% / 3);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
   margin: 0 auto;
   text-align: center;
   font-family: Montserrat;
   font-size: 20px;
-  padding: 40px 50px 5px 50px;
+  padding: 50px 50px 5px 50px;
 }
 
 .paneElementOptions {
   width: 100%;
-  height: 25%;
+  height: 20%;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .20), 0 2px 2px rgba(0, 0, 0, .15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
   margin: 0 auto;
   text-align: center;
@@ -678,6 +680,18 @@ textarea{
   text-align: center;
   float: left;
   font-size: 80px;
-  padding-top: 8%;
-  border-right: 1px solid #34495e;
+  margin: 0 auto;
+
+  display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox;  /* TWEENER - IE 10 */
+  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+
+  justify-content: center;
+  align-items: center;
+
+  &:hover{
+    font-size: 90px;
+  }
 }
+
