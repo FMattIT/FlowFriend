@@ -1,8 +1,12 @@
 package pl.flow.dao.entities.calendar;
 
+import org.hibernate.annotations.*;
 import pl.flow.dao.entities.User;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**

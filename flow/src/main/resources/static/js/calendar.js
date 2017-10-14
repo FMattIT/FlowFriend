@@ -48,6 +48,7 @@ var days_in_month = ['31', '28', '31', '30', '31', '30', '31', '31', '30', '31',
 var years = [];
 years.push(new Date().getFullYear());
 years.push(new Date().getFullYear()+1);
+years.push(new Date().getFullYear()+2);
 
 
 function dataRetriever(dane, month_id, year, goal_init) {
@@ -318,7 +319,6 @@ function createNewCalendar(value, month_id, year, goal_init) {
     retrieveMinusTiles();
     $('#edit_name').text(value[1][actual_goal_id.innerHTML].name);
     makeChart($("#chart_changer").val());
-    makeAreChart();
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     // loadAdvAndCons(actual_goal_id.innerHTML);
     }
@@ -420,10 +420,9 @@ function onTickClick(target, event) {
     data["month"]=id;
     data["year"]=year;
 
-    saveTileToDB(data, 100);
+    saveTileToDB(data);
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart($("#chart_changer").val());
-    makeAreChart();
     event.stopPropagation();
 }
 
@@ -449,10 +448,9 @@ function onYellowTickClick(target, event) {
     data["month"]=id;
     data["year"]=year;
 
-    saveTileToDB(data, 50);
+    saveTileToDB(data);
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart($("#chart_changer").val());
-    makeAreChart();
     event.stopPropagation();
 }
 
@@ -478,10 +476,9 @@ function onCrossClick(target, event) {
     data["month"]=id;
     data["year"]=year;
 
-    saveTileToDB(data, -50);
+    saveTileToDB(data);
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart($("#chart_changer").val());
-    makeAreChart();
     event.stopPropagation();
 }
 
@@ -507,10 +504,9 @@ function onMinusClick(target, event) {
     data["month"]=id;
     data["year"]=year;
 
-    saveTileToDB(data, 0);
+    saveTileToDB(data);
     retrieveActualCount(value[1][actual_goal_id.innerHTML]);
     makeChart($("#chart_changer").val());
-    makeAreChart();
     event.stopPropagation();
 }
 
@@ -580,7 +576,7 @@ function retrieveActualCount(value){
     });
 }
 
-function saveTileToDB(data, strength) {
+function saveTileToDB(data) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -596,33 +592,6 @@ function saveTileToDB(data, strength) {
             if((typeof(dane) == 'undefined') || (dane == null)){
                 console.log("blad wprowadzenia kafelka")
             }
-        }
-    });
-
-    var day = data.day;
-    var header = $(".actual_date").text();
-    var words = header.split(' ');
-    var month_name = words[0];
-    var year = words[1];
-    var id = months.indexOf(month_name);
-
-    var dataData = {};
-    dataData["date"]=year+"-"+id+"-"+day;
-    dataData["goalId"]=value[1][actual_goal_id.innerHTML];
-    dataData["strength"]=strength;
-
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/calendar/saveStrength",
-        data: JSON.stringify(dataData),
-        dataType: 'json',
-        async: false,
-        success: function (dane) {
-            console.log("passed");
-        },
-        error: function (e) {
-            console.log("ERROR: ", e);
         }
     });
 }

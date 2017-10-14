@@ -42,9 +42,6 @@ public class CalendarController {
     @Autowired
     MinusTileService minusTileService;
 
-    @Autowired
-    GoalStrengthService goalStrengthService;
-
     @RequestMapping(value = "/calendar")
     public String home() {
         return "calendar";
@@ -138,7 +135,6 @@ public class CalendarController {
     public List<Goal> deleteGoal(@RequestBody Goal goal, Principal principal) {
         User user = usersService.getUserByUsername(principal.getName());
         goal.setUserId(user);
-        goalStrengthService.deleteRows(goal);
         tileService.delete(goal);
         minusTileService.delete(goal);
         goalService.delete(goal);
@@ -176,19 +172,4 @@ public class CalendarController {
         return tile;
     }
 
-    @RequestMapping(value="/calendar/saveStrength", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public GoalStrength saveStrength(@RequestBody GoalStrength goalStrength, Principal principal) {
-        User user = usersService.getUserByUsername(principal.getName());
-        goalStrength.setUserId(user);
-        goalStrength.setStrength(Long.parseLong(goalStrengthService.getPreviousGoalStrength(goalStrength).toString())+goalStrength.getStrength());
-        goalStrengthService.save(goalStrength);
-        return goalStrength;
-    }
-
-    @RequestMapping(value="/calendar/returnStrengths", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public List<GoalStrength> returnStrengths(@RequestBody Goal goal, Principal principal) {
-        return goalStrengthService.getGoalStrengthsList(goal);
-    }
 }

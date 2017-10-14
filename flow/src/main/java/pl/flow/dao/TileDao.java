@@ -23,18 +23,18 @@ public class TileDao {
     private EntityManager entityManager;
 
     public List<Tile> getTile(Goal goal){
-        return entityManager.createQuery("SELECT t FROM Tile t WHERE t.goalId = ?", Tile.class)
-                .setParameter(1, goal).getResultList();
+        return entityManager.createQuery("SELECT t FROM Tile t WHERE t.goalId = :goalId", Tile.class)
+                .setParameter("goalId", goal).getResultList();
     }
 
     public Tile getTileToMerge(Tile tile){
         try{
-        return entityManager.createQuery("SELECT t FROM Tile t WHERE t.day = ? AND t.month = ? AND t.year = ? AND t.goalId = ? AND t.userId = ?", Tile.class)
-                .setParameter(1, tile.getDay())
-                .setParameter(2, tile.getMonth())
-                .setParameter(3, tile.getYear())
-                .setParameter(4, tile.getGoalId())
-                .setParameter(5, tile.getUserId()).getSingleResult();
+        return entityManager.createQuery("SELECT t FROM Tile t WHERE t.day = :day AND t.month = :month AND t.year = :year AND t.goalId = :goalId AND t.userId = :userId", Tile.class)
+                .setParameter("day", tile.getDay())
+                .setParameter("month", tile.getMonth())
+                .setParameter("year", tile.getYear())
+                .setParameter("goalId", tile.getGoalId())
+                .setParameter("userId", tile.getUserId()).getSingleResult();
         }
         catch(Exception x){
             return null;
@@ -79,20 +79,16 @@ public class TileDao {
 
     public Object getActualCount(Goal goal){
         return entityManager.createNativeQuery("SELECT COUNT(*) FROM public.tiles\n" +
-                "WHERE EXISTS (SELECT 1 FROM public.tiles WHERE goal_id_id = ? AND flag = 'CROSS') AND\n" +
+                "WHERE EXISTS (SELECT 1 FROM public.tiles WHERE goal_id_id = :goal_id AND flag = 'CROSS') AND\n" +
                 "(\n" +
-                "  CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT)  > (SELECT CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT) FROM public.tiles WHERE goal_id_id = ? AND flag = 'CROSS' ORDER BY id DESC LIMIT 1)\n" +
+                "  CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT)  > (SELECT CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT) FROM public.tiles WHERE goal_id_id = :goal_id AND flag = 'CROSS' ORDER BY id DESC LIMIT 1)\n" +
                 ")\n" +
-                "AND goal_id_id = ? AND (flag = 'TICK' OR flag = 'YELLOWTICK')\n" +
-                "OR NOT EXISTS (SELECT 1 FROM public.tiles WHERE goal_id_id = ? AND flag = 'CROSS')\n" +
-                "AND goal_id_id = ?\n" +
+                "AND goal_id_id = :goal_id AND (flag = 'TICK' OR flag = 'YELLOWTICK')\n" +
+                "OR NOT EXISTS (SELECT 1 FROM public.tiles WHERE goal_id_id = :goal_id AND flag = 'CROSS')\n" +
+                "AND goal_id_id = :goal_id\n" +
                 "AND (flag = 'TICK' OR flag = 'YELLOWTICK')\n" +
                 "\n")
-                .setParameter(1, goal)
-                .setParameter(2, goal)
-                .setParameter(3, goal)
-                .setParameter(4, goal)
-                .setParameter(5, goal)
+                .setParameter("goal_id", goal)
                 .getSingleResult();
     }
 
@@ -107,11 +103,11 @@ public class TileDao {
                     "            from public.tiles\n" +
                     "           ) t\n" +
                     "      where flag = 'TICK'\n" +
-                    "      AND goal_id_id=?\n" +
+                    "      AND goal_id_id=:goal_id\n" +
                     "      group by goal_id_id, user_id_id, flag, (seqnum_sc - seqnum_scg)\n" +
                     "     ) scg\n" +
                     "order by goal_id_id, user_id_id, cnt desc) as cnt")
-                    .setParameter(1, goal)
+                    .setParameter("goal_id", goal)
                     .getSingleResult();
         }
         catch(Exception e){

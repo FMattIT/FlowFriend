@@ -673,13 +673,13 @@ textarea{
 }
 
 .smallPaneElement {
-  width: 25%;
+  width: calc(100% / 3);
   color: #34495e;
   height: 100%;
   line-height: 100%;
   text-align: center;
   float: left;
-  font-size: 80px;
+  font-size: 90px;
   margin: 0 auto;
 
   display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
@@ -691,7 +691,7 @@ textarea{
   align-items: center;
 
   &:hover{
-    font-size: 90px;
+    font-size: 100px;
   }
 }
 

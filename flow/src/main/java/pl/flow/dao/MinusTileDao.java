@@ -35,18 +35,18 @@ public class MinusTileDao {
     }
 
     public Object getMinusTile(Goal goal){
-        return entityManager.createNativeQuery("SELECT first_day, second_day, third_day, fourth_day, fifth_day, sixth_day, seventh_day FROM public.minus_tiles WHERE goal_id_id=? AND user_id_id=?")
-                .setParameter(1, goal)
-                .setParameter(2, goal.getUserId())
+        return entityManager.createNativeQuery("SELECT first_day, second_day, third_day, fourth_day, fifth_day, sixth_day, seventh_day FROM public.minus_tiles WHERE goal_id_id = :goal_id_id AND user_id_id = :user_id_id")
+                .setParameter("goal_id_id", goal)
+                .setParameter("user_id_id", goal.getUserId())
                 .getSingleResult(); }
 
     public List<MinusTile> getMinusTilesList(){
         return entityManager.createQuery("SELECT t FROM MinusTile t", MinusTile.class).getResultList(); }
 
     public MinusTile getMinusTileToMerge(MinusTile minusTile){
-        return entityManager.createQuery("SELECT t FROM MinusTile t WHERE t.goalId = ? AND t.userId = ?", MinusTile.class)
-                .setParameter(1, minusTile.getGoalId())
-                .setParameter(2, minusTile.getUserId()).getSingleResult();
+        return entityManager.createQuery("SELECT t FROM MinusTile t WHERE t.goalId = :goalId AND t.userId = :userId", MinusTile.class)
+                .setParameter("goalId", minusTile.getGoalId())
+                .setParameter("userId", minusTile.getUserId()).getSingleResult();
     }
 
     public MinusTile save(MinusTile minusTile){
@@ -61,9 +61,9 @@ public class MinusTileDao {
     }
 
     public Object update(MinusTile minusTile, String day, boolean state){
-        return entityManager.createNativeQuery("UPDATE public.minus_tiles WHERE goalId=? AND userId=? SET "+day+"=?")
-                .setParameter(1, minusTile.getGoalId())
-                .setParameter(2, minusTile.getUserId())
-                .setParameter(3, state).getSingleResult();
+        return entityManager.createNativeQuery("UPDATE public.minus_tiles WHERE goalId = :goalId AND userId = :userId SET "+day+" = :state")
+                .setParameter("goalId", minusTile.getGoalId())
+                .setParameter("userId", minusTile.getUserId())
+                .setParameter("state", state).getSingleResult();
     }
 }

@@ -33,13 +33,13 @@ public class UsersDao {
         Boolean enabled = true;
         String authority = user.getAuthority();
         entityManager.createNativeQuery(
-                "INSERT INTO users (enabled, authority, password, confirm_password, username, email) VALUES (?, ?, ?, ?, ?, ?)")
-                .setParameter(1, enabled)
-                .setParameter(2, authority)
-                .setParameter(3, password)
-                .setParameter(4, confirmPassword)
-                .setParameter(5, username)
-                .setParameter(6, email)
+                "INSERT INTO users (enabled, authority, password, confirm_password, username, email) VALUES (:enabled, :authority, :password, :confirm_password, :username, :email)")
+                .setParameter("enabled", enabled)
+                .setParameter("authority", authority)
+                .setParameter("password", password)
+                .setParameter("confirm_password", confirmPassword)
+                .setParameter("username", username)
+                .setParameter("email", email)
                 .executeUpdate();
     }
 
@@ -50,14 +50,14 @@ public class UsersDao {
     }
 
     public Object checkIfUserExistsByLogin(String login){
-        return entityManager.createNativeQuery("SELECT COUNT(*) FROM public.users WHERE username=?")
-                .setParameter(1, login)
+        return entityManager.createNativeQuery("SELECT COUNT(*) FROM public.users WHERE username = :username")
+                .setParameter("username", login)
                 .getSingleResult();
     }
 
     public Object checkIfUserExistsByEmail(String email){
-        return entityManager.createNativeQuery("SELECT COUNT(*) FROM public.users WHERE email=?")
-                .setParameter(1, email)
+        return entityManager.createNativeQuery("SELECT COUNT(*) FROM public.users WHERE email = :email")
+                .setParameter("email", email)
                 .getSingleResult();
     }
 }

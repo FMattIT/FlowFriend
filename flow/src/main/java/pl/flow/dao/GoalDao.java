@@ -32,8 +32,8 @@ public class GoalDao {
         return entityManager.createQuery("SELECT g FROM Goal g ORDER BY g.id ASC", Goal.class).getResultList(); }
 
     public List<Goal> getUserGoalsList(User user){
-        return entityManager.createNativeQuery("SELECT * FROM public.goals WHERE user_id_id=?")
-                .setParameter(1, user)
+        return entityManager.createNativeQuery("SELECT * FROM public.goals WHERE user_id_id = :user_id_id")
+                .setParameter("user_id_id", user)
                 .getResultList(); }
 
     public void delete(Goal goal){
