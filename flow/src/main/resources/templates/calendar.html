@@ -2,21 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/style/bar.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar.css}" />
+    <title>Kalendarz celów!</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.ui.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/style/animate.css}" />
-    <script type="text/javascript" th:src="@{/js/calendar.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/sidebar.css}" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
 </head>
-<body onload="retrieveNewData(null, null, 0)" >
-<!--onselectstart="return false;"-->
+<body>
+    <div class="sidebar">
+        <div class="sidebar__logo"><i class="fa fa-meetup" aria-hidden="true"></i></div>
+        <div class="sidebar__options">
+            <div class="sidebar__options_option"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
+            <div class="sidebar__options_option"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
+        </div>
+        <div class="sidebar__pages"></div>
+        <div class="sidebar__user_options"><i class="fa fa-user-o" aria-hidden="true"></i></div>
+    </div>
 </body>
 </html>

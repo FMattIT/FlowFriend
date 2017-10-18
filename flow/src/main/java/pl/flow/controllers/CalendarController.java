@@ -135,7 +135,7 @@ public class CalendarController {
     public List<Goal> deleteGoal(@RequestBody Goal goal, Principal principal) {
         User user = usersService.getUserByUsername(principal.getName());
         goal.setUserId(user);
-        tileService.delete(goal);
+//        tileService.delete(goal);
         minusTileService.delete(goal);
         goalService.delete(goal);
 

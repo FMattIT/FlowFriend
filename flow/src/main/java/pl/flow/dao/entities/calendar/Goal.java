@@ -1,6 +1,7 @@
 package pl.flow.dao.entities.calendar;
 
-import org.hibernate.annotations.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 import pl.flow.dao.entities.User;
 
 import javax.persistence.*;
@@ -8,10 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
 
 /**
  * Created by Admin on 18.06.2017.
@@ -111,4 +109,5 @@ public class Goal {
     public void setThirdAdvantage(String thirdAdvantage) {
         this.thirdAdvantage = thirdAdvantage;
     }
+
 }

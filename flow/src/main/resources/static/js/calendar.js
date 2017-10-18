@@ -169,13 +169,13 @@ function createNewCalendar(value, month_id, year, goal_init) {
 
         }
         else if(goal_init=="pr") {
-            if((typeof(value[1][Number(actual_goal_id.innerHTML)-1]) == 'undefined')){
-                goal_name = value[1][value[1].length-1].name;
-                goal_id = value[1].length-1;
-            }else{
-                goal_name = value[1][Number(actual_goal_id.innerHTML)-1].name;
-                goal_id = Number(actual_goal_id.innerHTML)-1;
-            }
+                if((typeof(value[1][Number(actual_goal_id.innerHTML)-1]) == 'undefined')){
+                    goal_name = value[1][value[1].length-1].name;
+                    goal_id = value[1].length-1;
+                }else{
+                    goal_name = value[1][Number(actual_goal_id.innerHTML)-1].name;
+                    goal_id = Number(actual_goal_id.innerHTML)-1;
+                }
         }
         else if(!isNaN(goal_init)){
             goal_name = value[1][Number(goal_init)].name;
@@ -229,21 +229,21 @@ function createNewCalendar(value, month_id, year, goal_init) {
     table.appendChild(tr);
 
     for(rows=1; rows<=6; rows++) {
-        var tr = document.createElement('tr');
-        for(days=1; days <=7; days++){
-            if(rows==1 && days<=new Date(this_year, this_month_id, 1).getDay()){
-                if(days==new Date(this_year, this_month_id, 1).getDay()){
-                    day=1;
-                }
-                else{
+    var tr = document.createElement('tr');
+    for(days=1; days <=7; days++){
+        if(rows==1 && days<=new Date(this_year, this_month_id, 1).getDay()){
+            if(days==new Date(this_year, this_month_id, 1).getDay()){
+                day=1;
+            }
+            else{
                 var td = document.createElement('td');
                 td.innerHTML = new Date(this_year, this_month_id, 0).getDate()+days-new Date(this_year, this_month_id, 1).getDay()+1;
-                    td.className = "day empty";
-                    tr.appendChild(td);
-                    table.appendChild(tr);
-                    day++
-                    continue;
-                }
+                td.className = "day empty";
+                tr.appendChild(td);
+                table.appendChild(tr);
+                day++
+                continue;
+            }
             }
 
             if(day>daysss && day<42){
