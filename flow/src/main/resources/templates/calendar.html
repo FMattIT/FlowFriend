@@ -11,6 +11,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.ui.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/style/animate.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/sidebar.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/others.css}" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
 </head>
@@ -30,6 +31,29 @@
             <div class="sidebar__pages_option"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
         </div>
         <div class="sidebar__user_options"><i class="fa fa-user-o" aria-hidden="true"></i></div>
+    </div>
+
+    <div class="block">
+        <div class="block__calendar">
+            <div class="block__calendar__goal_header"></div>
+            <div class="block__calendar__date_header"></div>
+            <div class="block__calendar__days"></div>
+            <div class="block__calendar__current_score"></div>
+            <div class="block__calendar__record_score"></div>
+        </div>
+        <div class="block__goals"></div>
+        <div class="block__options">
+            <div class="block__options__information">
+                <div class="information__goal_name"></div>
+                <div class="information__minus_days"></div>
+                <div class="information__advantages"></div>
+            </div>
+            <div class="block__options__chart">
+                <div class="forChart"></div>
+            </div>
+            <div class="block__options__notes"></div>
+            <div class="block__options__changer"></div>
+        </div>
     </div>
 </body>
 </html>
