@@ -12,6 +12,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style/animate.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/sidebar.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/others.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/calendar.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/goals.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/infos.css}" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
 </head>
@@ -35,24 +38,48 @@
 
     <div class="block">
         <div class="block__calendar">
-            <div class="block__calendar__goal_header"></div>
-            <div class="block__calendar__date_header"></div>
-            <div class="block__calendar__days"></div>
-            <div class="block__calendar__current_score"></div>
-            <div class="block__calendar__record_score"></div>
+            <div class="block__calendar__goal_header">
+                <div class="goal_header__previous_arrow"></div>
+                <div class="goal_header__goal_name"></div>
+                <div class="goal_header__next_arrow"></div>
+            </div>
+            <div class="block__calendar__date_header">
+                <div class="date_header__previous_arrow"></div>
+                <div class="date_header__date"></div>
+                <div class="date_header__next_arrow"></div>
+            </div>
+            <div class="block__calendar__days">
+                <table>
+                    <tr>
+                        <td>PN</td>
+                        <td>WT</td>
+                        <td>ŚR</td>
+                        <td>CZ</td>
+                        <td>PT</td>
+                        <td>SO</td>
+                        <td>ND</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="block__calendar__current_score">
+                <span class="">0</span> <span class="">TWÓJ WYNIK</span>
+            </div>
+            <div class="block__calendar__record_score">
+                <span class="">0</span> <span class="">TWÓJ REKORD</span>
+            </div>
         </div>
         <div class="block__goals"></div>
-        <div class="block__options">
-            <div class="block__options__information">
+        <div class="block__others">
+            <div class="block__others__information">
                 <div class="information__goal_name"></div>
-                <div class="information__minus_days"></div>
-                <div class="information__advantages"></div>
+                <div class="information__goal_off_days"></div>
+                <div class="information__goal_advantages"></div>
             </div>
-            <div class="block__options__chart">
+            <div class="block__others__chart">
                 <div class="forChart"></div>
             </div>
-            <div class="block__options__notes"></div>
-            <div class="block__options__changer"></div>
+            <div class="block__others__notes"></div>
+            <div class="block__others__changer"></div>
         </div>
     </div>
 </body>

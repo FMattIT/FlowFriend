@@ -1,5 +1,62 @@
 .block__calendar {
-  width: 40%;
+  width: 29%;
   height: 100%;
   border-right: 1px solid black;
+  float: left;
+  margin-right: 0.5%;
+
+  .block__calendar__goal_header {
+    width: 100%;
+    height: 18%;
+    border-bottom: 1px solid black;
+
+    .goal_header__previous_arrow {
+
+    }
+
+    .goal_header__goal_name {
+
+    }
+
+    .goal_header__next_arrow {
+
+    }
+  }
+
+  .block__calendar__date_header {
+    width: 100%;
+    height: 10%;
+    border-bottom: 1px solid black;
+
+    .date_header__previous_arrow {
+
+    }
+
+    .date_header__date {
+
+    }
+
+    .date_header__next_arrow {
+
+    }
+  }
+
+  .block__calendar__days {
+    width: 100%;
+    height: 62%;
+    border-bottom: 1px solid black;
+  }
+
+  .block__calendar__current_score {
+    width: 50%;
+    height: 10%;
+    float: left;
+    border-right: 1px solid black;
+  }
+
+  .block__calendar__record_score {
+    width: 50%;
+    height: 10%;
+    float: left;
+  }
 }

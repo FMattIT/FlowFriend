@@ -1,0 +1,30 @@
+.block__others {
+  width: 35%;
+  height: 100%;
+  border-left: 1px solid black;
+  float: left;
+
+  .block__others__information {
+    display: block;
+    width: 100%;
+    height: 80%;
+  }
+
+  .block__others__chart {
+    display: none;
+    width: 100%;
+    height: 80%;
+  }
+
+  .block__others__notes {
+    display: none;
+    width: 100%;
+    height: 80%;
+  }
+
+  .block__others__changer {
+    width: 100%;
+    height: 20%;
+    border-top: 1px solid black;
+  }
+}
