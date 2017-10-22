@@ -4,22 +4,49 @@
   border-right: 1px solid black;
   float: left;
   margin-right: 0.5%;
+  //box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.15), 0px 1px 16px -3px rgba(24, 24, 28, 0.34);
 
   .block__calendar__goal_header {
     width: 100%;
     height: 18%;
     border-bottom: 1px solid black;
+    color: #34495e;
 
     .goal_header__previous_arrow {
-
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
     }
 
     .goal_header__goal_name {
-
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      height: 100%;
+      float: left;
+      font-size: 17px;
+      text-align: center;
+      line-height: 100%;
+      font-weight: bold;
     }
 
     .goal_header__next_arrow {
-
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
     }
   }
 
@@ -27,17 +54,43 @@
     width: 100%;
     height: 10%;
     border-bottom: 1px solid black;
+    color: #34495e;
 
     .date_header__previous_arrow {
-
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
     }
 
     .date_header__date {
-
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
+      font-weight: bold;
     }
 
     .date_header__next_arrow {
-
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
     }
   }
 
@@ -45,6 +98,25 @@
     width: 100%;
     height: 62%;
     border-bottom: 1px solid black;
+
+    .calendar__days__table {
+      width: 100%;
+      height: 100%;
+
+      .calendar__days__table__row {
+        height: calc(100% / 7);
+        width: 100%;
+
+        .day_cell {
+          width: calc(100% / 7);
+          height: auto;
+          text-align: center;
+          font-size: 24px;
+          font-weight: bold;
+          color: rgba(44, 44, 46, 0.4);
+        }
+      }
+    }
   }
 
   .block__calendar__current_score {
@@ -52,6 +124,10 @@
     height: 10%;
     float: left;
     border-right: 1px solid black;
+
+    .current_score_counter {
+      height: 100%;
+    }
   }
 
   .block__calendar__record_score {
