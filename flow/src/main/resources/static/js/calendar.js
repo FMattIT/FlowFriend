@@ -3,6 +3,45 @@
  */
     var value = null;
 
+var goal_header_reset = document.createElement('div');
+goal_header_reset.setAttribute('style', 'clear: both;');
+
+var date_header_reset = document.createElement('div');
+date_header_reset.setAttribute('style', 'clear: both;');
+
+var goal_header = document.createElement('div');
+goal_header.className = "goalHeader";
+var previous_goal = document.createElement('div');
+previous_goal.className = "previous_goal";
+previous_goal.innerHTML = "<i class='fa fa-chevron-left' aria-hidden='true'></i>";
+var actual_goal = document.createElement('div');
+actual_goal.className = "actual_goal";
+var actual_goal_id = document.createElement('div');
+actual_goal_id.style.cssText = "display:none;";
+actual_goal.append(actual_goal_id);
+var next_goal = document.createElement('div');
+next_goal.className = "next_goal";
+next_goal.innerHTML = "<i class='fa fa-chevron-right' aria-hidden='true'></i>";
+goal_header.append(previous_goal);
+goal_header.append(actual_goal);
+goal_header.append(next_goal);
+goal_header.append(goal_header_reset);
+
+var date_header = document.createElement('div');
+date_header.className = "dateHeader";
+var previous_date = document.createElement('div');
+previous_date.className = "previous_date";
+previous_date.innerHTML = "<i class='fa fa-chevron-left' aria-hidden='true'></i>";
+var actual_date = document.createElement('div');
+actual_date.className = "actual_date";
+var next_date = document.createElement('div');
+next_date.className = "next_date";
+next_date.innerHTML = "<i class='fa fa-chevron-right' aria-hidden='true'></i>";
+date_header.append(previous_date);
+date_header.append(actual_date);
+date_header.append(next_date);
+date_header.append(date_header_reset);
+
 var months = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
 var days_in_month = ['31', '28', '31', '30', '31', '30', '31', '31', '30', '31', '30', '31'];
 var years = [];
