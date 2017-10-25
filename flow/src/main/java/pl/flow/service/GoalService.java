@@ -41,4 +41,8 @@ public class GoalService {
         goalDao.delete(goal);
     }
 
+    public List<Goal> getGoals(User user){
+        return goalDao.getGoals(user);
+    }
+
 }

@@ -42,6 +42,14 @@ public class CalendarController {
     @Autowired
     MinusTileService minusTileService;
 
+    @RequestMapping(value="/calendar/requests/goals", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public List<Goal> getGoals(Principal principal) {
+        return goalService.getGoals(usersService.getUserByUsername(principal.getName()));
+    }
+
+
+
     @RequestMapping(value = "/calendar")
     public String home() {
         return "calendar";
@@ -139,12 +147,6 @@ public class CalendarController {
         minusTileService.delete(goal);
         goalService.delete(goal);
 
-        return goalService.getGoalsList();
-    }
-
-    @RequestMapping(value="/calendar/retrieveData/goals", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public List<Goal> retrieveGoals(Principal principal) {
         return goalService.getGoalsList();
     }
 

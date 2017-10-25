@@ -40,4 +40,9 @@ public class GoalDao {
         entityManager.remove(entityManager.merge(goal));
     }
 
+    public List<Goal> getGoals(User user){
+        return entityManager.createQuery("SELECT g FROM Goal g WHERE g.userId = :userId ORDER BY g.id ASC", Goal.class)
+                .setParameter("userId", user)
+                .getResultList(); }
+
 }
