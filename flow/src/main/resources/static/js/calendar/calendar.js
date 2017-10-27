@@ -39,22 +39,28 @@ Calendar.prototype.generateCalendar = function() {
 
     let currentlyCreatingDay = 1;
     let tableRowNumber;
-    let dayInRowNumber; //days
+    let rowDayNumber; //dayInRowNumber
     let table = $(".calendar__days__table");
     let today = new Date();
+    let dayOfWeek;
 
     for(tableRowNumber=1; tableRowNumber<=6; tableRowNumber++) {
-        var tr = document.createElement('tr');
-        tr.className = "calendar__days__table__row"
-        for(dayInRowNumber=1; dayInRowNumber <=7; dayInRowNumber++){
-            if(tableRowNumber==1 && dayInRowNumber<=new Date(this.currentYear, this.currentMonthId, 1).getDay()){
-                if(dayInRowNumber==new Date(this.currentYear, this.currentMonthId, 1).getDay()){
+
+        let tr = document.createElement('tr');
+        tr.className = "calendar__days__table__row";
+
+        for(rowDayNumber=1; rowDayNumber <=7; rowDayNumber++) {
+
+            //check if in row number one exist empty days
+            if(tableRowNumber===1 && rowDayNumber<=new Date(this.currentYear, this.currentMonthId, 1).getDay()){
+                if(rowDayNumber===new Date(this.currentYear, this.currentMonthId, 1).getDay()){
                     currentlyCreatingDay=1;
                 }
-                else{
+                else{ //create empty day on the row number one and exit if statement
                     var td = document.createElement('td');
-                    td.innerHTML = new Date(this.currentYear, this.currentMonthId, 0).getDate()+dayInRowNumber-new Date(this.currentYear, this.currentMonthId, 1).getDay()+1;
-                    td.className = "day_cell";
+                    td.innerHTML = new Date(this.currentYear, this.currentMonthId, 0).getDate()+rowDayNumber-new Date(this.currentYear, this.currentMonthId, 1).getDay()+1;
+                    td.classList.add("day_cell");
+                    td.classList.add("empty");
                     tr.appendChild(td);
                     table.append(tr);
                     currentlyCreatingDay++
@@ -62,24 +68,59 @@ Calendar.prototype.generateCalendar = function() {
                 }
             }
 
+
+            //generateEmptyDaysAtTheEnd
+
+            // function generateEmptyDayOnFirstRow(){
+            // var td = document.createElement('td');
+            // td.innerHTML = new Date(this.currentYear, this.currentMonthId, 0).getDate()+rowDayNumber-new Date(this.currentYear, this.currentMonthId, 1).getDay()+1;
+            // td.classList.add("day_cell");
+            // td.classList.add("empty");
+            // tr.appendChild(td);
+            // table.append(tr);
+            // currentlyCreatingDay++
+            // continue;
+                // }
+
+            // function generateEmptyDayOnLastRows(){
+            //     var td = document.createElement('td');
+            //     td.innerHTML = new Date(this.currentYear, this.currentMonthId+1, 1).getDate()+currentlyCreatingDay-this.daysInMonth-1;
+            //     td.classList.add("day_cell");
+            //     td.classList.add("empty");
+            //     return td;
+            // }
+
             if(currentlyCreatingDay>this.daysInMonth && currentlyCreatingDay<42){
                 var td = document.createElement('td');
                 td.innerHTML = new Date(this.currentYear, this.currentMonthId+1, 1).getDate()+currentlyCreatingDay-this.daysInMonth-1;
-                td.className = "day_cell";
+                td.classList.add("day_cell");
+                td.classList.add("empty");
             }
-            else if(currentlyCreatingDay>this.daysInMonth){break;}
+            else if(currentlyCreatingDay>this.daysInMonth){break;} //breakIfEndOfTable
             else{
                 var td = document.createElement('td');
                 td.innerHTML = currentlyCreatingDay;
 
-                if((currentlyCreatingDay==new Date().getUTCDate() || currentlyCreatingDay==new Date().getUTCDate()-1 || currentlyCreatingDay==new Date().getUTCDate()-2) && this.currentMonthId==new Date().getMonth()){td.className = "day_cell"; td.setAttribute('onclick', 'onDayClick(this)');}else {td.className = "day_cell";}
+                //setDays on enabled or disabled
+                if((currentlyCreatingDay==new Date().getUTCDate() || currentlyCreatingDay==new Date().getUTCDate()-1 || currentlyCreatingDay==new Date().getUTCDate()-2) && this.currentMonthId==new Date().getMonth()){
+                    td.classList.add("day_cell");
+                    td.classList.add("enabled");
+                    td.setAttribute('onclick', 'onDayClick(this)');
+                }
+                    else {
+                    td.classList.add("day_cell");
+                    td.classList.add("disabled");
+                }
 
+                //setEmptyDaysAsEnabled when necesarry
                 if((new Date().getDate()==1 && this.currentMonthId == today.getMonth()-1 && (td.innerHTML==31 || td.innerHTML==30)) || (new Date().getDate()==2 && this.currentMonthId == today.getMonth()-1 && (td.innerHTML==31)))
                 {
-                    td.className = "day_cell";
+                    td.classList.add("day_cell");
+                    td.classList.add("enabled");
                     td.setAttribute('onclick', 'onDayClick(this)');
                 }
 
+                // do tiles - color/get/everything
                 // for(var i=0; i<value[0].length; i++){
                 //     var t= value[1][Number(actual_goal_id.innerHTML)];
                 //     if(value[0][i].goalId.id == t.id && value[0][i].month == this.currentMonthId && value[0][i].day == currentlyCreatingDay && value[0][i].flag == "TICK") {
