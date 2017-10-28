@@ -39,10 +39,15 @@ Calendar.prototype.generateCalendar = function() {
 
     let currentlyCreatingDay = 1;
     let tableRowNumber;
-    let rowDayNumber; //dayInRowNumber
+    let rowDayNumber;
     let table = $(".calendar__days__table");
     let today = new Date();
-    let dayOfWeek;
+    let firstDayOfWeekInCurrentMonth = new Date(this.currentYear, this.currentMonthId, 1).getDay(); // 0 - 6 and 0 for sunday
+    let lastDayInPreviousMonth = new Date(this.currentYear, this.currentMonthId, 0).getDate();
+
+    if(firstDayOfWeekInCurrentMonth == 0){
+        firstDayOfWeekInCurrentMonth = 7;
+    }
 
     for(tableRowNumber=1; tableRowNumber<=6; tableRowNumber++) {
 
@@ -51,74 +56,62 @@ Calendar.prototype.generateCalendar = function() {
 
         for(rowDayNumber=1; rowDayNumber <=7; rowDayNumber++) {
 
-            //check if in row number one exist empty days
-            if(tableRowNumber===1 && rowDayNumber<=new Date(this.currentYear, this.currentMonthId, 1).getDay()){
-                if(rowDayNumber===new Date(this.currentYear, this.currentMonthId, 1).getDay()){
-                    currentlyCreatingDay=1;
+            if(tableRowNumber === 1 && rowDayNumber <= firstDayOfWeekInCurrentMonth) {
+                if(rowDayNumber === firstDayOfWeekInCurrentMonth) {
+                    currentlyCreatingDay = 1;
                 }
-                else{ //create empty day on the row number one and exit if statement
-                    var td = document.createElement('td');
-                    td.innerHTML = new Date(this.currentYear, this.currentMonthId, 0).getDate()+rowDayNumber-new Date(this.currentYear, this.currentMonthId, 1).getDay()+1;
-                    td.classList.add("day_cell");
-                    td.classList.add("empty");
-                    tr.appendChild(td);
-                    table.append(tr);
+                else {
+                    createEmptyDaysInFirstRow(lastDayInPreviousMonth, rowDayNumber, firstDayOfWeekInCurrentMonth);
                     currentlyCreatingDay++
                     continue;
                 }
             }
 
-
-            //generateEmptyDaysAtTheEnd
-
-            // function generateEmptyDayOnFirstRow(){
-            // var td = document.createElement('td');
-            // td.innerHTML = new Date(this.currentYear, this.currentMonthId, 0).getDate()+rowDayNumber-new Date(this.currentYear, this.currentMonthId, 1).getDay()+1;
-            // td.classList.add("day_cell");
-            // td.classList.add("empty");
-            // tr.appendChild(td);
-            // table.append(tr);
-            // currentlyCreatingDay++
-            // continue;
-                // }
-
-            // function generateEmptyDayOnLastRows(){
-            //     var td = document.createElement('td');
-            //     td.innerHTML = new Date(this.currentYear, this.currentMonthId+1, 1).getDate()+currentlyCreatingDay-this.daysInMonth-1;
-            //     td.classList.add("day_cell");
-            //     td.classList.add("empty");
-            //     return td;
-            // }
-
-            if(currentlyCreatingDay>this.daysInMonth && currentlyCreatingDay<42){
-                var td = document.createElement('td');
-                td.innerHTML = new Date(this.currentYear, this.currentMonthId+1, 1).getDate()+currentlyCreatingDay-this.daysInMonth-1;
-                td.classList.add("day_cell");
-                td.classList.add("empty");
-            }
-            else if(currentlyCreatingDay>this.daysInMonth){break;} //breakIfEndOfTable
-            else{
-                var td = document.createElement('td');
+            function createCurrentMonthDays() {
+                let td = document.createElement('td');
                 td.innerHTML = currentlyCreatingDay;
+                createEnabledDays();
+                createDisabledDays();
 
+                let currentDay = new Date().getUTCDate();
+            }
+
+            function createEnabledDays() {
+
+            }
+
+            function createDisabledDays() {
+
+            }
+
+            if(currentlyCreatingDay > this.daysInMonth && currentlyCreatingDay < 42) {
+                createEmptyDaysAtTheEnd(currentlyCreatingDay);
+            }
+            else if(currentlyCreatingDay > this.daysInMonth) {
+                break;
+            }
+            else {
+                let td = document.createElement('td');
+                td.innerHTML = currentlyCreatingDay;
                 //setDays on enabled or disabled
-                if((currentlyCreatingDay==new Date().getUTCDate() || currentlyCreatingDay==new Date().getUTCDate()-1 || currentlyCreatingDay==new Date().getUTCDate()-2) && this.currentMonthId==new Date().getMonth()){
+                if ((currentlyCreatingDay === new Date().getUTCDate() || currentlyCreatingDay === new Date().getUTCDate() - 1 || currentlyCreatingDay === new Date().getUTCDate() - 2) && this.currentMonthId === new Date().getMonth() && this.currentYear === today.getFullYear()) {
                     td.classList.add("day_cell");
                     td.classList.add("enabled");
                     td.setAttribute('onclick', 'onDayClick(this)');
                 }
-                    else {
+                else {
                     td.classList.add("day_cell");
                     td.classList.add("disabled");
                 }
 
                 //setEmptyDaysAsEnabled when necesarry
-                if((new Date().getDate()==1 && this.currentMonthId == today.getMonth()-1 && (td.innerHTML==31 || td.innerHTML==30)) || (new Date().getDate()==2 && this.currentMonthId == today.getMonth()-1 && (td.innerHTML==31)))
-                {
+                if ((new Date().getDate() == 1 && this.currentMonthId == today.getMonth() - 1 && (td.innerHTML == 31 || td.innerHTML == 30)) || (new Date().getDate() == 2 && this.currentMonthId == today.getMonth() - 1 && (td.innerHTML == 31))) {
                     td.classList.add("day_cell");
                     td.classList.add("enabled");
                     td.setAttribute('onclick', 'onDayClick(this)');
                 }
+            }
+
 
                 // do tiles - color/get/everything
                 // for(var i=0; i<value[0].length; i++){
@@ -141,12 +134,31 @@ Calendar.prototype.generateCalendar = function() {
             table.append(tr);
             currentlyCreatingDay++
         }
+
+        function createEmptyDaysInFirstRow(lastDayInPreviousMonth, rowDayNumber, firstDayOfWeekInCurrentMonth) {
+            let td = document.createElement('td');
+            td.innerHTML = lastDayInPreviousMonth + rowDayNumber - firstDayOfWeekInCurrentMonth + 1;
+            td.classList.add("day_cell");
+            td.classList.add("empty");
+            tr.appendChild(td);
+            table.append(tr);
+        }
+
+        function createEmptyDaysAtTheEnd(currentlyCreatingDay) {
+            let td = document.createElement('td');
+            td.innerHTML = currentlyCreatingDay - this.daysInMonth;
+            td.classList.add("day_cell");
+            td.classList.add("empty");
+        }
+
     }
 }
 
 Calendar.prototype.setGoals = function(goals) {
     this.goals = goals;
 }
+
+
 
 function generateDays() {
    //generowanie tr i td i wypelnienie danymi
