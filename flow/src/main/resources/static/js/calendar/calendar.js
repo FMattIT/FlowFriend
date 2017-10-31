@@ -2,12 +2,26 @@
  * Created by Admin on 23.10.2017.
  */
 
-var calendarInstance = new Calendar(1, 9, 2017);
-//10 - listopad
-//11- listopad
+var calendarInstance = new Calendar(0, 9, 2017);
 
 $( document ).ready(function() {
     calendarInstance.generateCalendar();
+
+    $( ".date_header__next_arrow .fa-chevron-right" ).click(function() {
+        calendarInstance.setNextMonth();
+    });
+
+    $( ".date_header__previous_arrow .fa-chevron-left" ).click(function() {
+        calendarInstance.setPreviousMonth();
+    });
+
+    $( ".goal_header__next_arrow .fa-chevron-right" ).click(function() {
+        calendarInstance.setNextGoal();
+    });
+
+    $( ".goal_header__previous_arrow .fa-chevron-left" ).click(function() {
+        calendarInstance.setPreviousGoal();
+    });
 });
 
 function Calendar(currentGoalId, currentMonthId, currentYear) {
@@ -16,7 +30,6 @@ function Calendar(currentGoalId, currentMonthId, currentYear) {
     this.years = [];
     this.years.push(new Date().getFullYear());
     this.years.push(new Date().getFullYear()+1);
-    this.years.push(new Date().getFullYear()+2);
 
     this.currentGoalId = currentGoalId;
     this.currentMonthId = currentMonthId;
@@ -28,34 +41,64 @@ function Calendar(currentGoalId, currentMonthId, currentYear) {
         this.daysInMonth = 29;
     }
 
-
     this.goals;
     this.goalPosition;
 }
 
-Calendar.prototype.init = function() {}
+Calendar.prototype.init = function(currentGoalId, currentMonthId, currentYear) {
+    this.currentGoalId = currentGoalId;
+    this.currentMonthId = currentMonthId;
+    this.currentMonth = this.months[this.currentMonthId];
+    this.currentYear = currentYear;
+    this.daysInMonth = this.daysInMonths[this.currentMonthId];
+    // this.goalPosition = this.goals[this.currentGoalId].position;
+
+    if((this.currentYear % 4 == 0 &&this.currentYear % 100 != 0) || this.currentYear % 400 == 0){
+        this.daysInMonth = 29;
+    }
+}
+
+Calendar.prototype.getGoalIdByPosition = function(goalPosition) {
+    for (var goalId = 0; goalId <= this.goals.length-1; goalId++) {
+
+        if (this.goals[goalId].position === goalPosition)
+        {
+            return goalId;
+            break;
+        }
+    }
+}
+
+Calendar.prototype.getNextGoalIdByPosition = function() {
+    let currentGoalPosition = this.goals[this.currentGoalId].position;
+    return this.getGoalIdByPosition(currentGoalPosition+1);
+}
+
+Calendar.prototype.getPreviousGoalIdByPosition = function() {
+    let currentGoalPosition = this.goals[this.currentGoalId].position;
+    return this.getGoalIdByPosition(currentGoalPosition-1);
+}
 
 Calendar.prototype.generateCalendar = function() {
 
-    let currentlyCreatingDay = 1;
-    let tableRowNumber;
-    let rowDayNumber;
-    let table = $(".calendar__days__table");
-    let today = new Date();
-    let firstDayOfWeekInCurrentMonth = new Date(this.currentYear, this.currentMonthId, 1).getDay(); // 0 - 6 and 0 for sunday
-    let lastDayInPreviousMonth = new Date(this.currentYear, this.currentMonthId, 0).getDate();
+    var currentlyCreatingDay = 1;
+    var tableRowNumber;
+    var rowDayNumber;
+    var table = $(".calendar__days__table");
+    var currentDate = new Date();
+    var firstDayOfWeekInCurrentMonth = new Date(this.currentYear, this.currentMonthId, 1).getDay(); // 0 - 6 and 0 for sunday
+    var lastDayInPreviousMonth = new Date(this.currentYear, this.currentMonthId, 0).getDate();
 
-    if(firstDayOfWeekInCurrentMonth == 0){
+    if(firstDayOfWeekInCurrentMonth === 0){
         firstDayOfWeekInCurrentMonth = 7;
     }
 
     for(tableRowNumber=1; tableRowNumber<=6; tableRowNumber++) {
 
-        let tr = document.createElement('tr');
+        var tr = document.createElement('tr');
         tr.className = "calendar__days__table__row";
 
         for(rowDayNumber=1; rowDayNumber <=7; rowDayNumber++) {
-
             if(tableRowNumber === 1 && rowDayNumber <= firstDayOfWeekInCurrentMonth) {
                 if(rowDayNumber === firstDayOfWeekInCurrentMonth) {
                     currentlyCreatingDay = 1;
@@ -67,34 +110,42 @@ Calendar.prototype.generateCalendar = function() {
                 }
             }
 
-            function createCurrentMonthDays() {
+            function createEmptyDaysInFirstRow(lastDayInPreviousMonth, rowDayNumber, firstDayOfWeekInCurrentMonth) {
                 let td = document.createElement('td');
-                td.innerHTML = currentlyCreatingDay;
-                createEnabledDays();
-                createDisabledDays();
-
-                let currentDay = new Date().getUTCDate();
+                td.innerHTML = lastDayInPreviousMonth + rowDayNumber - firstDayOfWeekInCurrentMonth + 1;
+                td.classList.add("day_cell");
+                td.classList.add("empty");
+                tr.appendChild(td);
+                table.append(tr);
             }
 
-            function createEnabledDays() {
+            // function createEmptyDaysAtTheEnd(currentlyCreatingDay) {
+            //     var td = document.createElement('td');
+            //     td.innerHTML = currentlyCreatingDay - this.daysInMonth;
+            //     td.classList.add("day_cell");
+            //     td.classList.add("empty");
+            // }
 
-            }
-
-            function createDisabledDays() {
-
-            }
 
             if(currentlyCreatingDay > this.daysInMonth && currentlyCreatingDay < 42) {
-                createEmptyDaysAtTheEnd(currentlyCreatingDay);
+                var td = document.createElement('td');
+                td.innerHTML = currentlyCreatingDay - this.daysInMonth;
+                td.classList.add("day_cell");
+                td.classList.add("empty");
             }
             else if(currentlyCreatingDay > this.daysInMonth) {
                 break;
             }
             else {
-                let td = document.createElement('td');
+                var td = document.createElement('td');
                 td.innerHTML = currentlyCreatingDay;
-                //setDays on enabled or disabled
-                if ((currentlyCreatingDay === new Date().getUTCDate() || currentlyCreatingDay === new Date().getUTCDate() - 1 || currentlyCreatingDay === new Date().getUTCDate() - 2) && this.currentMonthId === new Date().getMonth() && this.currentYear === today.getFullYear()) {
+
+                let today = currentDate.getUTCDate();
+                let yesterday = currentDate.getUTCDate() - 1;
+                let dayBeforeYesterday = currentDate.getUTCDate() - 2;
+                let currentMonthId = currentDate.getMonth(); // tu nazwe zmienic bo dwie takie same sa
+
+                if((currentlyCreatingDay === today || currentlyCreatingDay === yesterday || currentlyCreatingDay === dayBeforeYesterday) && this.currentMonthId === currentMonthId && this.currentYear === currentDate.getFullYear()){
                     td.classList.add("day_cell");
                     td.classList.add("enabled");
                     td.setAttribute('onclick', 'onDayClick(this)');
@@ -104,13 +155,6 @@ Calendar.prototype.generateCalendar = function() {
                     td.classList.add("disabled");
                 }
 
-                //setEmptyDaysAsEnabled when necesarry
-                if ((new Date().getDate() == 1 && this.currentMonthId == today.getMonth() - 1 && (td.innerHTML == 31 || td.innerHTML == 30)) || (new Date().getDate() == 2 && this.currentMonthId == today.getMonth() - 1 && (td.innerHTML == 31))) {
-                    td.classList.add("day_cell");
-                    td.classList.add("enabled");
-                    td.setAttribute('onclick', 'onDayClick(this)');
-                }
-            }
 
 
                 // do tiles - color/get/everything
@@ -129,28 +173,12 @@ Calendar.prototype.generateCalendar = function() {
                 //         td.style.cssText = "background-color: #7f8c8d; background-size: cover; border: 0; color:white;";
                 //     }
                 // }
+
             }
             tr.appendChild(td);
             table.append(tr);
-            currentlyCreatingDay++
+            currentlyCreatingDay++;
         }
-
-        function createEmptyDaysInFirstRow(lastDayInPreviousMonth, rowDayNumber, firstDayOfWeekInCurrentMonth) {
-            let td = document.createElement('td');
-            td.innerHTML = lastDayInPreviousMonth + rowDayNumber - firstDayOfWeekInCurrentMonth + 1;
-            td.classList.add("day_cell");
-            td.classList.add("empty");
-            tr.appendChild(td);
-            table.append(tr);
-        }
-
-        function createEmptyDaysAtTheEnd(currentlyCreatingDay) {
-            let td = document.createElement('td');
-            td.innerHTML = currentlyCreatingDay - this.daysInMonth;
-            td.classList.add("day_cell");
-            td.classList.add("empty");
-        }
-
     }
 }
 
@@ -158,53 +186,58 @@ Calendar.prototype.setGoals = function(goals) {
     this.goals = goals;
 }
 
-
-
-function generateDays() {
-   //generowanie tr i td i wypelnienie danymi
-    //musze tu miec id miesiaca, roku, celu
-    //po id miesiaca biore taile z bazy
-    var goals;
-
+Calendar.prototype.clearTable = function() {
+    let table = $(".calendar__days__table");
+    table.html("<tr class='calendar__days__table__row'><td class='day_cell disabled'>PN</td><td class='day_cell disabled'>WT</td><td class='day_cell disabled'>ŚR</td><td class='day_cell disabled'>CZ</td> <td class='day_cell disabled'>PT</td> <td class='day_cell disabled'>SO</td> <td class='day_cell disabled'>ND</td> </tr>");
 }
 
-function getActualDate() {
+Calendar.prototype.updateDateHeader = function() {
+    let dateHeader = $(".date_header__date");
+    dateHeader.html(this.currentMonth + ' ' + this.currentYear);
+}
 
+Calendar.prototype.updateGoalHeader = function() {
+    let goalHeader = $(".goal_header__goal_name");
+    goalHeader.html(this.goals[this.currentGoalId].name);
+}
+
+Calendar.prototype.monthChecker = function() {
+    if(this.currentMonthId === 12) {
+        this.init(this.currentGoalId, 0, this.currentYear + 1);
+    }
+    else if(this.currentMonthId === -1) {
+        this.init(this.currentGoalId, 11, this.currentYear - 1);
+    }
+}
+
+Calendar.prototype.setNextMonth = function() {
+    this.clearTable();
+    this.init(this.currentGoalId, this.currentMonthId + 1, this.currentYear);
+    this.monthChecker();
+    this.generateCalendar();
+    this.updateDateHeader();
+}
+
+Calendar.prototype.setPreviousMonth = function() {
+    this.clearTable();
+    this.init(this.currentGoalId, this.currentMonthId - 1, this.currentYear);
+    this.monthChecker();
+    this.generateCalendar();
+    this.updateDateHeader();
+}
+
+Calendar.prototype.setNextGoal = function() {
+    this.clearTable();
+    this.init(this.getNextGoalIdByPosition(), this.currentMonthId, this.currentYear);
+    this.generateCalendar();
+    this.updateGoalHeader();
+}
+
+Calendar.prototype.setPreviousGoal = function() {
+    this.clearTable();
+    this.init(this.getPreviousGoalIdByPosition(), this.currentMonthId, this.currentYear);
+    this.generateCalendar();
+    this.updateGoalHeader();
 }
 
 
-function getCurrentDate() {
-
-}
-
-function getPreviousDate() {
-
-}
-
-function getCurrentGoal() {
-
-}
-
-function getNextGoal() {
-
-}
-
-function getPreviousGoal() {
-
-}
-
-function updateGoalHeader() {
-
-}
-
-function updateDateHeader() {
-
-}
-
-function updateCurrentScore() {
-
-}
-
-function updateRecordScore() {
-
-}

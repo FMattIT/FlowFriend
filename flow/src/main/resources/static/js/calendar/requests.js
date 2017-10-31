@@ -13,6 +13,12 @@ function getGoals() {
         dataType: 'json',
         success: function (goals) {
             calendarInstance.setGoals(goals);
+
+            let dateHeader = $(".date_header__date");
+            dateHeader.html(calendarInstance.currentMonth + ' ' + calendarInstance.currentYear);
+
+            let goalHeader = $(".goal_header__goal_name");
+            goalHeader.html(calendarInstance.goals[calendarInstance.currentGoalId].name);
         },
         error: function (e) {
             console.log("ERROR: ", e);

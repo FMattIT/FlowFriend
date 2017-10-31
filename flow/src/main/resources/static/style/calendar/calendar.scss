@@ -22,6 +22,10 @@
       font-size: 25px;
       text-align: center;
       line-height: 100%;
+
+      .fa-chevron-left {
+        cursor: pointer;
+      }
     }
 
     .goal_header__goal_name {
@@ -47,6 +51,10 @@
       font-size: 25px;
       text-align: center;
       line-height: 100%;
+
+      .fa-chevron-right {
+        cursor: pointer;
+      }
     }
   }
 
@@ -66,6 +74,10 @@
       font-size: 25px;
       text-align: center;
       line-height: 100%;
+
+      .fa-chevron-left {
+        cursor: pointer;
+      }
     }
 
     .date_header__date {
@@ -79,6 +91,7 @@
       text-align: center;
       line-height: 100%;
       font-weight: bold;
+      text-transform: uppercase;
     }
 
     .date_header__next_arrow {
@@ -91,6 +104,10 @@
       font-size: 25px;
       text-align: center;
       line-height: 100%;
+
+      .fa-chevron-right {
+        cursor: pointer;
+      }
     }
   }
 
