@@ -40,6 +40,12 @@
 
     <div class="block">
         <div class="block__calendar">
+            <div class="tile__chooser">
+                <div class="tile__chooser__tick_choice"></div>
+                <div class="tile__chooser__yellow_tick_choice"></div>
+                <div class="tile__chooser__cross_choice"></div>
+                <div class="tile__chooser__minus_choice"></div>
+            </div>
             <div class="block__calendar__goal_header">
                 <div class="goal_header__previous_arrow"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
                 <div class="goal_header__goal_name"></div>
@@ -84,5 +90,21 @@
             <div class="block__others__changer"></div>
         </div>
     </div>
+
+    <div class="modal animated fadeIn" id="goalModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="labelek">Dodaj nowy cel</div>
+                    <form id='formek' method='post' th:action='@{/calendar/addGoal}'>
+                        <div id="name" contenteditable="true" maxlength="170" spellcheck="true"></div>
+                        <input id="buttonek" type='submit' value='Dodaj cel'/>
+                        <div class="add_error">Maksymalna ilość znaków wynosi 170!</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

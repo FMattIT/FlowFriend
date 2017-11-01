@@ -536,7 +536,6 @@ function onDayClick(day){
     else{
         GetThisHidden();
     }
-
 }
 
 function retrieveMaxCount(value){

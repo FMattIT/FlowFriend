@@ -48,6 +48,19 @@ public class CalendarController {
         return goalService.getGoals(usersService.getUserByUsername(principal.getName()));
     }
 
+    @RequestMapping(value="/calendar/requests/goals/add", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public Goal addGoal(Principal principal) {
+//        return goalService.getGoals(usersService.getUserByUsername(principal.getName()));
+        return null;
+    }
+
+    @RequestMapping(value="/calendar/requests/tiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public List<Tile> getTiles(@RequestBody Goal goal, Principal principal) {
+        return tileService.getTiles(usersService.getUserByUsername(principal.getName()), goal);
+    }
+
 
 
     @RequestMapping(value = "/calendar")

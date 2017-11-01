@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.flow.dao.GoalDao;
 import pl.flow.dao.TileDao;
+import pl.flow.dao.entities.User;
 import pl.flow.dao.entities.calendar.Goal;
 import pl.flow.dao.entities.calendar.Tile;
 
@@ -50,5 +51,9 @@ public class TileService {
 
     public Object getMaxCount(Goal goal){
         return tileDao.getMaxCount(goal);
+    }
+
+    public List<Tile> getTiles(User user, Goal goal){
+        return tileDao.getTiles(user, goal);
     }
 }

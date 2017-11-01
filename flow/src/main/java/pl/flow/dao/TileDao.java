@@ -1,6 +1,7 @@
 package pl.flow.dao;
 
 import org.springframework.stereotype.Repository;
+import pl.flow.dao.entities.User;
 import pl.flow.dao.entities.calendar.Goal;
 import pl.flow.dao.entities.calendar.Tile;
 
@@ -114,5 +115,11 @@ public class TileDao {
             return 0;
         }
     }
+
+    public List<Tile> getTiles(User user, Goal goal){
+        return entityManager.createQuery("SELECT t FROM Tile t WHERE t.userId = :userId AND t.goalId = :goalId ORDER BY t.id ASC", Tile.class)
+                .setParameter("userId", user)
+                .setParameter("goalId", goal)
+                .getResultList(); }
 
 }

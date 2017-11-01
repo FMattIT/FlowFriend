@@ -4,7 +4,51 @@
   border-right: 1px solid black;
   float: left;
   margin-right: 0.5%;
-  //box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.15), 0px 1px 16px -3px rgba(24, 24, 28, 0.34);
+
+  .tile__chooser {
+    background-color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    height: 70px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 2px 2px rgba(0, 0, 0, .15), 0px 0px 80px -12px #90A09A;
+    width: 271px;
+    border-radius: 40px;
+    display: none;
+    animation-duration: .3s !important;
+    z-index: 1000 !important;
+    position: absolute;
+
+    .tile__chooser__tick_choice, .tile__chooser__cross_choice, .tile__chooser__yellow_tick_choice, .tile__chooser__minus_choice {
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      text-align: center;
+      vertical-align: middle;
+      display: inline-block !important;
+      margin: 5px 0 5px 1px;
+    }
+
+    .tile__chooser__tick_choice {
+      background: url(img/tick.png) no-repeat;
+      background-size: cover;
+    }
+
+    .tile__chooser__cross_choice {
+      background: url(img/cross.png) no-repeat;
+      background-size: cover;
+    }
+
+    .tile__chooser__yellow_tick_choice {
+      background: url(img/yellow_tick.png) no-repeat;
+      background-size: cover;
+    }
+
+    .tile__chooser__minus_choice {
+      background: url(img/minus.png) no-repeat;
+      background-size: cover;
+      margin-right: 1px;
+    }
+  }
 
   .block__calendar__goal_header {
     width: 100%;
@@ -133,6 +177,7 @@
 
           &.enabled {
             color: #34495e;
+            cursor: pointer;
           }
 
           &.disabled {
@@ -141,6 +186,38 @@
 
           &.empty {
             color: rgba(44, 44, 46, 0.2);
+          }
+
+          &.tick {
+            background-color: #009966;
+            background-size: cover;
+            border-radius: 50%;
+            border: 0;
+            color:white;
+          }
+
+          &.yellow_tick {
+            background-color: #f1c40f;
+            background-size: cover;
+            border-radius: 50%;
+            border: 0;
+            color:white;
+          }
+
+          &.cross {
+            background-color: #e74c3c;
+            background-size: cover;
+            border-radius: 50%;
+            border: 0;
+            color:white;
+          }
+
+          &.minus {
+            background-color: #7f8c8d;
+            background-size: cover;
+            border-radius: 50%;
+            border: 0;
+            color:white;
           }
         }
       }
@@ -200,3 +277,4 @@
     }
   }
 }
+

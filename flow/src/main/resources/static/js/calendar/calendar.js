@@ -2,9 +2,11 @@
  * Created by Admin on 23.10.2017.
  */
 
-var calendarInstance = new Calendar(0, 9, 2017);
+var calendarInstance = new Calendar(0, 10, 2017);
 
 $( document ).ready(function() {
+    getGoals();
+
     calendarInstance.generateCalendar();
 
     $( ".date_header__next_arrow .fa-chevron-right" ).click(function() {
@@ -21,6 +23,10 @@ $( document ).ready(function() {
 
     $( ".goal_header__previous_arrow .fa-chevron-left" ).click(function() {
         calendarInstance.setPreviousGoal();
+    });
+
+    $('.fa-plus-circle').on('click', function () {
+        $('#goalModal').modal('show');
     });
 });
 
@@ -43,6 +49,7 @@ function Calendar(currentGoalId, currentMonthId, currentYear) {
 
     this.goals;
     this.goalPosition;
+    this.tiles;
 }
 
 Calendar.prototype.init = function(currentGoalId, currentMonthId, currentYear) {
@@ -51,7 +58,6 @@ Calendar.prototype.init = function(currentGoalId, currentMonthId, currentYear) {
     this.currentMonth = this.months[this.currentMonthId];
     this.currentYear = currentYear;
     this.daysInMonth = this.daysInMonths[this.currentMonthId];
-    // this.goalPosition = this.goals[this.currentGoalId].position;
 
     if((this.currentYear % 4 == 0 &&this.currentYear % 100 != 0) || this.currentYear % 400 == 0){
         this.daysInMonth = 29;
@@ -71,15 +77,29 @@ Calendar.prototype.getGoalIdByPosition = function(goalPosition) {
 
 Calendar.prototype.getNextGoalIdByPosition = function() {
     let currentGoalPosition = this.goals[this.currentGoalId].position;
-    return this.getGoalIdByPosition(currentGoalPosition+1);
+    let newGoalId = this.getGoalIdByPosition(currentGoalPosition+1);
+    if( isNaN(newGoalId) ) {
+        return this.getGoalIdByPosition(0);
+    }
+    else {
+        return this.getGoalIdByPosition(currentGoalPosition+1);
+    }
 }
 
 Calendar.prototype.getPreviousGoalIdByPosition = function() {
     let currentGoalPosition = this.goals[this.currentGoalId].position;
-    return this.getGoalIdByPosition(currentGoalPosition-1);
+    let newGoalId = this.getGoalIdByPosition(currentGoalPosition-1);
+    if( isNaN(newGoalId) ) {
+        return this.getGoalIdByPosition(this.goals.length-1);
+    }
+    else {
+        return this.getGoalIdByPosition(currentGoalPosition-1);
+    }
 }
 
 Calendar.prototype.generateCalendar = function() {
+
+    getTiles();
 
     var currentlyCreatingDay = 1;
     var tableRowNumber;
@@ -119,14 +139,6 @@ Calendar.prototype.generateCalendar = function() {
                 table.append(tr);
             }
 
-            // function createEmptyDaysAtTheEnd(currentlyCreatingDay) {
-            //     var td = document.createElement('td');
-            //     td.innerHTML = currentlyCreatingDay - this.daysInMonth;
-            //     td.classList.add("day_cell");
-            //     td.classList.add("empty");
-            // }
-
-
             if(currentlyCreatingDay > this.daysInMonth && currentlyCreatingDay < 42) {
                 var td = document.createElement('td');
                 td.innerHTML = currentlyCreatingDay - this.daysInMonth;
@@ -148,31 +160,38 @@ Calendar.prototype.generateCalendar = function() {
                 if((currentlyCreatingDay === today || currentlyCreatingDay === yesterday || currentlyCreatingDay === dayBeforeYesterday) && this.currentMonthId === currentMonthId && this.currentYear === currentDate.getFullYear()){
                     td.classList.add("day_cell");
                     td.classList.add("enabled");
-                    td.setAttribute('onclick', 'onDayClick(this)');
+                    td.setAttribute('onclick', 'calendarInstance.displayTileChooser()');
                 }
                 else {
                     td.classList.add("day_cell");
                     td.classList.add("disabled");
                 }
 
+                if((new Date().getDate()==1 && this.currentMonthId == new Date().getMonth()-1 && (td.innerHTML==lastDayInPreviousMonth || td.innerHTML==lastDayInPreviousMonth-1)) || (new Date().getDate()==2 && this.currentMonthId == new Date().getMonth()-1 && (td.innerHTML==lastDayInPreviousMonth)))
+                {
+                    td.classList.add("day_cell");
+                    td.classList.add("enabled");
+                    td.setAttribute('onclick', 'calendarInstance.displayTileChooser()');
+                }
+
 
 
                 // do tiles - color/get/everything
-                // for(var i=0; i<value[0].length; i++){
-                //     var t= value[1][Number(actual_goal_id.innerHTML)];
-                //     if(value[0][i].goalId.id == t.id && value[0][i].month == this.currentMonthId && value[0][i].day == currentlyCreatingDay && value[0][i].flag == "TICK") {
-                //         td.style.cssText = "background-color: #009966; background-size: cover; border: 0; color:white;";
-                //     }
-                //     else if (value[0][i].goalId.id == value[1][Number(actual_goal_id.innerHTML)].id && value[0][i].month == this.currentMonthId && value[0][i].day == currentlyCreatingDay && value[0][i].flag == "CROSS") {
-                //         td.style.cssText = "background-color: #e74c3c; background-size: cover; border: 0; color:white;";
-                //     }
-                //     else if (value[0][i].goalId.id == value[1][Number(actual_goal_id.innerHTML)].id && value[0][i].month == this.currentMonthId && value[0][i].day == currentlyCreatingDay && value[0][i].flag == "YELLOWTICK") {
-                //         td.style.cssText = "background-color: #f1c40f; background-size: cover; border: 0; color:white;";
-                //     }
-                //     else if (value[0][i].goalId.id == value[1][Number(actual_goal_id.innerHTML)].id && value[0][i].month == this.currentMonthId && value[0][i].day == currentlyCreatingDay && value[0][i].flag == "MINUS") {
-                //         td.style.cssText = "background-color: #7f8c8d; background-size: cover; border: 0; color:white;";
-                //     }
-                // }
+                for(let i=0; i<this.tiles.length; i++){
+                    let tile = this.tiles[i];
+                    if(tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "TICK") {
+                        td.classList.add("tick");
+                    }
+                    else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "CROSS") {
+                        td.classList.add("cross");
+                    }
+                    else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "YELLOWTICK") {
+                        td.classList.add("yellow_tick");
+                    }
+                    else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "MINUS") {
+                        td.classList.add("minus");
+                    }
+                }
 
             }
             tr.appendChild(td);
@@ -184,6 +203,10 @@ Calendar.prototype.generateCalendar = function() {
 
 Calendar.prototype.setGoals = function(goals) {
     this.goals = goals;
+}
+
+Calendar.prototype.setTiles = function(tiles) {
+    this.tiles = tiles;
 }
 
 Calendar.prototype.clearTable = function() {
@@ -238,6 +261,22 @@ Calendar.prototype.setPreviousGoal = function() {
     this.init(this.getPreviousGoalIdByPosition(), this.currentMonthId, this.currentYear);
     this.generateCalendar();
     this.updateGoalHeader();
+}
+
+Calendar.prototype.displayTileChooser = function() {
+    if ($('.tile__chooser').css("display") == "none"){
+        $(".tile__chooser").removeClass('animated zoomOut');
+        $(".tile__chooser").addClass('animated zoomIn');
+        $(".tile__chooser").css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
+        $('.tile__chooser').css( {top:event.pageY - 60, left: event.pageX + 10});
+    }
+    else{
+        $(".tile__chooser").removeClass('zoomIn');
+        $(".tile__chooser").css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+            $(".tile__chooser").css("display", "none");
+        });
+        $(".tile__chooser").addClass('zoomOut');
+    }
 }
 
 
