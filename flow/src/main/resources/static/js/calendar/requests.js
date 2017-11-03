@@ -8,17 +8,9 @@ function getGoals() {
         contentType: "application/json",
         url: "/calendar/requests/goals",
         dataType: 'json',
-        async: false,
         success: function (goals) {
             calendarInstance.setGoals(goals);
-
-            let dateHeader = $(".date_header__date");
-            dateHeader.html(calendarInstance.currentMonth + ' ' + calendarInstance.currentYear);
-
-            let goalHeader = $(".goal_header__goal_name");
-            goalHeader.html(calendarInstance.goals[calendarInstance.getGoalIdByPosition(0)].name);
-
-            calendarInstance.currentGoalId = calendarInstance.getGoalIdByPosition(0);
+            getTiles();
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -35,9 +27,25 @@ function getTiles() {
         url: "/calendar/requests/tiles",
         data: JSON.stringify(goal),
         dataType: 'json',
-        async: false,
         success: function (tiles) {
             calendarInstance.setTiles(tiles);
+            calendarInstance.generateCalendar();
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
+function saveTile(tile) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/tiles/save",
+        data: JSON.stringify(tile),
+        dataType: 'json',
+        success: function () {
+            console.log("Kafelek został pomyślnie dodany do bazy!")
         },
         error: function (e) {
             console.log("ERROR: ", e);

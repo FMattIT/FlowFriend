@@ -42,32 +42,32 @@ public class TileDao {
         }
     }
 
-    public Tile save(Tile tile){
-        LocalDateTime l = LocalDateTime.now();
-
-        int dayOfMonth = l.getDayOfMonth();
-        int month = l.getMonthValue() - 1;
-        int year = l.getYear();
-
-        int tileDayOfMonth = Integer.parseInt(tile.getDay());
-        int tileMonth = Integer.parseInt(tile.getMonth());
-        int tileYear = Integer.parseInt(tile.getYear());
-
-//        if((tileDayOfMonth == dayOfMonth || tileDayOfMonth == dayOfMonth-1 || tileDayOfMonth == dayOfMonth-2) && tileMonth==month && tileYear == year) {
-
-            try {
-                tile.setId(getTileToMerge(tile).getId());
-                return entityManager.merge(tile);
-            } catch (Exception e) {
-                entityManager.persist(tile);
-            }
-            return tile;
-
-//        }
-//        else{
-//            return null;
-//        }
-    }
+//    public Tile save(Tile tile){
+//        LocalDateTime l = LocalDateTime.now();
+//
+//        int dayOfMonth = l.getDayOfMonth();
+//        int month = l.getMonthValue() - 1;
+//        int year = l.getYear();
+//
+//        int tileDayOfMonth = Integer.parseInt(tile.getDay());
+//        int tileMonth = Integer.parseInt(tile.getMonth());
+//        int tileYear = Integer.parseInt(tile.getYear());
+//
+////        if((tileDayOfMonth == dayOfMonth || tileDayOfMonth == dayOfMonth-1 || tileDayOfMonth == dayOfMonth-2) && tileMonth==month && tileYear == year) {
+//
+//            try {
+//                tile.setId(getTileToMerge(tile).getId());
+//                return entityManager.merge(tile);
+//            } catch (Exception e) {
+//                entityManager.persist(tile);
+//            }
+//            return tile;
+//
+////        }
+////        else{
+////            return null;
+////        }
+//    }
 
     public List<Tile> getTilesList(){
         return entityManager.createQuery("SELECT t FROM Tile t", Tile.class).getResultList(); }
@@ -121,5 +121,9 @@ public class TileDao {
                 .setParameter("userId", user)
                 .setParameter("goalId", goal)
                 .getResultList(); }
+
+    public Tile save(Tile tile) {
+        return entityManager.merge(tile);
+    }
 
 }

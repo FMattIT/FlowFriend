@@ -26,9 +26,9 @@ public class TileService {
         this.tileDao = tileDao;
     }
 
-    public Tile save(Tile tile){
-        return tileDao.save(tile);
-    }
+//    public Tile save(Tile tile){
+//        return tileDao.save(tile);
+//    }
 
     public List<Tile> getTilesList(){
         return tileDao.getTilesList(); }
@@ -55,5 +55,9 @@ public class TileService {
 
     public List<Tile> getTiles(User user, Goal goal){
         return tileDao.getTiles(user, goal);
+    }
+
+    public Tile save(Tile tile) {
+        return tileDao.save(tile);
     }
 }

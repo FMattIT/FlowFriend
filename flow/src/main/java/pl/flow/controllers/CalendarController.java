@@ -48,7 +48,7 @@ public class CalendarController {
         return goalService.getGoals(usersService.getUserByUsername(principal.getName()));
     }
 
-    @RequestMapping(value="/calendar/requests/goals/add", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @RequestMapping(value="/calendar/requests/goals/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal addGoal(Principal principal) {
 //        return goalService.getGoals(usersService.getUserByUsername(principal.getName()));
@@ -59,6 +59,19 @@ public class CalendarController {
     @ResponseBody
     public List<Tile> getTiles(@RequestBody Goal goal, Principal principal) {
         return tileService.getTiles(usersService.getUserByUsername(principal.getName()), goal);
+    }
+
+    @RequestMapping(value="/calendar/requests/tiles/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public Tile save(@RequestBody Tile tile, Principal principal) {
+        tile.setUserId(usersService.getUserByUsername(principal.getName()));
+        try{
+            tile.setId(tileService.getTileToMerge(tile).getId());
+        }
+        catch(Exception e) {
+            System.out.println("exception");
+        }
+        return tileService.save(tile);
     }
 
 
