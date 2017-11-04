@@ -182,6 +182,26 @@ Calendar.prototype.saveTile = function(target, event, flag) {
     event.stopPropagation();
 }
 
+Calendar.prototype.generateTiles = function(teedek, currentlyCreatingDay) {
+    let td = teedek;
+    for(let i=0; i<this.tiles.length; i++){
+        let tile = this.tiles[i];
+        if(tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "TICK") {
+            td.classList.add("tick");
+        }
+        else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "CROSS") {
+            td.classList.add("cross");
+        }
+        else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "YELLOWTICK") {
+            td.classList.add("yellow_tick");
+        }
+        else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "MINUS") {
+            td.classList.add("minus");
+        }
+    }
+    return td;
+}
+
 Calendar.prototype.generateCalendar = function() {
 
     this.updateDateHeader();
@@ -260,21 +280,7 @@ Calendar.prototype.generateCalendar = function() {
                     td.setAttribute('onclick', 'calendarInstance.displayTilePicker()');
                 }
 
-                for(let i=0; i<this.tiles.length; i++){
-                    let tile = this.tiles[i];
-                    if(tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "TICK") {
-                        td.classList.add("tick");
-                    }
-                    else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "CROSS") {
-                        td.classList.add("cross");
-                    }
-                    else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "YELLOWTICK") {
-                        td.classList.add("yellow_tick");
-                    }
-                    else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "MINUS") {
-                        td.classList.add("minus");
-                    }
-                }
+                td = this.generateTiles(td, currentlyCreatingDay);
 
             }
             tr.appendChild(td);

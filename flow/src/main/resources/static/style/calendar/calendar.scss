@@ -213,15 +213,17 @@
     height: 10%;
     float: left;
     border-right: 1px solid black;
+    margin: 0 auto;
+    padding: 0 auto;
 
     .current_score_counter {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100%;
-      width: 25%;
       font-size: 40px;
       float: left;
+      padding-right: 6%;
     }
 
     .current_score_label {
@@ -229,9 +231,9 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-      width: 75%;
       font-size: 20px;
       float: left;
+      text-align: center;
     }
   }
 
@@ -245,9 +247,9 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-      width: 25%;
       font-size: 40px;
       float: left;
+      padding-right: 6%;
     }
 
     .record_score_label {
@@ -255,9 +257,9 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-      width: 75%;
       font-size: 20px;
       float: left;
+      text-align: center;
     }
   }
 }
