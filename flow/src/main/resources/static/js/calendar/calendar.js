@@ -5,7 +5,7 @@
 var calendarInstance = new Calendar(0, 10, 2017);
 
 $( document ).ready(function() {
-    getGoals();
+    // getGoals();
 
     $( ".date_header__next_arrow .fa-chevron-right" ).click(function() {
         calendarInstance.setNextMonth();
@@ -100,7 +100,12 @@ Calendar.prototype.setTiles = function(tiles) {
 
 Calendar.prototype.clearTable = function() {
     let table = $(".calendar__days__table");
-    table.html("<tr class='calendar__days__table__row'><td class='day_cell disabled'>PN</td><td class='day_cell disabled'>WT</td><td class='day_cell disabled'>ŚR</td><td class='day_cell disabled'>CZ</td> <td class='day_cell disabled'>PT</td> <td class='day_cell disabled'>SO</td> <td class='day_cell disabled'>ND</td> </tr>");
+    for(let i = 6; i>=1; i--){
+        $(".calendar__days__table__row").eq(i).remove();
+    }
+
+
+    // table.html("<tr class='calendar__days__table__row'><td class='day_cell disabled'>PN</td><td class='day_cell disabled'>WT</td><td class='day_cell disabled'>ŚR</td><td class='day_cell disabled'>CZ</td> <td class='day_cell disabled'>PT</td> <td class='day_cell disabled'>SO</td> <td class='day_cell disabled'>ND</td> </tr>");
 }
 
 Calendar.prototype.updateDateHeader = function() {
@@ -203,6 +208,8 @@ Calendar.prototype.generateTiles = function(teedek, currentlyCreatingDay) {
 }
 
 Calendar.prototype.generateCalendar = function() {
+
+    this.clearTable();
 
     this.updateDateHeader();
     this.updateGoalHeader();
