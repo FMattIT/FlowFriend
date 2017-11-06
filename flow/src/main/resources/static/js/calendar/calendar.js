@@ -5,7 +5,7 @@
 var calendarInstance = new Calendar(0, 10, 2017);
 
 $( document ).ready(function() {
-    // getGoals();
+    getGoals();
 
     $( ".date_header__next_arrow .fa-chevron-right" ).click(function() {
         calendarInstance.setNextMonth();
@@ -99,13 +99,9 @@ Calendar.prototype.setTiles = function(tiles) {
 }
 
 Calendar.prototype.clearTable = function() {
-    let table = $(".calendar__days__table");
-    for(let i = 6; i>=1; i--){
-        $(".calendar__days__table__row").eq(i).remove();
+    for(let iterator = 6; iterator >= 1; iterator --) {
+        $(".calendar__days__table__row").eq(iterator).remove();
     }
-
-
-    // table.html("<tr class='calendar__days__table__row'><td class='day_cell disabled'>PN</td><td class='day_cell disabled'>WT</td><td class='day_cell disabled'>ŚR</td><td class='day_cell disabled'>CZ</td> <td class='day_cell disabled'>PT</td> <td class='day_cell disabled'>SO</td> <td class='day_cell disabled'>ND</td> </tr>");
 }
 
 Calendar.prototype.updateDateHeader = function() {
