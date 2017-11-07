@@ -2,7 +2,7 @@
  * Created by Admin on 23.10.2017.
  */
 
-function getGoals() {
+function getGoals(initialPosition) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -10,6 +10,7 @@ function getGoals() {
         dataType: 'json',
         success: function (goals) {
             calendarInstance.setGoals(goals);
+            calendarInstance.currentGoalId = calendarInstance.getGoalIdByPosition(initialPosition);
             getTiles();
         },
         error: function (e) {

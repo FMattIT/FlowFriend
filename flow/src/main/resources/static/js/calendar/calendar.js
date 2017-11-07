@@ -5,7 +5,7 @@
 var calendarInstance = new Calendar(0, 10, 2017);
 
 $( document ).ready(function() {
-    getGoals();
+    getGoals(0);
 
     $( ".date_header__next_arrow .fa-chevron-right" ).click(function() {
         calendarInstance.setNextMonth();
@@ -58,7 +58,7 @@ Calendar.prototype.init = function(currentGoalId, currentMonthId, currentYear) {
 }
 
 Calendar.prototype.getGoalIdByPosition = function(goalPosition) {
-    for (var goalId = 0; goalId <= this.goals.length-1; goalId++) {
+    for (let goalId = 0; goalId <= this.goals.length-1; goalId++) {
 
         if (this.goals[goalId].position === goalPosition)
         {
@@ -153,26 +153,28 @@ Calendar.prototype.setPreviousGoal = function() {
     this.updateGoalHeader();
 }
 
-Calendar.prototype.displayTilePicker = function() {
-    if ($('.tile__picker').css("display") == "none"){
-        $(".tile__picker").removeClass('animated zoomOut');
-        $(".tile__picker").addClass('animated zoomIn');
-        $(".tile__picker").css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
-        $('.tile__picker').css( {top:event.pageY - 60, left: event.pageX + 10});
+Calendar.prototype.showTilePicker = function() {
+    let picker = $('.tile__picker');
+
+    if (picker.css("display") == "none") {
+        picker.removeClass('animated zoomOut');
+        picker.addClass('animated zoomIn');
+        picker.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
+        picker.css( {top:event.pageY - 60, left: event.pageX + 10});
     }
-    else{
-        $(".tile__picker").removeClass('zoomIn');
-        $(".tile__picker").css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-            $(".tile__picker").css("display", "none");
+    else {
+        picker.removeClass('zoomIn');
+        picker.css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+            picker.css("display", "none");
         });
-        $(".tile__picker").addClass('zoomOut');
+        picker.addClass('zoomOut');
     }
 }
 
 Calendar.prototype.saveTile = function(target, event, flag) {
-    this.displayTilePicker();
+    this.showTilePicker();
 
-    var tile = {};
+    let tile = {};
     tile["day"]=2;
     tile["flag"]=flag;
     tile["goalId"]=this.goals[this.currentGoalId];
@@ -183,20 +185,19 @@ Calendar.prototype.saveTile = function(target, event, flag) {
     event.stopPropagation();
 }
 
-Calendar.prototype.generateTiles = function(teedek, currentlyCreatingDay) {
-    let td = teedek;
-    for(let i=0; i<this.tiles.length; i++){
-        let tile = this.tiles[i];
-        if(tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "TICK") {
+Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
+    for (let iterator = 0; iterator < this.tiles.length; iterator ++) {
+        let tile = this.tiles[iterator];
+        if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "TICK") {
             td.classList.add("tick");
         }
-        else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "CROSS") {
+        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "CROSS") {
             td.classList.add("cross");
         }
-        else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "YELLOWTICK") {
+        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "YELLOWTICK") {
             td.classList.add("yellow_tick");
         }
-        else if (tile.month == this.currentMonthId && tile.day == currentlyCreatingDay && tile.flag == "MINUS") {
+        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "MINUS") {
             td.classList.add("minus");
         }
     }
@@ -206,26 +207,51 @@ Calendar.prototype.generateTiles = function(teedek, currentlyCreatingDay) {
 Calendar.prototype.generateCalendar = function() {
 
     this.clearTable();
-
     this.updateDateHeader();
     this.updateGoalHeader();
 
-    var currentlyCreatingDay = 1;
-    var tableRowNumber;
-    var rowDayNumber;
-    var table = $(".calendar__days__table");
-    var currentDate = new Date();
-    var firstDayOfWeekInCurrentMonth = new Date(this.currentYear, this.currentMonthId, 1).getDay(); // 0 - 6 and 0 for sunday
-    var lastDayInPreviousMonth = new Date(this.currentYear, this.currentMonthId, 0).getDate();
+    let table = $(".calendar__days__table");
+    let currentlyCreatingDay = 1;
+    let tableRowNumber;
+    let rowDayNumber;
+    let currentDate = new Date();
+    let firstDayOfWeekInCurrentMonth = new Date(this.currentYear, this.currentMonthId, 1).getDay(); // 0 - 6 and 0 for sunday
+    let lastDayInPreviousMonth = new Date(this.currentYear, this.currentMonthId, 0).getDate();
 
-    if(firstDayOfWeekInCurrentMonth === 0){
+    if (firstDayOfWeekInCurrentMonth === 0) {
         firstDayOfWeekInCurrentMonth = 7;
     }
 
-    for(tableRowNumber=1; tableRowNumber<=6; tableRowNumber++) {
+    for (tableRowNumber=1; tableRowNumber<=6; tableRowNumber++) {
 
-        var tr = document.createElement('tr');
+        let tr = document.createElement('tr');
         tr.className = "calendar__days__table__row";
+
+        function createEmptyDaysInFirstRow(lastDayInPreviousMonth, rowDayNumber, firstDayOfWeekInCurrentMonth) {
+            let td = document.createElement('td');
+            td.innerHTML = lastDayInPreviousMonth + rowDayNumber - firstDayOfWeekInCurrentMonth + 1;
+            td.classList.add("day_cell");
+            td.classList.add("empty");
+            tr.appendChild(td);
+            table.append(tr);
+        }
+
+        function createEmptyDaysInLastRows(td, daysInMonth) {
+            td.innerHTML = currentlyCreatingDay - daysInMonth;
+            td.classList.add("day_cell");
+            td.classList.add("empty");
+        }
+
+        function createEnabledDay(td) {
+            td.classList.add("day_cell");
+            td.classList.add("enabled");
+            td.setAttribute('onclick', 'calendarInstance.showTilePicker()');
+        }
+
+        function createDisabledDay(td) {
+            td.classList.add("day_cell");
+            td.classList.add("disabled");
+        }
 
         for(rowDayNumber=1; rowDayNumber <=7; rowDayNumber++) {
             if(tableRowNumber === 1 && rowDayNumber <= firstDayOfWeekInCurrentMonth) {
@@ -239,51 +265,41 @@ Calendar.prototype.generateCalendar = function() {
                 }
             }
 
-            function createEmptyDaysInFirstRow(lastDayInPreviousMonth, rowDayNumber, firstDayOfWeekInCurrentMonth) {
-                let td = document.createElement('td');
-                td.innerHTML = lastDayInPreviousMonth + rowDayNumber - firstDayOfWeekInCurrentMonth + 1;
-                td.classList.add("day_cell");
-                td.classList.add("empty");
-                tr.appendChild(td);
-                table.append(tr);
-            }
+            let td = document.createElement('td');
 
             if(currentlyCreatingDay > this.daysInMonth && currentlyCreatingDay < 42) {
-                var td = document.createElement('td');
-                td.innerHTML = currentlyCreatingDay - this.daysInMonth;
-                td.classList.add("day_cell");
-                td.classList.add("empty");
+                createEmptyDaysInLastRows(td, this.daysInMonth);
             }
             else if(currentlyCreatingDay > this.daysInMonth) {
                 break;
             }
             else {
-                var td = document.createElement('td');
                 td.innerHTML = currentlyCreatingDay;
 
                 let today = currentDate.getUTCDate();
                 let yesterday = currentDate.getUTCDate() - 1;
                 let dayBeforeYesterday = currentDate.getUTCDate() - 2;
-                let currentMonthId = currentDate.getMonth(); // tu nazwe zmienic bo dwie takie same sa
+                let currentDateMonthId = currentDate.getMonth();
+                let currentDateYear = currentDate.getFullYear()
+                let lastDayOfPreviousMonth = new Date(this.currentYear, this.currentMonthId, 0).getDate();
 
-                if((currentlyCreatingDay === today || currentlyCreatingDay === yesterday || currentlyCreatingDay === dayBeforeYesterday) && this.currentMonthId === currentMonthId && this.currentYear === currentDate.getFullYear()){
-                    td.classList.add("day_cell");
-                    td.classList.add("enabled");
-                    td.setAttribute('onclick', 'calendarInstance.displayTilePicker()');
+
+                if( (currentlyCreatingDay === today || currentlyCreatingDay === yesterday || currentlyCreatingDay === dayBeforeYesterday) && this.currentMonthId === currentDateMonthId && this.currentYear === currentDateYear) {
+                    createEnabledDay(td);
                 }
                 else {
-                    td.classList.add("day_cell");
-                    td.classList.add("disabled");
+                    createDisabledDay(td);
                 }
 
-                if((new Date().getDate()==1 && this.currentMonthId == new Date().getMonth()-1 && (td.innerHTML==31 || td.innerHTML==30)) || (new Date().getDate()==2 && this.currentMonthId == new Date().getMonth()-1 && (td.innerHTML==31)))
+                if(this.currentYear === currentDateYear && this.currentMonthId === currentDateMonthId - 1 && today === 1 && (currentlyCreatingDay === lastDayOfPreviousMonth || currentlyCreatingDay === lastDayOfPreviousMonth - 1)) {
+                    createEnabledDay(td);
+                }
+                else if(this.currentYear === currentDateYear && this.currentMonthId === currentDateMonthId - 1 && today === 2 && currentlyCreatingDay === lastDayOfPreviousMonth)
                 {
-                    td.classList.add("day_cell");
-                    td.classList.add("enabled");
-                    td.setAttribute('onclick', 'calendarInstance.displayTilePicker()');
+                    createEnabledDay(td);
                 }
 
-                td = this.generateTiles(td, currentlyCreatingDay);
+                td = this.generateTile(td, currentlyCreatingDay);
 
             }
             tr.appendChild(td);
