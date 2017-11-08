@@ -43,6 +43,7 @@ function Calendar(currentGoalId, currentMonthId, currentYear) {
 
     this.goals;
     this.tiles;
+    this.clickedDay;
 }
 
 Calendar.prototype.init = function(currentGoalId, currentMonthId, currentYear) {
@@ -153,36 +154,51 @@ Calendar.prototype.setPreviousGoal = function() {
     this.updateGoalHeader();
 }
 
-Calendar.prototype.showTilePicker = function() {
+Calendar.prototype.showTilePicker = function(target) {
+    this.clickedDay = target;
     let picker = $('.tile__picker');
 
-    if (picker.css("display") == "none") {
-        picker.removeClass('animated zoomOut');
-        picker.addClass('animated zoomIn');
-        picker.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
-        picker.css( {top:event.pageY - 60, left: event.pageX + 10});
+    picker.removeClass('animated zoomOut');
+    picker.addClass('animated zoomIn');
+    picker.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
+    picker.css( {top:event.pageY - 60, left: event.pageX + 10});
+}
+
+Calendar.prototype.hideTilePicker = function() {
+    this.clickedDay = null;
+    let picker = $('.tile__picker');
+
+    picker.removeClass('zoomIn');
+    picker.css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+        picker.css("display", "none");
+    });
+    picker.addClass('zoomOut');
+}
+
+Calendar.prototype.loadSavedTileView = function(flag) {
+    $(this.clickedDay).removeClass("tick").removeClass("cross").removeClass("yellow_tick").removeClass("minus");
+
+    if(flag=="YELLOWTICK") {
+        $(this.clickedDay).addClass("yellow_tick");
     }
     else {
-        picker.removeClass('zoomIn');
-        picker.css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-            picker.css("display", "none");
-        });
-        picker.addClass('zoomOut');
+        $(this.clickedDay).addClass(flag.toLowerCase());
     }
 }
 
 Calendar.prototype.saveTile = function(target, event, flag) {
-    this.showTilePicker();
-
     let tile = {};
-    tile["day"]=2;
+    tile["day"]=this.clickedDay.innerHTML;
     tile["flag"]=flag;
     tile["goalId"]=this.goals[this.currentGoalId];
     tile["month"]=this.currentMonthId;
     tile["year"]=this.currentYear;
 
+    this.loadSavedTileView(flag);
+
     saveTile(tile);
     event.stopPropagation();
+    this.hideTilePicker();
 }
 
 Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
@@ -202,6 +218,14 @@ Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
         }
     }
     return td;
+}
+
+Calendar.prototype.loadCurrentScore = function() {
+
+}
+
+Calendar.prototype.loadRecordScore = function() {
+
 }
 
 Calendar.prototype.generateCalendar = function() {
@@ -245,7 +269,7 @@ Calendar.prototype.generateCalendar = function() {
         function createEnabledDay(td) {
             td.classList.add("day_cell");
             td.classList.add("enabled");
-            td.setAttribute('onclick', 'calendarInstance.showTilePicker()');
+            td.setAttribute('onclick', 'calendarInstance.showTilePicker(this)');
         }
 
         function createDisabledDay(td) {

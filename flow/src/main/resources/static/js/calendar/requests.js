@@ -14,7 +14,7 @@ function getGoals(initialPosition) {
             getTiles();
         },
         error: function (e) {
-            console.log("ERROR: ", e);
+            console.log("Wystąpił błąd podczas pobierania celów z bazy danych: ", e);
         }
     });
 }
@@ -33,7 +33,7 @@ function getTiles() {
             calendarInstance.generateCalendar();
         },
         error: function (e) {
-            console.log("ERROR: ", e);
+            console.log("Wystąpił błąd podczas pobierania kafelków z bazy danych: ", e);
         }
     });
 }
@@ -49,7 +49,39 @@ function saveTile(tile) {
             console.log("Kafelek został pomyślnie dodany do bazy!")
         },
         error: function (e) {
-            console.log("ERROR: ", e);
+            console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);
+        }
+    });
+}
+
+function getCurrentScore() {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/tiles/save",
+        data: JSON.stringify(tile),
+        dataType: 'json',
+        success: function () {
+            console.log("Kafelek został pomyślnie dodany do bazy!")
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);
+        }
+    });
+}
+
+function getRecordScore() {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/tiles/save",
+        data: JSON.stringify(tile),
+        dataType: 'json',
+        success: function () {
+            console.log("Kafelek został pomyślnie dodany do bazy!")
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);
         }
     });
 }
