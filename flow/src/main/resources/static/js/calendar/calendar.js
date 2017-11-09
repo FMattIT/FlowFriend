@@ -22,6 +22,16 @@ $( document ).ready(function() {
     $( ".goal_header__previous_arrow .fa-chevron-left" ).click(function() {
         calendarInstance.setPreviousGoal();
     });
+
+    $('.block__goals').sortable({
+        revert: false,
+        handle: '.fa.fa-arrows-v',
+        // update: function (event, ui) {
+        //     updateSortable(false);
+        // }
+    });
+
+    $('.block__goals').disableSelection();
 });
 
 function Calendar(currentGoalId, currentMonthId, currentYear) {
@@ -228,6 +238,30 @@ Calendar.prototype.loadRecordScore = function() {
 
 }
 
+Calendar.prototype.loadGoalsList = function() {
+    $(".block__goals").html("");
+    for (let iterator = 0; iterator <= this.goals.length-1; iterator++) {
+        let goalId = this.getGoalIdByPosition(iterator);
+
+        let goal_bar = document.createElement('div');
+        goal_bar.className = "block__goals__goal_bar";
+
+        let goal_grip = document.createElement('div');
+        goal_grip.className = "goal_bar__grip";
+        goal_grip.innerHTML = "<i class='fa fa-arrows-v' aria-hidden='true'></i>";
+
+        let goal_name = document.createElement('div');
+        goal_name.className = "goal_bar__name";
+        goal_name.innerHTML = this.goals[goalId].name;
+
+        goal_bar.append(goal_grip);
+        goal_bar.append(goal_name);
+
+        $(".block__goals").append(goal_bar);
+    }
+}
+
+
 Calendar.prototype.generateCalendar = function() {
 
     this.clearTable();
@@ -331,6 +365,7 @@ Calendar.prototype.generateCalendar = function() {
             currentlyCreatingDay++;
         }
     }
+    this.loadGoalsList();
 }
 
 

@@ -5,10 +5,12 @@
     <title>Kalendarz celów!</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/style/animate.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/sidebar.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/others.css}" />
@@ -76,7 +78,8 @@
                 <span class="record_score_label">TWÓJ REKORD</span> <span class="record_score_counter">0</span>
             </div>
         </div>
-        <div class="block__goals"></div>
+        <div class="block__goals">
+        </div>
         <div class="block__others">
             <div class="block__others__information">
                 <div class="information__goal_name"></div>
