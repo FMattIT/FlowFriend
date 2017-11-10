@@ -26,9 +26,9 @@ $( document ).ready(function() {
     $('.block__goals').sortable({
         revert: false,
         handle: '.fa.fa-arrows-v',
-        // update: function (event, ui) {
-        //     updateSortable(false);
-        // }
+        update: function (event, ui) {
+            calendarInstance.updateGoalsList();
+        }
     });
 
     $('.block__goals').disableSelection();
@@ -246,6 +246,14 @@ Calendar.prototype.loadGoalsList = function() {
         let goal_bar = document.createElement('div');
         goal_bar.className = "block__goals__goal_bar";
 
+        let goal_position = document.createElement('div');
+        goal_position.className = "goal_bar__position";
+        goal_position.innerHTML = iterator;
+
+        let goal_id = document.createElement('div');
+        goal_position.className = "goal_bar__id";
+        goal_id.innerHTML = goalId;
+
         let goal_grip = document.createElement('div');
         goal_grip.className = "goal_bar__grip";
         goal_grip.innerHTML = "<i class='fa fa-arrows-v' aria-hidden='true'></i>";
@@ -254,6 +262,8 @@ Calendar.prototype.loadGoalsList = function() {
         goal_name.className = "goal_bar__name";
         goal_name.innerHTML = this.goals[goalId].name;
 
+        goal_bar.append(goal_position);
+        goal_bar.append(goal_id);
         goal_bar.append(goal_grip);
         goal_bar.append(goal_name);
 
@@ -261,6 +271,19 @@ Calendar.prototype.loadGoalsList = function() {
     }
 }
 
+Calendar.prototype.updateGoalsList = function() {
+    let self = this;
+    $('.block__goals').find('.block__goals__goal_bar').each(function(){
+        // var goalId = $(this).find('.slide_goal_id').html();
+        var goalPosition = $(this).index();
+        // saveGoal(this.goals[]);
+    });
+}
+
+Calendar.prototype.putSelected = function(target) {
+    $(".block__goals__goal_bar").removeClass('selectable');
+    $(target).addClass('selectable');
+}
 
 Calendar.prototype.generateCalendar = function() {
 

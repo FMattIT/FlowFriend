@@ -19,6 +19,14 @@
     border-bottom: 1px solid black;
     color: #34495e;
 
+    .goal_bar__position {
+      display: none;
+    }
+
+    .goal_bar__id {
+      display: none;
+    }
+
     .goal_bar__grip {
       @include display-flex();
       width: 10%;
@@ -39,11 +47,10 @@
       float: left;
       font-size: 16px;
       font-weight: bold;
-
-      .selected {
-
-      }
     }
 
+    .selected {
+      border: 2px solid #34495e;
+    }
   }
 }

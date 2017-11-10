@@ -54,6 +54,22 @@ function saveTile(tile) {
     });
 }
 
+function saveGoal(goal) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/goals/save",
+        data: JSON.stringify(goal),
+        dataType: 'json',
+        success: function () {
+            console.log("Cel został pomyślnie dodany do bazy!")
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas dodawania celu do bazy: ", e);
+        }
+    });
+}
+
 function getCurrentScore() {
     $.ajax({
         type: "POST",
