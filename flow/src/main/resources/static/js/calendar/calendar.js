@@ -23,6 +23,12 @@ $( document ).ready(function() {
         calendarInstance.setPreviousGoal();
     });
 
+    $( document ).on( "click", ".goal_bar__name" , function() {
+        calendarInstance.currentGoalId = $(this).parent().find(".goal_bar__id").html();
+        calendarInstance.generateCalendar();
+        calendarInstance.selectGoalOnList();
+    });
+
     $('.block__goals').sortable({
         revert: false,
         handle: '.fa.fa-arrows-v',
@@ -140,6 +146,7 @@ Calendar.prototype.setNextMonth = function() {
     this.monthChecker();
     getTiles();
     this.updateDateHeader();
+    this.selectGoalOnList();
 }
 
 Calendar.prototype.setPreviousMonth = function() {
@@ -148,6 +155,7 @@ Calendar.prototype.setPreviousMonth = function() {
     this.monthChecker();
     getTiles();
     this.updateDateHeader();
+    this.selectGoalOnList();
 }
 
 Calendar.prototype.setNextGoal = function() {
@@ -155,6 +163,7 @@ Calendar.prototype.setNextGoal = function() {
     this.init(this.getNextGoalIdByPosition(), this.currentMonthId, this.currentYear);
     getTiles();
     this.updateGoalHeader();
+    this.selectGoalOnList();
 }
 
 Calendar.prototype.setPreviousGoal = function() {
@@ -162,6 +171,7 @@ Calendar.prototype.setPreviousGoal = function() {
     this.init(this.getPreviousGoalIdByPosition(), this.currentMonthId, this.currentYear);
     getTiles();
     this.updateGoalHeader();
+    this.selectGoalOnList();
 }
 
 Calendar.prototype.showTilePicker = function(target) {
@@ -238,6 +248,11 @@ Calendar.prototype.loadRecordScore = function() {
 
 }
 
+Calendar.prototype.selectGoalOnList = function() {
+    $(".block__goals__goal_bar").removeClass('selected');
+    $(".goal_bar__id:contains('"+this.currentGoalId+"')").parent().addClass('selected');
+}
+
 Calendar.prototype.loadGoalsList = function() {
     $(".block__goals").html("");
     for (let iterator = 0; iterator <= this.goals.length-1; iterator++) {
@@ -251,7 +266,7 @@ Calendar.prototype.loadGoalsList = function() {
         goal_position.innerHTML = iterator;
 
         let goal_id = document.createElement('div');
-        goal_position.className = "goal_bar__id";
+        goal_id.className = "goal_bar__id";
         goal_id.innerHTML = goalId;
 
         let goal_grip = document.createElement('div');
@@ -269,20 +284,16 @@ Calendar.prototype.loadGoalsList = function() {
 
         $(".block__goals").append(goal_bar);
     }
+    this.selectGoalOnList();
 }
 
 Calendar.prototype.updateGoalsList = function() {
     let self = this;
     $('.block__goals').find('.block__goals__goal_bar').each(function(){
-        // var goalId = $(this).find('.slide_goal_id').html();
+        var goalId = $(this).find('.goal_bar__id').html();
         var goalPosition = $(this).index();
-        // saveGoal(this.goals[]);
+        saveGoal(self.goals[goalId], goalPosition);
     });
-}
-
-Calendar.prototype.putSelected = function(target) {
-    $(".block__goals__goal_bar").removeClass('selectable');
-    $(target).addClass('selectable');
 }
 
 Calendar.prototype.generateCalendar = function() {
@@ -388,7 +399,6 @@ Calendar.prototype.generateCalendar = function() {
             currentlyCreatingDay++;
         }
     }
-    this.loadGoalsList();
 }
 
 

@@ -11,6 +11,7 @@ function getGoals(initialPosition) {
         success: function (goals) {
             calendarInstance.setGoals(goals);
             calendarInstance.currentGoalId = calendarInstance.getGoalIdByPosition(initialPosition);
+            calendarInstance.loadGoalsList();
             getTiles();
         },
         error: function (e) {
@@ -54,7 +55,9 @@ function saveTile(tile) {
     });
 }
 
-function saveGoal(goal) {
+function saveGoal(goal, position) {
+    goal.position = position;
+
     $.ajax({
         type: "POST",
         contentType: "application/json",

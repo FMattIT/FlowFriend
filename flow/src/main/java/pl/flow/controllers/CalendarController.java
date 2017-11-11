@@ -50,9 +50,9 @@ public class CalendarController {
 
     @RequestMapping(value="/calendar/requests/goals/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public Goal addGoal(Principal principal) {
-//        return goalService.getGoals(usersService.getUserByUsername(principal.getName()));
-        return null;
+    public Goal save(@RequestBody Goal goal, Principal principal) {
+        goalService.save(goal);
+        return goal;
     }
 
     @RequestMapping(value="/calendar/requests/tiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -145,21 +145,21 @@ public class CalendarController {
         return tileService.getMaxCount(cel);
     }
 
-    @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public Goal addGoal(@RequestBody Goal goal, Principal principal) {
-        if(goal.getName().length()>170){
-            return null;
-        }
-        else {
-            User user = usersService.getUserByUsername(principal.getName());
-            goal.setUserId(user);
-            goal.setCreateDate(new Date());
-            goalService.save(goal);
-
-            return goal;
-        }
-    }
+//    @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+//    @ResponseBody
+//    public Goal addGoal(@RequestBody Goal goal, Principal principal) {
+//        if(goal.getName().length()>170){
+//            return null;
+//        }
+//        else {
+//            User user = usersService.getUserByUsername(principal.getName());
+//            goal.setUserId(user);
+//            goal.setCreateDate(new Date());
+//            goalService.save(goal);
+//
+//            return goal;
+//        }
+//    }
 
     @RequestMapping(value="/calendar/editGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
