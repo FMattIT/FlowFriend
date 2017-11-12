@@ -23,9 +23,19 @@ $( document ).ready(function() {
         calendarInstance.setPreviousGoal();
     });
 
+    $( ".fa-plus-circle" ).click(function() {
+        $('#addGoalModal').modal('show');
+    });
+
+    $('body').on('submit', '.add_goal__modal__form', function(event) {
+        event.preventDefault();
+        calendarInstance.saveGoal();
+        $('#addGoalModal').modal('toggle');
+    });
+
     $( document ).on( "click", ".goal_bar__name" , function() {
         calendarInstance.currentGoalId = $(this).parent().find(".goal_bar__id").html();
-        calendarInstance.generateCalendar();
+        getTiles();
         calendarInstance.selectGoalOnList();
     });
 
@@ -219,6 +229,13 @@ Calendar.prototype.saveTile = function(target, event, flag) {
     saveTile(tile);
     event.stopPropagation();
     this.hideTilePicker();
+}
+
+Calendar.prototype.saveGoal = function(event) {
+    let goal = {};
+    goal["name"]=$('.add_goal__modal__form_name').val();
+    goal["position"]=$('.block__goals').children().length;
+    saveGoal(goal, goal.position);
 }
 
 Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {

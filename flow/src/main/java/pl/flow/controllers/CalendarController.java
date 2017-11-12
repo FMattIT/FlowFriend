@@ -51,6 +51,7 @@ public class CalendarController {
     @RequestMapping(value="/calendar/requests/goals/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal save(@RequestBody Goal goal, Principal principal) {
+        goal.setUserId(usersService.getUserByUsername(principal.getName()));
         goalService.save(goal);
         return goal;
     }
