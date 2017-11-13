@@ -24,19 +24,21 @@ $( document ).ready(function() {
     });
 
     $( ".fa-plus-circle" ).click(function() {
-        $('#addGoalModal').modal('show');
+        $('#add_goal__modal').modal('show');
     });
 
     $('body').on('submit', '.add_goal__modal__form', function(event) {
         event.preventDefault();
         calendarInstance.saveGoal();
-        $('#addGoalModal').modal('toggle');
+        $('#add_goal__modal').modal('toggle');
     });
 
     $( document ).on( "click", ".goal_bar__name" , function() {
-        calendarInstance.currentGoalId = $(this).parent().find(".goal_bar__id").html();
-        getTiles();
-        calendarInstance.selectGoalOnList();
+        if(calendarInstance.currentGoalId != $(this).parent().find(".goal_bar__id").html()){
+            calendarInstance.currentGoalId = $(this).parent().find(".goal_bar__id").html();
+            getTiles();
+            calendarInstance.selectGoalOnList();
+        }
     });
 
     $('.block__goals').sortable({
@@ -218,23 +220,20 @@ Calendar.prototype.loadSavedTileView = function(flag) {
 
 Calendar.prototype.saveTile = function(target, event, flag) {
     let tile = {};
-    tile["day"]=this.clickedDay.innerHTML;
-    tile["flag"]=flag;
-    tile["goalId"]=this.goals[this.currentGoalId];
-    tile["month"]=this.currentMonthId;
-    tile["year"]=this.currentYear;
-
-    this.loadSavedTileView(flag);
+    tile["day"] = this.clickedDay.innerHTML;
+    tile["flag"] = flag;
+    tile["goalId"] = this.goals[this.currentGoalId];
+    tile["month"] = this.currentMonthId;
+    tile["year"] = this.currentYear;
 
     saveTile(tile);
     event.stopPropagation();
-    this.hideTilePicker();
 }
 
-Calendar.prototype.saveGoal = function(event) {
+Calendar.prototype.saveGoal = function() {
     let goal = {};
-    goal["name"]=$('.add_goal__modal__form_name').val();
-    goal["position"]=$('.block__goals').children().length;
+    goal["name"] = $('.add_goal__modal__form_name').val();
+    goal["position"] = $('.block__goals').children().length;
     saveGoal(goal, goal.position);
 }
 
@@ -258,16 +257,16 @@ Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
 }
 
 Calendar.prototype.loadCurrentScore = function() {
-
+    getCurrentScore(this.goals[this.currentGoalId]);
 }
 
 Calendar.prototype.loadRecordScore = function() {
-
+    getRecordScore(this.goals[this.currentGoalId]);
 }
 
 Calendar.prototype.selectGoalOnList = function() {
     $(".block__goals__goal_bar").removeClass('selected');
-    $(".goal_bar__id:contains('"+this.currentGoalId+"')").parent().addClass('selected');
+    $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().addClass('selected');
 }
 
 Calendar.prototype.loadGoalsList = function() {
@@ -307,8 +306,8 @@ Calendar.prototype.loadGoalsList = function() {
 Calendar.prototype.updateGoalsList = function() {
     let self = this;
     $('.block__goals').find('.block__goals__goal_bar').each(function(){
-        var goalId = $(this).find('.goal_bar__id').html();
-        var goalPosition = $(this).index();
+        let goalId = $(this).find('.goal_bar__id').html();
+        let goalPosition = $(this).index();
         saveGoal(self.goals[goalId], goalPosition);
     });
 }
@@ -416,6 +415,8 @@ Calendar.prototype.generateCalendar = function() {
             currentlyCreatingDay++;
         }
     }
+    this.loadCurrentScore();
+    this.loadRecordScore();
 }
 
 

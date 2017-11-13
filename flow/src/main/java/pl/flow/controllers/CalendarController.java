@@ -77,14 +77,14 @@ public class CalendarController {
 
     @RequestMapping(value="/calendar/requests/tiles/scores/current", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public List<Tile> getCurrentScore(@RequestBody Goal goal, Principal principal) {
-        return tileService.getTiles(usersService.getUserByUsername(principal.getName()), goal);
+    public Object getCurrentScore(@RequestBody Goal goal, Principal principal) {
+        return tileService.getActualCount(goal);
     }
 
     @RequestMapping(value="/calendar/requests/tiles/scores/record", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public List<Tile> getRecordScore(@RequestBody Goal goal, Principal principal) {
-        return tileService.getTiles(usersService.getUserByUsername(principal.getName()), goal);
+    public Object getRecordScore(@RequestBody Goal goal, Principal principal) {
+        return tileService.getMaxCount(goal);
     }
 
 

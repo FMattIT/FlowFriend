@@ -5,14 +5,42 @@ html, body {
   font-family: Montserrat;
 }
 
+@mixin display-flex() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .block {
   height: 82%;
   width: 92%;
   margin: 2%;
-  //border: 1px solid black;
   float: left;
 }
 
 .fa {
   cursor: pointer;
+}
+
+.add_goal__modal__form_label {
+  @include display-flex();
+  color: #34495e;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.add_goal__modal__form {
+  @include display-flex();
+}
+
+.add_goal__modal__form_name {
+  outline: none;
+  border: 1px solid #34495e;
+}
+
+.add_goal__modal__form_submit {
+  display: block;
+  outline: none;
 }

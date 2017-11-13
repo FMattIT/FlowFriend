@@ -48,6 +48,8 @@ function saveTile(tile) {
         dataType: 'json',
         success: function () {
             console.log("Kafelek został pomyślnie dodany do bazy!")
+            calendarInstance.loadSavedTileView(tile.flag);
+            calendarInstance.hideTilePicker();
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);
@@ -73,34 +75,36 @@ function saveGoal(goal, position) {
     });
 }
 
-function getCurrentScore() {
+function getCurrentScore(goal) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/calendar/requests/tiles/save",
-        data: JSON.stringify(tile),
+        url: "/calendar/requests/tiles/scores/current",
+        data: JSON.stringify(goal),
         dataType: 'json',
-        success: function () {
-            console.log("Kafelek został pomyślnie dodany do bazy!")
+        success: function (currentScore) {
+            console.log("Aktualny wynik został pomyślnie pobrany z serwera!")
+            $(".current_score_counter").html(currentScore);
         },
         error: function (e) {
-            console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);
+            console.log("Wystąpił błąd podczas pobierania aktualnego wyniu z serwera: ", e);
         }
     });
 }
 
-function getRecordScore() {
+function getRecordScore(goal) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/calendar/requests/tiles/save",
-        data: JSON.stringify(tile),
+        url: "/calendar/requests/tiles/scores/record",
+        data: JSON.stringify(goal),
         dataType: 'json',
-        success: function () {
-            console.log("Kafelek został pomyślnie dodany do bazy!")
+        success: function (recordScore) {
+            console.log("Rekordowy wynik został pomyślnie pobrany z serwera!")
+            $(".record_score_counter").html(recordScore);
         },
         error: function (e) {
-            console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);
+            console.log("Wystąpił błąd podczas pobierania rekordowego wyniu z serwera: ", e);
         }
     });
 }
