@@ -21,7 +21,7 @@ function getGoals(initialPosition) {
 }
 
 function getTiles() {
-    var goal = calendarInstance.goals[calendarInstance.currentGoalId];
+    let goal = calendarInstance.goals[calendarInstance.currentGoalId];
 
     $.ajax({
         type: "POST",
@@ -50,6 +50,8 @@ function saveTile(tile) {
             console.log("Kafelek został pomyślnie dodany do bazy!")
             calendarInstance.loadSavedTileView(tile.flag);
             calendarInstance.hideTilePicker();
+            calendarInstance.loadCurrentScore();
+            calendarInstance.loadRecordScore();
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);

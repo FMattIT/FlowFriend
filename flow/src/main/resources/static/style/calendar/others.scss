@@ -23,6 +23,10 @@ html, body {
   cursor: pointer;
 }
 
+.fa-info-circle:hover, .fa-pie-chart:hover, .fa-sticky-note:hover {
+  font-size: 110px;
+}
+
 .add_goal__modal__form_label {
   @include display-flex();
   color: #34495e;
