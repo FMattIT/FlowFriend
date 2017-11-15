@@ -27,21 +27,33 @@
         font-size: 24px;
         font-weight: bold;
         color: #34495e;
+        padding-top: 5%;
+        padding-bottom: 1%;
       }
 
       .information__goal_name__name textarea {
-        width: 50%;
-        outline: #202020;
-        border: 1px solid lightgray;
-        text-align: left;
-        font-size: 14px;
-        line-height: 19px;
-        padding: 8px 8px;
-        border-radius: 1%;
-        font-family: "Open Sans","Helvetica",Arial,sans-serif;
-        color: black;
+        //width: 80%;
+        //line-height: 8px;
+        ////line-height: auto;
+        //outline: #202020;
+        //border: 1px solid lightgray;
+        //text-align: left;
+        //font-size: 14px;
+        //padding: 8px 8px;
+        //border-radius: 1%;
+        //font-family: "Open Sans","Helvetica",Arial,sans-serif;
+        //color: black;
+        //resize: none;
+        //overflow: hidden;
+        width: 80%;
         resize: none;
         overflow: hidden;
+        font-size: 14px;
+        border-radius: 1%;
+        outline: #202020;
+        border: 1px solid lightgray;
+        color: black;
+
       }
 
       .information__goal_name__buttons input {
@@ -54,7 +66,11 @@
         font-weight: bold;
         float: left;
         margin-right: 20px;
-        padding: 1%;
+        padding: 2.5% 3%;
+      }
+
+      .information__goal_name__buttons {
+        margin: 0 auto;
       }
     }
 
