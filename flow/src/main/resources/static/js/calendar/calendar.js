@@ -50,6 +50,8 @@ $( document ).ready(function() {
     });
 
     $('.block__goals').disableSelection();
+
+    autosize(document.querySelector('textarea'));
 });
 
 function Calendar(currentGoalId, currentMonthId, currentYear) {

@@ -32,20 +32,9 @@
       }
 
       .information__goal_name__name textarea {
-        //width: 80%;
-        //line-height: 8px;
-        ////line-height: auto;
-        //outline: #202020;
-        //border: 1px solid lightgray;
-        //text-align: left;
-        //font-size: 14px;
-        //padding: 8px 8px;
-        //border-radius: 1%;
-        //font-family: "Open Sans","Helvetica",Arial,sans-serif;
-        //color: black;
-        //resize: none;
-        //overflow: hidden;
         width: 80%;
+        max-height: 82px;
+        padding: 6px 6px;
         resize: none;
         overflow: hidden;
         font-size: 14px;
@@ -53,24 +42,24 @@
         outline: #202020;
         border: 1px solid lightgray;
         color: black;
+      }
 
+      .information__goal_name__buttons {
+        width: 80%;
+        height: 50px;
+        margin: 0 auto;
+        text-align: center;
       }
 
       .information__goal_name__buttons input {
-        width: 20%;
         background-color: #34495e;
         color: white;
         text-align: center;
         border: none;
         font-size: 18px;
         font-weight: bold;
-        float: left;
         margin-right: 20px;
         padding: 2.5% 3%;
-      }
-
-      .information__goal_name__buttons {
-        margin: 0 auto;
       }
     }
 

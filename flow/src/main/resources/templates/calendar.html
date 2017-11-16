@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/infos.css}" />
     <script type="text/javascript" th:src="@{/js/calendar/calendar.js}"></script>
     <script type="text/javascript" th:src="@{/js/calendar/requests.js}"></script>
+    <script type="text/javascript" th:src="@{/js/calendar/autosize.min.js}"></script>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
 </head>
@@ -55,7 +56,7 @@
             </div>
             <div class="block__calendar__date_header">
                 <div class="date_header__previous_arrow"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
-                <div class="date_header__date">PAŹDZIERNIK 2017</div>
+                <div class="date_header__date"></div>
                 <div class="date_header__next_arrow"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
             </div>
             <div class="block__calendar__days">
@@ -85,7 +86,7 @@
                 <div class="information__goal_name">
                     <div class="information__goal_name__label">NAZWA CELU: </div>
                     <div class="information__goal_name__name">
-                        <textarea type="text" rows="1"/>
+                        <textarea type="text" rows="1" maxlength="170"/>
                     </div>
                     <div class="information__goal_name__buttons">
                         <input type="submit" value="ZAPISZ"/>
