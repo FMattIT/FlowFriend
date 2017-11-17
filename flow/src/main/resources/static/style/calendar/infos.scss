@@ -31,7 +31,7 @@
         padding-bottom: 1%;
       }
 
-      .information__goal_name__name textarea {
+      .information__goal_name__name_text_area {
         width: 80%;
         max-height: 82px;
         padding: 6px 6px;
@@ -49,17 +49,24 @@
         height: 50px;
         margin: 0 auto;
         text-align: center;
-      }
 
-      .information__goal_name__buttons input {
-        background-color: #34495e;
-        color: white;
-        text-align: center;
-        border: none;
-        font-size: 18px;
-        font-weight: bold;
-        margin-right: 20px;
-        padding: 2.5% 3%;
+        .goal_name__buttons_save, .goal_name__buttons_delete {
+          background-color: #34495e;
+          color: white;
+          text-align: center;
+          border: none;
+          font-size: 20px;
+          font-weight: bold;
+          padding: 3% 8%;
+        }
+
+        .goal_name__buttons_save {
+          margin-right: 20px;
+        }
+
+        .goal_name__buttons_delete {
+          background-color: #FC221E !important;
+        }
       }
     }
 

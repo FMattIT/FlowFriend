@@ -23,6 +23,19 @@ $( document ).ready(function() {
         calendarInstance.setPreviousGoal();
     });
 
+    $( ".goal_name__buttons_save").click(function() {
+        let goal = calendarInstance.goals[calendarInstance.currentGoalId];
+        goal.name = $(".information__goal_name__name_text_area").val();
+        saveGoal(goal, goal.position);
+        $(".goal_bar__id:contains('" + calendarInstance.currentGoalId + "')").parent().find(".goal_bar__name").html(goal.name);
+    });
+
+    $( ".goal_name__buttons_delete").click(function() {
+        deleteGoal(calendarInstance.goals[calendarInstance.currentGoalId]);
+        calendarInstance.deleteGoal();
+        calendarInstance.updateGoalsList();
+    });
+
     $( ".fa-plus-circle" ).click(function() {
         $('#add_goal__modal').modal('show');
     });
@@ -31,6 +44,8 @@ $( document ).ready(function() {
         event.preventDefault();
         calendarInstance.saveGoal();
         $('#add_goal__modal').modal('toggle');
+        getGoals(0);
+        calendarInstance.loadGoalsList();
     });
 
     $( document ).on( "click", ".goal_bar__name" , function() {
@@ -239,6 +254,10 @@ Calendar.prototype.saveGoal = function() {
     saveGoal(goal, goal.position);
 }
 
+Calendar.prototype.deleteGoal = function() {
+    $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().remove();
+}
+
 Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
     for (let iterator = 0; iterator < this.tiles.length; iterator ++) {
         let tile = this.tiles[iterator];
@@ -264,6 +283,10 @@ Calendar.prototype.loadCurrentScore = function() {
 
 Calendar.prototype.loadRecordScore = function() {
     getRecordScore(this.goals[this.currentGoalId]);
+}
+
+Calendar.prototype.loadGoalNameToEditField = function() {
+    $(".information__goal_name__name_text_area").val(this.goals[this.currentGoalId].name);
 }
 
 Calendar.prototype.selectGoalOnList = function() {
@@ -419,6 +442,7 @@ Calendar.prototype.generateCalendar = function() {
     }
     this.loadCurrentScore();
     this.loadRecordScore();
+    this.loadGoalNameToEditField();
 }
 
 

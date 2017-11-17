@@ -77,6 +77,23 @@ function saveGoal(goal, position) {
     });
 }
 
+function deleteGoal(goal) {
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/goals/delete",
+        data: JSON.stringify(goal),
+        dataType: 'json',
+        success: function () {
+            console.log("Cel został pomyślnie usunięty z bazy!")
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas usuwania celu z bazy: ", e);
+        }
+    });
+}
+
 function getCurrentScore(goal) {
     $.ajax({
         type: "POST",

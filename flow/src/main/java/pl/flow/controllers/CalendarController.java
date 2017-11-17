@@ -56,6 +56,15 @@ public class CalendarController {
         return goal;
     }
 
+    @RequestMapping(value="/calendar/requests/goals/delete", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public Goal delete(@RequestBody Goal goal, Principal principal) {
+        tileService.delete(goal);
+        minusTileService.delete(goal);
+        goalService.delete(goal);
+        return goal;
+    }
+
     @RequestMapping(value="/calendar/requests/tiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public List<Tile> getTiles(@RequestBody Goal goal, Principal principal) {
