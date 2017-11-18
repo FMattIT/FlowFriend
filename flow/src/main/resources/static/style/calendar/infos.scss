@@ -74,6 +74,48 @@
       width: 100%;
       height: calc(100% / 3);
       border-bottom: 1px solid rgba(24, 24, 28, 0.45);
+      margin: 0 auto;
+      text-align: center;
+
+      .information__goal_off_days__label {
+        font-size: 24px;
+        font-weight: bold;
+        color: #34495e;
+        padding-top: 5%;
+        padding-bottom: 1%;
+        text-align: center;
+      }
+
+      .information__goal_off_days__blocks {
+        width: 80%;
+        height: 60px;
+        margin: 0 auto;
+        text-align: center;
+
+        .goal_off_days__blocks_block {
+          width: 60px;
+          height: 60px;
+          line-height: 60px;
+          display: inline-block;
+          border: 2px solid #7f8c8d;
+          font-size: 26px;
+          text-align: center;
+
+          &.enabled {
+            background-color: #7f8c8d;
+            color: white;
+          }
+
+          &.disabled {
+            background-color: white;
+            color: #7f8c8d;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
     }
 
     .information__goal_advantages {

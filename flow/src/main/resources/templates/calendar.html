@@ -77,14 +77,14 @@
             </div>
             <div class="block__calendar__record_score">
                 <span class="record_score_label">TWÓJ REKORD</span> <span class="record_score_counter">0</span>
-            </div>7
+            </div>
         </div>
         <div class="block__goals">
         </div>
         <div class="block__others">
             <div class="block__others__information">
                 <div class="information__goal_name">
-                    <div class="information__goal_name__label">NAZWA CELU: </div>
+                    <div class="information__goal_name__label">NAZWA CELU:</div>
                     <div class="information__goal_name__name">
                         <textarea class="information__goal_name__name_text_area" type="text" rows="1" maxlength="170"/>
                     </div>
@@ -93,7 +93,18 @@
                         <input class="goal_name__buttons_delete" type="button" value="USUŃ"/>
                     </div>
                 </div>
-                <div class="information__goal_off_days"></div>
+                <div class="information__goal_off_days">
+                    <div class="information__goal_off_days__label">DNI, W KTÓRYCH CEL NIE OBOWIĄZUJE:</div>
+                    <div class="information__goal_off_days__blocks">
+                        <div class="goal_off_days__blocks_block disabled" id="firstDay" onclick="calendarInstance.toggleClassInBlock(this); calendarInstance.saveOffDays(this);">PN</div>
+                        <div class="goal_off_days__blocks_block disabled" id="secondDay" onclick="calendarInstance.toggleClassInBlock(this); calendarInstance.saveOffDays(this);">WT</div>
+                        <div class="goal_off_days__blocks_block disabled" id="thirdDay" onclick="calendarInstance.toggleClassInBlock(this); calendarInstance.saveOffDays(this);">ŚR</div>
+                        <div class="goal_off_days__blocks_block disabled" id="fourthDay" onclick="calendarInstance.toggleClassInBlock(this); calendarInstance.saveOffDays(this);">CZ</div>
+                        <div class="goal_off_days__blocks_block disabled" id="fifthDay" onclick="calendarInstance.toggleClassInBlock(this); calendarInstance.saveOffDays(this);">PT</div>
+                        <div class="goal_off_days__blocks_block disabled" id="sixthDay" onclick="calendarInstance.toggleClassInBlock(this); calendarInstance.saveOffDays(this);">SO</div>
+                        <div class="goal_off_days__blocks_block disabled" id="seventhDay" onclick="calendarInstance.toggleClassInBlock(this); calendarInstance.saveOffDays(this);">ND</div>
+                    </div>
+                </div>
                 <div class="information__goal_advantages"></div>
             </div>
             <div class="block__others__chart">

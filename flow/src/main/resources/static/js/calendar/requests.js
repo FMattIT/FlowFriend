@@ -68,8 +68,9 @@ function saveGoal(goal, position) {
         url: "/calendar/requests/goals/save",
         data: JSON.stringify(goal),
         dataType: 'json',
-        success: function () {
+        success: function (goalek) {
             console.log("Cel został pomyślnie dodany do bazy!")
+            getGoals(goalek.position);
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas dodawania celu do bazy: ", e);

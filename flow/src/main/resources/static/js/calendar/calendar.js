@@ -27,7 +27,6 @@ $( document ).ready(function() {
         let goal = calendarInstance.goals[calendarInstance.currentGoalId];
         goal.name = $(".information__goal_name__name_text_area").val();
         saveGoal(goal, goal.position);
-        $(".goal_bar__id:contains('" + calendarInstance.currentGoalId + "')").parent().find(".goal_bar__name").html(goal.name);
     });
 
     $( ".goal_name__buttons_delete").click(function() {
@@ -44,8 +43,6 @@ $( document ).ready(function() {
         event.preventDefault();
         calendarInstance.saveGoal();
         $('#add_goal__modal').modal('toggle');
-        getGoals(0);
-        calendarInstance.loadGoalsList();
     });
 
     $( document ).on( "click", ".goal_bar__name" , function() {
@@ -258,6 +255,15 @@ Calendar.prototype.deleteGoal = function() {
     $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().remove();
 }
 
+Calendar.prototype.saveOffDays = function (target) {
+
+}
+
+Calendar.prototype.toggleClassInBlock = function (target) {
+     $(target).toggleClass("disabled");
+     $(target).toggleClass("enabled");
+}
+
 Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
     for (let iterator = 0; iterator < this.tiles.length; iterator ++) {
         let tile = this.tiles[iterator];
@@ -292,6 +298,11 @@ Calendar.prototype.loadGoalNameToEditField = function() {
 Calendar.prototype.selectGoalOnList = function() {
     $(".block__goals__goal_bar").removeClass('selected');
     $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().addClass('selected');
+}
+
+Calendar.prototype.selectGoalOnListForDelete = function(position) {
+    $(".block__goals__goal_bar").removeClass('selected');
+    $(".goal_bar__id:contains('" + this.getGoalIdByPosition(position) + "')").parent().addClass('selected');
 }
 
 Calendar.prototype.loadGoalsList = function() {
