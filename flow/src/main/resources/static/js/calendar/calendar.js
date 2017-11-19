@@ -7,6 +7,21 @@ var calendarInstance = new Calendar(0, 10, 2017);
 $( document ).ready(function() {
     getGoals(0);
 
+    $( ".fa-info-circle" ).click(function() {
+        $(".block__others__information").toggle();
+        $(".block__others__chart").toggle();
+    });
+
+    $( ".fa-pie-chart" ).click(function() {
+        $(".block__others__information").toggle();
+        $(".block__others__chart").toggle();
+        calendarInstance.createChart();
+    });
+
+    $( ".goal_header__previous_arrow .fa-chevron-left" ).click(function() {
+        calendarInstance.setPreviousGoal();
+    });
+
     $( ".date_header__next_arrow .fa-chevron-right" ).click(function() {
         calendarInstance.setNextMonth();
     });
@@ -255,8 +270,36 @@ Calendar.prototype.deleteGoal = function() {
     $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().remove();
 }
 
-Calendar.prototype.saveOffDays = function (target) {
+Calendar.prototype.saveOffDays = function(target) {
+    let value = "false";
+    let minusTiles = {}
+    minusTiles["goalId"] = this.goals[this.currentGoalId];
 
+    for(let iterator = 0; iterator <= 6; iterator++) {
+        if($(target).parent().find("div").eq(iterator).hasClass("enabled")) {
+            value="true";
+        }
+        else{
+            value="false";
+        }
+        minusTiles[$(target).parent().find("div").eq(iterator).attr('id')] = value;
+    }
+    saveMinusTiles(minusTiles);
+}
+
+Calendar.prototype.getOffDays = function() {
+    getMinusTiles(this.goals[this.currentGoalId]);
+}
+
+Calendar.prototype.displayOffDays = function(minusTiles) {
+    $(".information__goal_off_days__blocks").find("div").removeClass("enabled").removeClass("disabled");
+    $(".information__goal_off_days__blocks").find("div").addClass("disabled");
+    jQuery.each(minusTiles, function(iterator, value) {
+        if(value == "true"){
+            $(".information__goal_off_days__blocks").find("div").eq(iterator).toggleClass("disabled");
+            $(".information__goal_off_days__blocks").find("div").eq(iterator).toggleClass("enabled");
+        }
+    });
 }
 
 Calendar.prototype.toggleClassInBlock = function (target) {
@@ -298,6 +341,7 @@ Calendar.prototype.loadGoalNameToEditField = function() {
 Calendar.prototype.selectGoalOnList = function() {
     $(".block__goals__goal_bar").removeClass('selected');
     $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().addClass('selected');
+    this.getOffDays();
 }
 
 Calendar.prototype.selectGoalOnListForDelete = function(position) {
@@ -345,6 +389,40 @@ Calendar.prototype.updateGoalsList = function() {
         let goalId = $(this).find('.goal_bar__id').html();
         let goalPosition = $(this).index();
         saveGoal(self.goals[goalId], goalPosition);
+    });
+}
+
+Calendar.prototype.createChart = function() {
+    let canvas = document.getElementById('forChart');
+    canvas.innerHTML = '';
+    canvas.innerHTML = "<canvas id='myChart'></canvas>";
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        options:{
+            legend:{
+                display: false
+            }
+        },
+        data: {
+            datasets: [{
+                // data: [getChoicesCount("TICK", type), getChoicesCount("YELLOWTICK", type), getChoicesCount("CROSS", type), getChoicesCount("MINUS", type)],
+                data: [1, 1, 1, 1],
+                backgroundColor: [
+                    "#009966",
+                    "#f1c40f",
+                    "#e74c3c",
+                    "#7f8c8d"
+                ]
+            }],
+
+            labels: [
+                'TICK',
+                'YELLOWTICK',
+                'CROSS',
+                'MINUS'
+            ]
+        },
     });
 }
 

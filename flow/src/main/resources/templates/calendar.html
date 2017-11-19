@@ -20,6 +20,7 @@
     <script type="text/javascript" th:src="@{/js/calendar/calendar.js}"></script>
     <script type="text/javascript" th:src="@{/js/calendar/requests.js}"></script>
     <script type="text/javascript" th:src="@{/js/calendar/autosize.min.js}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
 </head>
@@ -108,13 +109,11 @@
                 <div class="information__goal_advantages"></div>
             </div>
             <div class="block__others__chart">
-                <div class="forChart"></div>
+                <div id="forChart" style="padding: 5%;"></div>
             </div>
-            <div class="block__others__notes"></div>
             <div class="block__others__changer">
                 <div class="block__others__changer_info"> <i class="fa fa-info-circle" aria-hidden="true"></i> </div>
                 <div class="block__others__changer_chart"> <i class="fa fa-pie-chart" aria-hidden="true"></i> </div>
-                <div class="block__others__changer_notes"> <i class="fa fa-sticky-note" aria-hidden="true"></i> </div>
             </div>
         </div>
     </div>

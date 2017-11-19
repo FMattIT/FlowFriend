@@ -59,6 +59,39 @@ function saveTile(tile) {
     });
 }
 
+function getMinusTiles(goal) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/minus/tiles",
+        data: JSON.stringify(goal),
+        dataType: 'json',
+        success: function (minusTiles) {
+            console.log("Wyłączone kafelki zostały pomyślnie pobrane z bazy!")
+            calendarInstance.displayOffDays(minusTiles);
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas pobierania wyłączonych kafelków: ", e);
+        }
+    });
+}
+
+function saveMinusTiles(minusTiles) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/minus/tiles/save",
+        data: JSON.stringify(minusTiles),
+        dataType: 'json',
+        success: function () {
+            console.log("Wyłączony kafelek został pomyślnie dodany do bazy!")
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas dodawania wyłączonego kafelka do bazy: ", e);
+        }
+    });
+}
+
 function saveGoal(goal, position) {
     goal.position = position;
 
