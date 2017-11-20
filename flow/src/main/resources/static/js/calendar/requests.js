@@ -52,6 +52,7 @@ function saveTile(tile) {
             calendarInstance.hideTilePicker();
             calendarInstance.loadCurrentScore();
             calendarInstance.loadRecordScore();
+            calendarInstance.createChart($(".block__others__chart_type_select").val());
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);

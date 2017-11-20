@@ -8,14 +8,14 @@ $( document ).ready(function() {
     getGoals(0);
 
     $( ".fa-info-circle" ).click(function() {
-        $(".block__others__information").toggle();
-        $(".block__others__chart").toggle();
+        $(".block__others__information").css("display", "block");
+        $(".block__others__chart").css("display", "none");
     });
 
     $( ".fa-pie-chart" ).click(function() {
-        $(".block__others__information").toggle();
-        $(".block__others__chart").toggle();
-        calendarInstance.createChart();
+        $(".block__others__information").css("display", "none");
+        $(".block__others__chart").css("display", "block");
+        calendarInstance.createChart($(".block__others__chart_type_select").val());
     });
 
     $( ".goal_header__previous_arrow .fa-chevron-left" ).click(function() {
@@ -79,6 +79,7 @@ $( document ).ready(function() {
     $('.block__goals').disableSelection();
 
     autosize(document.querySelector('textarea'));
+    autosize(document.getElementsByClassName("information__goal_advantages__list_text_area"));
 });
 
 function Calendar(currentGoalId, currentMonthId, currentYear) {
@@ -392,7 +393,27 @@ Calendar.prototype.updateGoalsList = function() {
     });
 }
 
-Calendar.prototype.createChart = function() {
+Calendar.prototype.countTilesToCreateChart = function(choice, type) {
+    let score = 0;
+    for (let iterator = 0; iterator <= this.tiles.length-1; iterator++) {
+
+        if(type=="one"){
+            if (this.tiles[iterator].goalId.id == this.goals[this.currentGoalId].id && this.tiles[iterator].flag == choice && this.tiles[iterator].month == this.currentMonthId)
+            {
+                score++;
+            }
+        }
+        else{
+            if (this.tiles[iterator].goalId.id  == this.goals[this.currentGoalId].id && this.tiles[iterator].flag == choice)
+            {
+                score++;
+            }
+        }
+    }
+    return score;
+}
+
+Calendar.prototype.createChart = function(type) {
     let canvas = document.getElementById('forChart');
     canvas.innerHTML = '';
     canvas.innerHTML = "<canvas id='myChart'></canvas>";
@@ -406,8 +427,7 @@ Calendar.prototype.createChart = function() {
         },
         data: {
             datasets: [{
-                // data: [getChoicesCount("TICK", type), getChoicesCount("YELLOWTICK", type), getChoicesCount("CROSS", type), getChoicesCount("MINUS", type)],
-                data: [1, 1, 1, 1],
+                data: [this.countTilesToCreateChart("TICK", type), this.countTilesToCreateChart("YELLOWTICK", type), this.countTilesToCreateChart("CROSS", type), this.countTilesToCreateChart("MINUS", type)],
                 backgroundColor: [
                     "#009966",
                     "#f1c40f",
@@ -532,6 +552,7 @@ Calendar.prototype.generateCalendar = function() {
     this.loadCurrentScore();
     this.loadRecordScore();
     this.loadGoalNameToEditField();
+    this.createChart($(".block__others__chart_type_select").val());
 }
 
 

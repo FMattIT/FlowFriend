@@ -106,9 +106,18 @@
                         <div class="goal_off_days__blocks_block disabled" id="seventhDay" onclick="calendarInstance.toggleClassInBlock(this); calendarInstance.saveOffDays(this);">ND</div>
                     </div>
                 </div>
-                <div class="information__goal_advantages"></div>
+                <div class="information__goal_advantages">
+                    <div class="information__goal_advantages__label">KORZYŚCI Z REALIZACJI CELU:</div>
+                    <div class="information__goal_advantages__list">
+                        <textarea class="information__goal_advantages__list_text_area" type="text" rows="1" />
+                    </div>
+                </div>
             </div>
             <div class="block__others__chart">
+                <select class="block__others__chart_type_select" onchange="calendarInstance.createChart($(this).val());">
+                    <option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option>
+                    <option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option>
+                </select>
                 <div id="forChart" style="padding: 5%;"></div>
             </div>
             <div class="block__others__changer">
