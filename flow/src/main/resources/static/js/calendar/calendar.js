@@ -446,6 +446,20 @@ Calendar.prototype.createChart = function(type) {
     });
 }
 
+Calendar.prototype.loadNewTileToList = function(tile) {
+    let count = 0;
+    let self  = this;
+    this.tiles.filter(function(item) {
+        if(item.id === tile.id) {
+            self.tiles[self.tiles.indexOf(item)] = tile;
+            count++;
+        }
+    });
+    if(count === 0) {
+        this.tiles.push(tile);
+    }
+}
+
 Calendar.prototype.generateCalendar = function() {
 
     this.clearTable();

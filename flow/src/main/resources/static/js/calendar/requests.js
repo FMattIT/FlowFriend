@@ -46,12 +46,13 @@ function saveTile(tile) {
         url: "/calendar/requests/tiles/save",
         data: JSON.stringify(tile),
         dataType: 'json',
-        success: function () {
+        success: function (returnedTile) {
             console.log("Kafelek został pomyślnie dodany do bazy!")
             calendarInstance.loadSavedTileView(tile.flag);
             calendarInstance.hideTilePicker();
             calendarInstance.loadCurrentScore();
             calendarInstance.loadRecordScore();
+            calendarInstance.loadNewTileToList(returnedTile);
             calendarInstance.createChart($(".block__others__chart_type_select").val());
         },
         error: function (e) {
