@@ -38,16 +38,22 @@ $( document ).ready(function() {
         calendarInstance.setPreviousGoal();
     });
 
-    $( ".goal_name__buttons_save").click(function() {
+    $( ".information__goal_advantages__list_save").click(function() {
         let goal = calendarInstance.goals[calendarInstance.currentGoalId];
-        goal.name = $(".information__goal_name__name_text_area").val();
-        saveGoal(goal, goal.position);
+        goal.advantages = $(".information__goal_advantages__list_text_area").val();
+        saveGoal(goal, goal.position, goal.advantages);
     });
 
     $( ".goal_name__buttons_delete").click(function() {
         deleteGoal(calendarInstance.goals[calendarInstance.currentGoalId]);
         calendarInstance.deleteGoal();
         calendarInstance.updateGoalsList();
+    });
+
+    $( ".goal_name__buttons_save").click(function() {
+        let goal = calendarInstance.goals[calendarInstance.currentGoalId];
+        goal.name = $(".information__goal_name__name_text_area").val();
+        saveGoal(goal, goal.position, goal.advantages);
     });
 
     $( ".fa-plus-circle" ).click(function() {
@@ -264,7 +270,7 @@ Calendar.prototype.saveGoal = function() {
     let goal = {};
     goal["name"] = $('.add_goal__modal__form_name').val();
     goal["position"] = $('.block__goals').children().length;
-    saveGoal(goal, goal.position);
+    saveGoal(goal, goal.position, goal.advantages);
 }
 
 Calendar.prototype.deleteGoal = function() {
@@ -339,6 +345,10 @@ Calendar.prototype.loadGoalNameToEditField = function() {
     $(".information__goal_name__name_text_area").val(this.goals[this.currentGoalId].name);
 }
 
+Calendar.prototype.loadGoalAdvantages = function() {
+    $(".information__goal_advantages__list_text_area").val(this.goals[this.currentGoalId].advantages);
+}
+
 Calendar.prototype.selectGoalOnList = function() {
     $(".block__goals__goal_bar").removeClass('selected');
     $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().addClass('selected');
@@ -389,7 +399,7 @@ Calendar.prototype.updateGoalsList = function() {
     $('.block__goals').find('.block__goals__goal_bar').each(function(){
         let goalId = $(this).find('.goal_bar__id').html();
         let goalPosition = $(this).index();
-        saveGoal(self.goals[goalId], goalPosition);
+        saveGoal(self.goals[goalId], goalPosition, self.goals[goalId].advantages);
     });
 }
 
@@ -566,6 +576,7 @@ Calendar.prototype.generateCalendar = function() {
     this.loadCurrentScore();
     this.loadRecordScore();
     this.loadGoalNameToEditField();
+    this.loadGoalAdvantages();
     this.createChart($(".block__others__chart_type_select").val());
 }
 

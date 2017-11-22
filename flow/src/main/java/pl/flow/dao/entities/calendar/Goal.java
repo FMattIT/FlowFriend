@@ -37,14 +37,7 @@ public class Goal {
     private Date createDate;
 
     @Column
-    private String firstAdvantage;
-
-    @Column
-    private String secondAdvantage;
-
-    @Column
-    private String thirdAdvantage;
-
+    private String advantages;
 
     public Long getId() {
         return id;
@@ -86,28 +79,11 @@ public class Goal {
         this.createDate = createDate;
     }
 
-    public String getFirstAdvantage() {
-        return firstAdvantage;
+    public String getAdvantages() {
+        return advantages;
     }
 
-    public void setFirstAdvantage(String firstAdvantage) {
-        this.firstAdvantage = firstAdvantage;
+    public void setAdvantages(String advantages) {
+        this.advantages = advantages;
     }
-
-    public String getSecondAdvantage() {
-        return secondAdvantage;
-    }
-
-    public void setSecondAdvantage(String secondAdvantage) {
-        this.secondAdvantage = secondAdvantage;
-    }
-
-    public String getThirdAdvantage() {
-        return thirdAdvantage;
-    }
-
-    public void setThirdAdvantage(String thirdAdvantage) {
-        this.thirdAdvantage = thirdAdvantage;
-    }
-
 }

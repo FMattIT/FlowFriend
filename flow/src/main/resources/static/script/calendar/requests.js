@@ -94,8 +94,9 @@ function saveMinusTiles(minusTiles) {
     });
 }
 
-function saveGoal(goal, position) {
+function saveGoal(goal, position, advantages) {
     goal.position = position;
+    goal.advantages = advantages;
 
     $.ajax({
         type: "POST",

@@ -1,6 +1,5 @@
 package pl.flow.controllers;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -8,17 +7,11 @@ import pl.flow.dao.entities.User;
 import pl.flow.dao.entities.calendar.*;
 import pl.flow.service.*;
 
-import javax.persistence.NoResultException;
-import java.awt.image.TileObserver;
-import java.math.BigInteger;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Admin on 18.06.2017.
@@ -96,9 +89,8 @@ public class CalendarController {
     @RequestMapping(value="/calendar/requests/minus/tiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Object getMinusTiles(@RequestBody Goal goal,Principal principal) {
-        Goal cel = goalService.getGoal(goal.getId());
         try{
-            minusTileService.getMinusTile(cel);
+            minusTileService.getMinusTile(goal);
         }
         catch (Exception ex){
             MinusTile minusTile = new MinusTile();
@@ -109,23 +101,23 @@ public class CalendarController {
             minusTile.setSixthDay("false");
             minusTile.setSeventhDay("false");
             minusTile.setFourthDay("false");
-            minusTile.setGoalId(cel);
-            minusTile.setUserId(cel.getUserId());
+            minusTile.setGoalId(goal);
+            minusTile.setUserId(goal.getUserId());
             minusTileService.save(minusTile);
         }
-        return minusTileService.getMinusTile(cel);
+        return minusTileService.getMinusTile(goal);
     }
 
     @RequestMapping(value="/calendar/requests/tiles/scores/current", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Object getCurrentScore(@RequestBody Goal goal, Principal principal) {
-        return tileService.getActualCount(goal);
+        return tileService.getCurrentScore(goal);
     }
 
     @RequestMapping(value="/calendar/requests/tiles/scores/record", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Object getRecordScore(@RequestBody Goal goal, Principal principal) {
-        return tileService.getMaxCount(goal);
+        return tileService.getRecordScore(goal);
     }
 
 
@@ -136,56 +128,6 @@ public class CalendarController {
         return "calendar";
     }
 
-    @RequestMapping(value = "/original")
-    public String original() {
-        return "original";
-    }
-
-//    @RequestMapping(value="/calendar/retrieveMinusTiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-//    @ResponseBody
-//    public Object retrieveMinusTiles(@RequestBody Goal goal,Principal principal) {
-//        Goal cel = goalService.getGoal(goal.getId());
-//        try{
-//            minusTileService.getMinusTile(cel);
-//        }
-//        catch (Exception ex){
-//            MinusTile minusTile = new MinusTile();
-//            minusTile.setFirstDay("false");
-//            minusTile.setSecondDay("false");
-//            minusTile.setThirdDay("false");
-//            minusTile.setFifthDay("false");
-//            minusTile.setSixthDay("false");
-//            minusTile.setSeventhDay("false");
-//            minusTile.setFourthDay("false");
-//            minusTile.setGoalId(cel);
-//            minusTile.setUserId(cel.getUserId());
-//            minusTileService.save(minusTile);
-//        }
-//        return minusTileService.getMinusTile(cel);
-//    }
-
-    @RequestMapping(value="/calendar/updateMinusTile", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public MinusTile updateMinusTile(@RequestBody MinusTile minusTile, Principal principal) {
-        User user = usersService.getUserByUsername(principal.getName());
-        minusTile.setUserId(user);
-        minusTileService.save(minusTile);
-        return minusTile;
-    }
-
-    @RequestMapping(value="/calendar/actualCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public Object actualCounter(@RequestBody Goal goal, Principal principal) {
-        Goal cel = goalService.getGoal(goal.getId());
-        return tileService.getActualCount(cel);
-    }
-
-    @RequestMapping(value="/calendar/maxCounter", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public Object maxCounter(@RequestBody Goal goal, Principal principal) {
-        Goal cel = goalService.getGoal(goal.getId());
-        return tileService.getMaxCount(cel);
-    }
 
 //    @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
 //    @ResponseBody
@@ -203,39 +145,6 @@ public class CalendarController {
 //        }
 //    }
 
-    @RequestMapping(value="/calendar/editGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public Goal editGoal(@RequestBody Goal goal, Principal principal) {
-        if(goal.getName().length()>170){
-            return null;
-        }
-        else {
-            User user = usersService.getUserByUsername(principal.getName());
-            goal.setUserId(user);
-            goal.setCreateDate((goalService.getGoal(goal.getId())).getCreateDate());
-            goalService.save(goal);
-
-            return goal;
-        }
-    }
-
-    @RequestMapping(value="/calendar/deleteGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public List<Goal> deleteGoal(@RequestBody Goal goal, Principal principal) {
-        User user = usersService.getUserByUsername(principal.getName());
-        goal.setUserId(user);
-//        tileService.delete(goal);
-        minusTileService.delete(goal);
-        goalService.delete(goal);
-
-        return goalService.getGoalsList();
-    }
-
-    @RequestMapping(value="/calendar/retrieveData/tiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public Object[] retrieveTiles(Principal principal) {
-        return new Object[]{tileService.getTilesList(), goalService.getGoalsList()};
-    }
 
     @RequestMapping(value="/calendar/saveTile", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody

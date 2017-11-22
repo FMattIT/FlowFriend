@@ -23,6 +23,22 @@ public class TileDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public Tile save(Tile tile) {
+        return entityManager.merge(tile);
+    }
+
+    public void delete(Goal goal) {
+        for(Tile t : getTile(goal)) {
+            entityManager.remove(t);
+        }
+    }
+
+    public List<Tile> getTiles(User user, Goal goal){
+        return entityManager.createQuery("SELECT t FROM Tile t WHERE t.userId = :userId AND t.goalId = :goalId ORDER BY t.id ASC", Tile.class)
+                .setParameter("userId", user)
+                .setParameter("goalId", goal)
+                .getResultList(); }
+
     public List<Tile> getTile(Goal goal){
         return entityManager.createQuery("SELECT t FROM Tile t WHERE t.goalId = :goalId", Tile.class)
                 .setParameter("goalId", goal).getResultList();
@@ -42,43 +58,7 @@ public class TileDao {
         }
     }
 
-//    public Tile save(Tile tile){
-//        LocalDateTime l = LocalDateTime.now();
-//
-//        int dayOfMonth = l.getDayOfMonth();
-//        int month = l.getMonthValue() - 1;
-//        int year = l.getYear();
-//
-//        int tileDayOfMonth = Integer.parseInt(tile.getDay());
-//        int tileMonth = Integer.parseInt(tile.getMonth());
-//        int tileYear = Integer.parseInt(tile.getYear());
-//
-////        if((tileDayOfMonth == dayOfMonth || tileDayOfMonth == dayOfMonth-1 || tileDayOfMonth == dayOfMonth-2) && tileMonth==month && tileYear == year) {
-//
-//            try {
-//                tile.setId(getTileToMerge(tile).getId());
-//                return entityManager.merge(tile);
-//            } catch (Exception e) {
-//                entityManager.persist(tile);
-//            }
-//            return tile;
-//
-////        }
-////        else{
-////            return null;
-////        }
-//    }
-
-    public List<Tile> getTilesList(){
-        return entityManager.createQuery("SELECT t FROM Tile t", Tile.class).getResultList(); }
-
-    public void delete(Goal goal){
-      for(Tile t : getTile(goal)) {
-          entityManager.remove(t);
-      }
-    }
-
-    public Object getActualCount(Goal goal){
+    public Object getCurrentScore(Goal goal){
         return entityManager.createNativeQuery("SELECT COUNT(*) FROM public.tiles\n" +
                 "WHERE EXISTS (SELECT 1 FROM public.tiles WHERE goal_id_id = :goal_id AND flag = 'CROSS') AND\n" +
                 "(\n" +
@@ -93,7 +73,7 @@ public class TileDao {
                 .getSingleResult();
     }
 
-    public Object getMaxCount(Goal goal){
+    public Object getRecordScore(Goal goal){
         try{
             return entityManager.createNativeQuery("select cnt from(select distinct on (goal_id_id, user_id_id) scg.*\n" +
                     "from (select goal_id_id, user_id_id, flag, count(*) as cnt,\n" +
@@ -114,16 +94,6 @@ public class TileDao {
         catch(Exception e){
             return 0;
         }
-    }
-
-    public List<Tile> getTiles(User user, Goal goal){
-        return entityManager.createQuery("SELECT t FROM Tile t WHERE t.userId = :userId AND t.goalId = :goalId ORDER BY t.id ASC", Tile.class)
-                .setParameter("userId", user)
-                .setParameter("goalId", goal)
-                .getResultList(); }
-
-    public Tile save(Tile tile) {
-        return entityManager.merge(tile);
     }
 
 }

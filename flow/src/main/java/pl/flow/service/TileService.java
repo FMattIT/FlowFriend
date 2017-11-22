@@ -26,14 +26,20 @@ public class TileService {
         this.tileDao = tileDao;
     }
 
-//    public Tile save(Tile tile){
-//        return tileDao.save(tile);
-//    }
 
-    public List<Tile> getTilesList(){
-        return tileDao.getTilesList(); }
+    public Tile save(Tile tile) {
+        return tileDao.save(tile);
+    }
 
-    public List<Tile> getTile(Goal goal){
+    public void delete(Goal goal){
+        tileDao.delete(goal);
+    }
+
+    public List<Tile> getTiles(User user, Goal goal){
+        return tileDao.getTiles(user, goal);
+    }
+
+    public List<Tile> getTile(Goal goal) {
         return tileDao.getTile(goal);
     }
 
@@ -41,23 +47,12 @@ public class TileService {
         return tileDao.getTileToMerge(tile);
     }
 
-    public void delete(Goal goal){
-        tileDao.delete(goal);
+    public Object getCurrentScore(Goal goal){
+        return tileDao.getCurrentScore(goal);
     }
 
-    public Object getActualCount(Goal goal){
-        return tileDao.getActualCount(goal);
+    public Object getRecordScore(Goal goal){
+        return tileDao.getRecordScore(goal);
     }
 
-    public Object getMaxCount(Goal goal){
-        return tileDao.getMaxCount(goal);
-    }
-
-    public List<Tile> getTiles(User user, Goal goal){
-        return tileDao.getTiles(user, goal);
-    }
-
-    public Tile save(Tile tile) {
-        return tileDao.save(tile);
-    }
 }
