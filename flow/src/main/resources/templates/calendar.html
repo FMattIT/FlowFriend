@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Kalendarz celów!</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -13,10 +14,10 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/animate.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/sidebar.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/others.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/general.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/calendar.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/goals.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/infos.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/others.css}" />
     <script type="text/javascript" th:src="@{/script/calendar/calendar.js}"></script>
     <script type="text/javascript" th:src="@{/script/calendar/requests.js}"></script>
     <script type="text/javascript" th:src="@{/script/calendar/autosize.min.js}"></script>
@@ -80,18 +81,17 @@
                 <span class="record_score_label">TWÓJ REKORD</span> <span class="record_score_counter">0</span>
             </div>
         </div>
-        <div class="block__goals">
-        </div>
+        <div class="block__goals"></div>
         <div class="block__others">
             <div class="block__others__information">
                 <div class="information__goal_name">
                     <div class="information__goal_name__label">NAZWA CELU:</div>
-                    <div class="information__goal_name__name">
-                        <textarea class="information__goal_name__name_text_area" type="text" rows="1" maxlength="170"/>
+                    <div class="information__goal_name__field">
+                        <textarea class="information__goal_name__field_area" rows="1" maxlength="170"></textarea>
                     </div>
                     <div class="information__goal_name__buttons">
-                        <input class="goal_name__buttons_save" type="button" value="ZAPISZ"/>
-                        <input class="goal_name__buttons_delete" type="button" value="USUŃ"/>
+                        <input class="information__goal_name__buttons_save" type="button" value="ZAPISZ"/>
+                        <input class="information__goal_name__buttons_delete" type="button" value="USUŃ"/>
                     </div>
                 </div>
                 <div class="information__goal_off_days">
@@ -108,18 +108,20 @@
                 </div>
                 <div class="information__goal_advantages">
                     <div class="information__goal_advantages__label">KORZYŚCI Z REALIZACJI CELU:</div>
-                    <div class="information__goal_advantages__list">
-                        <textarea class="information__goal_advantages__list_text_area" type="text" rows="1" />
-                        <input class="information__goal_advantages__list_save" type="button" value="ZAPISZ"/>
+                    <div class="information__goal_advantages__field">
+                        <textarea class="information__goal_advantages__field_area" rows="1"></textarea>
+                    </div>
+                    <div class="information__goal_advantages__button">
+                        <input class="information__goal_advantages__button_save" type="button" value="ZAPISZ"/>
                     </div>
                 </div>
             </div>
             <div class="block__others__chart">
-                <select class="block__others__chart_type_select" onchange="calendarInstance.createChart($(this).val());">
+                <select class="block__others__chart__type_select" onchange="calendarInstance.createChart($(this).val());">
                     <option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option>
                     <option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option>
                 </select>
-                <div id="forChart" style="padding: 5%;"></div>
+                <div id="block__others__chart__chart_space"></div>
             </div>
             <div class="block__others__changer">
                 <div class="block__others__changer_info"> <i class="fa fa-info-circle" aria-hidden="true"></i> </div>

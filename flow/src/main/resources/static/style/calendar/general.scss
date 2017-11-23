@@ -1,0 +1,50 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Montserrat;
+}
+
+@mixin display-flex() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.block {
+  height: 82%;
+  width: 92%;
+  margin: 2%;
+  float: left;
+}
+
+.fa {
+  cursor: pointer;
+}
+
+.fa-info-circle:hover, .fa-pie-chart:hover, .fa-sticky-note:hover {
+  font-size: 110px;
+}
+
+.add_goal__modal__form_label {
+  @include display-flex();
+  color: #34495e;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.add_goal__modal__form {
+  @include display-flex();
+}
+
+.add_goal__modal__form_name {
+  outline: none;
+  border: 1px solid #34495e;
+}
+
+.add_goal__modal__form_submit {
+  display: block;
+  outline: none;
+}

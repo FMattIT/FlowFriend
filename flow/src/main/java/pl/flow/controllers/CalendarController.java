@@ -30,10 +30,12 @@ public class CalendarController {
     TileService tileService;
 
     @Autowired
-    UtilsService utilsService;
-
-    @Autowired
     MinusTileService minusTileService;
+
+    @RequestMapping(value = "/calendar")
+    public String home() {
+        return "calendar";
+    }
 
     @RequestMapping(value="/calendar/requests/goals", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
@@ -119,49 +121,4 @@ public class CalendarController {
     public Object getRecordScore(@RequestBody Goal goal, Principal principal) {
         return tileService.getRecordScore(goal);
     }
-
-
-
-
-    @RequestMapping(value = "/calendar")
-    public String home() {
-        return "calendar";
-    }
-
-
-//    @RequestMapping(value="/calendar/addGoal", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-//    @ResponseBody
-//    public Goal addGoal(@RequestBody Goal goal, Principal principal) {
-//        if(goal.getName().length()>170){
-//            return null;
-//        }
-//        else {
-//            User user = usersService.getUserByUsername(principal.getName());
-//            goal.setUserId(user);
-//            goal.setCreateDate(new Date());
-//            goalService.save(goal);
-//
-//            return goal;
-//        }
-//    }
-
-
-    @RequestMapping(value="/calendar/saveTile", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public Tile saveTile(@RequestBody Tile tile, Principal principal) {
-        User user = usersService.getUserByUsername(principal.getName());
-        tile.setUserId(user);
-        SimpleDateFormat dt1 = new SimpleDateFormat("yyyyy-mm-dd");
-        String date_s = tile.getYear() + "-" + tile.getMonth() + "-" + tile.getDay();
-        Date data = null;
-        try {
-            data = dt1.parse(date_s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        tile.setDate(data);
-        tileService.save(tile);
-        return tile;
-    }
-
 }

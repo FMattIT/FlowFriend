@@ -38,21 +38,21 @@ $( document ).ready(function() {
         calendarInstance.setPreviousGoal();
     });
 
-    $( ".information__goal_advantages__list_save").click(function() {
+    $( ".information__goal_advantages__button_save").click(function() {
         let goal = calendarInstance.goals[calendarInstance.currentGoalId];
-        goal.advantages = $(".information__goal_advantages__list_text_area").val();
+        goal.advantages = $(".information__goal_advantages__field_area").val();
         saveGoal(goal, goal.position, goal.advantages);
     });
 
-    $( ".goal_name__buttons_delete").click(function() {
+    $( ".information__goal_name__buttons_delete").click(function() {
         deleteGoal(calendarInstance.goals[calendarInstance.currentGoalId]);
         calendarInstance.deleteGoal();
         calendarInstance.updateGoalsList();
     });
 
-    $( ".goal_name__buttons_save").click(function() {
+    $( ".information__goal_name__buttons_save").click(function() {
         let goal = calendarInstance.goals[calendarInstance.currentGoalId];
-        goal.name = $(".information__goal_name__name_text_area").val();
+        goal.name = $(".information__goal_name__field_area").val();
         saveGoal(goal, goal.position, goal.advantages);
     });
 
@@ -85,7 +85,7 @@ $( document ).ready(function() {
     $('.block__goals').disableSelection();
 
     autosize(document.querySelector('textarea'));
-    autosize(document.getElementsByClassName("information__goal_advantages__list_text_area"));
+    autosize(document.getElementsByClassName("information__goal_advantages__field_area"));
 });
 
 function Calendar(currentGoalId, currentMonthId, currentYear) {
@@ -177,6 +177,14 @@ Calendar.prototype.updateDateHeader = function() {
 Calendar.prototype.updateGoalHeader = function() {
     let goalHeader = $(".goal_header__goal_name");
     goalHeader.html(this.goals[this.currentGoalId].name);
+}
+
+Calendar.prototype.loadCurrentScore = function() {
+    getCurrentScore(this.goals[this.currentGoalId]);
+}
+
+Calendar.prototype.loadRecordScore = function() {
+    getRecordScore(this.goals[this.currentGoalId]);
 }
 
 Calendar.prototype.monthChecker = function() {
@@ -333,20 +341,14 @@ Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
     return td;
 }
 
-Calendar.prototype.loadCurrentScore = function() {
-    getCurrentScore(this.goals[this.currentGoalId]);
-}
 
-Calendar.prototype.loadRecordScore = function() {
-    getRecordScore(this.goals[this.currentGoalId]);
-}
 
 Calendar.prototype.loadGoalNameToEditField = function() {
-    $(".information__goal_name__name_text_area").val(this.goals[this.currentGoalId].name);
+    $(".information__goal_name__field_area").val(this.goals[this.currentGoalId].name);
 }
 
 Calendar.prototype.loadGoalAdvantages = function() {
-    $(".information__goal_advantages__list_text_area").val(this.goals[this.currentGoalId].advantages);
+    $(".information__goal_advantages__field_area").val(this.goals[this.currentGoalId].advantages);
 }
 
 Calendar.prototype.selectGoalOnList = function() {
@@ -424,10 +426,10 @@ Calendar.prototype.countTilesToCreateChart = function(choice, type) {
 }
 
 Calendar.prototype.createChart = function(type) {
-    let canvas = document.getElementById('forChart');
+    let canvas = document.getElementById('block__others__chart__chart_space');
     canvas.innerHTML = '';
-    canvas.innerHTML = "<canvas id='myChart'></canvas>";
-    let ctx = document.getElementById('myChart').getContext('2d');
+    canvas.innerHTML = "<canvas id='chart'></canvas>";
+    let ctx = document.getElementById('chart').getContext('2d');
     let myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         options:{
@@ -577,7 +579,7 @@ Calendar.prototype.generateCalendar = function() {
     this.loadRecordScore();
     this.loadGoalNameToEditField();
     this.loadGoalAdvantages();
-    this.createChart($(".block__others__chart_type_select").val());
+    this.createChart($(".block__others__chart__type_select").val());
 }
 
 
