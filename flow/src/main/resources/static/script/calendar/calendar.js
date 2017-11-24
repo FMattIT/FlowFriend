@@ -15,7 +15,6 @@ $( document ).ready(function() {
     $( ".fa-pie-chart" ).click(function() {
         $(".block__others__information").css("display", "none");
         $(".block__others__chart").css("display", "block");
-        calendarInstance.createChart($(".block__others__chart_type_select").val());
     });
 
     $( ".goal_header__previous_arrow .fa-chevron-left" ).click(function() {
@@ -44,16 +43,14 @@ $( document ).ready(function() {
         saveGoal(goal, goal.position, goal.advantages);
     });
 
-    $( ".information__goal_name__buttons_delete").click(function() {
-        deleteGoal(calendarInstance.goals[calendarInstance.currentGoalId]);
-        calendarInstance.deleteGoal();
-        calendarInstance.updateGoalsList();
-    });
-
     $( ".information__goal_name__buttons_save").click(function() {
         let goal = calendarInstance.goals[calendarInstance.currentGoalId];
         goal.name = $(".information__goal_name__field_area").val();
         saveGoal(goal, goal.position, goal.advantages);
+    });
+
+    $( ".information__goal_name__buttons_delete").click(function() {
+        calendarInstance.deleteGoal();
     });
 
     $( ".fa-plus-circle" ).click(function() {
@@ -84,7 +81,7 @@ $( document ).ready(function() {
 
     $('.block__goals').disableSelection();
 
-    autosize(document.querySelector('textarea'));
+    autosize(document.getElementsByClassName('information__goal_name__field_area'));
     autosize(document.getElementsByClassName("information__goal_advantages__field_area"));
 });
 
@@ -163,6 +160,111 @@ Calendar.prototype.setTiles = function(tiles) {
     this.tiles = tiles;
 }
 
+Calendar.prototype.getOffDays = function() {
+    getMinusTiles(this.goals[this.currentGoalId]);
+}
+
+Calendar.prototype.updateTiles = function(tile) {
+    let count = 0;
+    let self  = this;
+    this.tiles.filter(function(item) {
+        if(item.id === tile.id) {
+            self.tiles[self.tiles.indexOf(item)] = tile;
+            count++;
+        }
+    });
+    if(count === 0) {
+        this.tiles.push(tile);
+    }
+}
+
+// Calendar.prototype.saveGoalName = function() {
+//     let goal = this.goals[this.currentGoalId];
+//     goal.name = $(".information__goal_name__field_area").val();
+//     saveGoal(goal, goal.position, goal.advantages);
+// }
+
+Calendar.prototype.saveGoal = function() {
+    let goal = {};
+    goal["name"] = $('.add_goal__modal__form_name').val();
+    goal["position"] = $('.block__goals').children().length;
+    saveGoal(goal, goal.position, goal.advantages);
+}
+
+// Calendar.prototype.saveGoalAdvantages = function() {
+//     let goal = {};
+//     goal["name"] = $('.add_goal__modal__form_name').val();
+//     goal["position"] = $('.block__goals').children().length;
+//     saveGoal(goal, goal.position, goal.advantages);
+// }
+
+Calendar.prototype.saveTile = function(target, event, flag) {
+    let tile = {};
+    tile["day"] = this.clickedDay.innerHTML;
+    tile["flag"] = flag;
+    tile["goalId"] = this.goals[this.currentGoalId];
+    tile["month"] = this.currentMonthId;
+    tile["year"] = this.currentYear;
+
+    saveTile(tile);
+    event.stopPropagation();
+}
+
+Calendar.prototype.saveOffDays = function(target) {
+    let value = "false";
+    let minusTiles = {}
+    minusTiles["goalId"] = this.goals[this.currentGoalId];
+
+    for(let iterator = 0; iterator <= 6; iterator++) {
+        if($(target).parent().find("div").eq(iterator).hasClass("enabled")) {
+            value="true";
+        }
+        else{
+            value="false";
+        }
+        minusTiles[$(target).parent().find("div").eq(iterator).attr('id')] = value;
+    }
+    saveMinusTiles(minusTiles);
+}
+
+Calendar.prototype.deleteGoal = function() {
+    $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().remove();
+    deleteGoal(this.goals[this.currentGoalId]);
+    this.updateGoalsList();
+}
+
+Calendar.prototype.loadSavedTileView = function(flag) {
+    $(this.clickedDay).removeClass("tick").removeClass("cross").removeClass("yellow_tick").removeClass("minus");
+
+    if(flag=="YELLOWTICK") {
+        $(this.clickedDay).addClass("yellow_tick");
+    }
+    else {
+        $(this.clickedDay).addClass(flag.toLowerCase());
+    }
+}
+
+Calendar.prototype.showTilePicker = function(target) {
+    this.clickedDay = target;
+    let picker = $('.tile__picker');
+
+    picker.removeClass('animated zoomOut');
+    picker.addClass('animated zoomIn');
+    picker.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
+    picker.css( {top:event.pageY - 60, left: event.pageX + 10});
+}
+
+Calendar.prototype.hideTilePicker = function() {
+    this.clickedDay = null;
+    let picker = $('.tile__picker');
+
+    picker.removeClass('zoomIn');
+    picker.css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+        picker.css("display", "none");
+    });
+    picker.addClass('zoomOut');
+}
+
 Calendar.prototype.clearTable = function() {
     for(let iterator = 6; iterator >= 1; iterator --) {
         $(".calendar__days__table__row").eq(iterator).remove();
@@ -230,83 +332,14 @@ Calendar.prototype.setPreviousGoal = function() {
     this.selectGoalOnList();
 }
 
-Calendar.prototype.showTilePicker = function(target) {
-    this.clickedDay = target;
-    let picker = $('.tile__picker');
 
-    picker.removeClass('animated zoomOut');
-    picker.addClass('animated zoomIn');
-    picker.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
-    picker.css( {top:event.pageY - 60, left: event.pageX + 10});
+// INFORMATION METHODS
+
+Calendar.prototype.loadGoalNameToEditField = function() {
+    $(".information__goal_name__field_area").val(this.goals[this.currentGoalId].name);
 }
 
-Calendar.prototype.hideTilePicker = function() {
-    this.clickedDay = null;
-    let picker = $('.tile__picker');
-
-    picker.removeClass('zoomIn');
-    picker.css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-        picker.css("display", "none");
-    });
-    picker.addClass('zoomOut');
-}
-
-Calendar.prototype.loadSavedTileView = function(flag) {
-    $(this.clickedDay).removeClass("tick").removeClass("cross").removeClass("yellow_tick").removeClass("minus");
-
-    if(flag=="YELLOWTICK") {
-        $(this.clickedDay).addClass("yellow_tick");
-    }
-    else {
-        $(this.clickedDay).addClass(flag.toLowerCase());
-    }
-}
-
-Calendar.prototype.saveTile = function(target, event, flag) {
-    let tile = {};
-    tile["day"] = this.clickedDay.innerHTML;
-    tile["flag"] = flag;
-    tile["goalId"] = this.goals[this.currentGoalId];
-    tile["month"] = this.currentMonthId;
-    tile["year"] = this.currentYear;
-
-    saveTile(tile);
-    event.stopPropagation();
-}
-
-Calendar.prototype.saveGoal = function() {
-    let goal = {};
-    goal["name"] = $('.add_goal__modal__form_name').val();
-    goal["position"] = $('.block__goals').children().length;
-    saveGoal(goal, goal.position, goal.advantages);
-}
-
-Calendar.prototype.deleteGoal = function() {
-    $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().remove();
-}
-
-Calendar.prototype.saveOffDays = function(target) {
-    let value = "false";
-    let minusTiles = {}
-    minusTiles["goalId"] = this.goals[this.currentGoalId];
-
-    for(let iterator = 0; iterator <= 6; iterator++) {
-        if($(target).parent().find("div").eq(iterator).hasClass("enabled")) {
-            value="true";
-        }
-        else{
-            value="false";
-        }
-        minusTiles[$(target).parent().find("div").eq(iterator).attr('id')] = value;
-    }
-    saveMinusTiles(minusTiles);
-}
-
-Calendar.prototype.getOffDays = function() {
-    getMinusTiles(this.goals[this.currentGoalId]);
-}
-
-Calendar.prototype.displayOffDays = function(minusTiles) {
+Calendar.prototype.loadOffDays = function(minusTiles) {
     $(".information__goal_off_days__blocks").find("div").removeClass("enabled").removeClass("disabled");
     $(".information__goal_off_days__blocks").find("div").addClass("disabled");
     jQuery.each(minusTiles, function(iterator, value) {
@@ -317,49 +350,77 @@ Calendar.prototype.displayOffDays = function(minusTiles) {
     });
 }
 
-Calendar.prototype.toggleClassInBlock = function (target) {
-     $(target).toggleClass("disabled");
-     $(target).toggleClass("enabled");
-}
-
-Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
-    for (let iterator = 0; iterator < this.tiles.length; iterator ++) {
-        let tile = this.tiles[iterator];
-        if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "TICK") {
-            td.classList.add("tick");
-        }
-        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "CROSS") {
-            td.classList.add("cross");
-        }
-        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "YELLOWTICK") {
-            td.classList.add("yellow_tick");
-        }
-        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "MINUS") {
-            td.classList.add("minus");
-        }
-    }
-    return td;
-}
-
-
-
-Calendar.prototype.loadGoalNameToEditField = function() {
-    $(".information__goal_name__field_area").val(this.goals[this.currentGoalId].name);
-}
-
 Calendar.prototype.loadGoalAdvantages = function() {
     $(".information__goal_advantages__field_area").val(this.goals[this.currentGoalId].advantages);
 }
 
+Calendar.prototype.toggleClassInOffDayBlock = function (target) {
+    $(target).toggleClass("disabled");
+    $(target).toggleClass("enabled");
+}
+
+
+// CHART METHODS
+
+Calendar.prototype.countTilesToCreateChart = function(choice, type) {
+    let score = 0;
+    for (let iterator = 0; iterator <= this.tiles.length-1; iterator++) {
+
+        if(type=="one"){
+            if (this.tiles[iterator].goalId.id == this.goals[this.currentGoalId].id && this.tiles[iterator].flag == choice && this.tiles[iterator].month == this.currentMonthId)
+            {
+                score++;
+            }
+        }
+        else{
+            if (this.tiles[iterator].goalId.id  == this.goals[this.currentGoalId].id && this.tiles[iterator].flag == choice)
+            {
+                score++;
+            }
+        }
+    }
+    return score;
+}
+
+Calendar.prototype.createPieChart = function(type) {
+    let canvas = document.getElementById('block__others__chart__chart_space');
+    canvas.innerHTML = '';
+    canvas.innerHTML = "<canvas id='chart'></canvas>";
+    let ctx = document.getElementById('chart').getContext('2d');
+    let myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        options:{
+            legend:{
+                display: false
+            }
+        },
+        data: {
+            datasets: [{
+                data: [this.countTilesToCreateChart("TICK", type), this.countTilesToCreateChart("YELLOWTICK", type), this.countTilesToCreateChart("CROSS", type), this.countTilesToCreateChart("MINUS", type)],
+                backgroundColor: [
+                    "#009966",
+                    "#f1c40f",
+                    "#e74c3c",
+                    "#7f8c8d"
+                ]
+            }],
+
+            labels: [
+                'TICK',
+                'YELLOWTICK',
+                'CROSS',
+                'MINUS'
+            ]
+        },
+    });
+}
+
+
+// GOALS LIST METHODS
+
 Calendar.prototype.selectGoalOnList = function() {
     $(".block__goals__goal_bar").removeClass('selected');
     $(".goal_bar__id:contains('" + this.currentGoalId + "')").parent().addClass('selected');
-    this.getOffDays();
-}
-
-Calendar.prototype.selectGoalOnListForDelete = function(position) {
-    $(".block__goals__goal_bar").removeClass('selected');
-    $(".goal_bar__id:contains('" + this.getGoalIdByPosition(position) + "')").parent().addClass('selected');
 }
 
 Calendar.prototype.loadGoalsList = function() {
@@ -405,71 +466,25 @@ Calendar.prototype.updateGoalsList = function() {
     });
 }
 
-Calendar.prototype.countTilesToCreateChart = function(choice, type) {
-    let score = 0;
-    for (let iterator = 0; iterator <= this.tiles.length-1; iterator++) {
+// MAIN METHODS
 
-        if(type=="one"){
-            if (this.tiles[iterator].goalId.id == this.goals[this.currentGoalId].id && this.tiles[iterator].flag == choice && this.tiles[iterator].month == this.currentMonthId)
-            {
-                score++;
-            }
+Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
+    for (let iterator = 0; iterator < this.tiles.length; iterator ++) {
+        let tile = this.tiles[iterator];
+        if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "TICK") {
+            td.classList.add("tick");
         }
-        else{
-            if (this.tiles[iterator].goalId.id  == this.goals[this.currentGoalId].id && this.tiles[iterator].flag == choice)
-            {
-                score++;
-            }
+        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "CROSS") {
+            td.classList.add("cross");
+        }
+        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "YELLOWTICK") {
+            td.classList.add("yellow_tick");
+        }
+        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "MINUS") {
+            td.classList.add("minus");
         }
     }
-    return score;
-}
-
-Calendar.prototype.createChart = function(type) {
-    let canvas = document.getElementById('block__others__chart__chart_space');
-    canvas.innerHTML = '';
-    canvas.innerHTML = "<canvas id='chart'></canvas>";
-    let ctx = document.getElementById('chart').getContext('2d');
-    let myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        options:{
-            legend:{
-                display: false
-            }
-        },
-        data: {
-            datasets: [{
-                data: [this.countTilesToCreateChart("TICK", type), this.countTilesToCreateChart("YELLOWTICK", type), this.countTilesToCreateChart("CROSS", type), this.countTilesToCreateChart("MINUS", type)],
-                backgroundColor: [
-                    "#009966",
-                    "#f1c40f",
-                    "#e74c3c",
-                    "#7f8c8d"
-                ]
-            }],
-
-            labels: [
-                'TICK',
-                'YELLOWTICK',
-                'CROSS',
-                'MINUS'
-            ]
-        },
-    });
-}
-
-Calendar.prototype.loadNewTileToList = function(tile) {
-    let count = 0;
-    let self  = this;
-    this.tiles.filter(function(item) {
-        if(item.id === tile.id) {
-            self.tiles[self.tiles.indexOf(item)] = tile;
-            count++;
-        }
-    });
-    if(count === 0) {
-        this.tiles.push(tile);
-    }
+    return td;
 }
 
 Calendar.prototype.generateCalendar = function() {
@@ -579,7 +594,8 @@ Calendar.prototype.generateCalendar = function() {
     this.loadRecordScore();
     this.loadGoalNameToEditField();
     this.loadGoalAdvantages();
-    this.createChart($(".block__others__chart__type_select").val());
+    this.getOffDays();
+    this.createPieChart($(".block__others__chart__type_select").val());
 }
 
 

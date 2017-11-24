@@ -39,6 +39,23 @@ function getTiles() {
     });
 }
 
+function getMinusTiles(goal) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/minus/tiles",
+        data: JSON.stringify(goal),
+        dataType: 'json',
+        success: function (minusTiles) {
+            console.log("Wyłączone kafelki zostały pomyślnie pobrane z bazy!")
+            calendarInstance.loadOffDays(minusTiles);
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas pobierania wyłączonych kafelków: ", e);
+        }
+    });
+}
+
 function saveTile(tile) {
     $.ajax({
         type: "POST",
@@ -52,28 +69,11 @@ function saveTile(tile) {
             calendarInstance.hideTilePicker();
             calendarInstance.loadCurrentScore();
             calendarInstance.loadRecordScore();
-            calendarInstance.loadNewTileToList(returnedTile);
-            calendarInstance.createChart($(".block__others__chart_type_select").val());
+            calendarInstance.updateTiles(returnedTile);
+            calendarInstance.createPieChart($(".block__others__chart_type_select").val());
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas dodawania kafelka do bazy: ", e);
-        }
-    });
-}
-
-function getMinusTiles(goal) {
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/calendar/requests/minus/tiles",
-        data: JSON.stringify(goal),
-        dataType: 'json',
-        success: function (minusTiles) {
-            console.log("Wyłączone kafelki zostały pomyślnie pobrane z bazy!")
-            calendarInstance.displayOffDays(minusTiles);
-        },
-        error: function (e) {
-            console.log("Wystąpił błąd podczas pobierania wyłączonych kafelków: ", e);
         }
     });
 }
