@@ -20,6 +20,42 @@ function getGoals(initialPosition) {
     });
 }
 
+function saveGoal(goal, position, advantages) {
+    goal.position = position;
+    goal.advantages = advantages;
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/goals/save",
+        data: JSON.stringify(goal),
+        dataType: 'json',
+        success: function (goalek) {
+            console.log("Cel został pomyślnie dodany do bazy!")
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas dodawania celu do bazy: ", e);
+        }
+    });
+}
+
+function deleteGoal(goal) {
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/goals/delete",
+        data: JSON.stringify(goal),
+        dataType: 'json',
+        success: function () {
+            console.log("Cel został pomyślnie usunięty z bazy!")
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas usuwania celu z bazy: ", e);
+        }
+    });
+}
+
 function getTiles() {
     let goal = calendarInstance.goals[calendarInstance.currentGoalId];
 
@@ -35,23 +71,6 @@ function getTiles() {
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas pobierania kafelków z bazy danych: ", e);
-        }
-    });
-}
-
-function getMinusTiles(goal) {
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/calendar/requests/minus/tiles",
-        data: JSON.stringify(goal),
-        dataType: 'json',
-        success: function (minusTiles) {
-            console.log("Wyłączone kafelki zostały pomyślnie pobrane z bazy!")
-            calendarInstance.loadOffDays(minusTiles);
-        },
-        error: function (e) {
-            console.log("Wystąpił błąd podczas pobierania wyłączonych kafelków: ", e);
         }
     });
 }
@@ -78,6 +97,23 @@ function saveTile(tile) {
     });
 }
 
+function getMinusTiles(goal) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/calendar/requests/minus/tiles",
+        data: JSON.stringify(goal),
+        dataType: 'json',
+        success: function (minusTiles) {
+            console.log("Wyłączone kafelki zostały pomyślnie pobrane z bazy!")
+            calendarInstance.fillOffDays(minusTiles);
+        },
+        error: function (e) {
+            console.log("Wystąpił błąd podczas pobierania wyłączonych kafelków: ", e);
+        }
+    });
+}
+
 function saveMinusTiles(minusTiles) {
     $.ajax({
         type: "POST",
@@ -90,43 +126,6 @@ function saveMinusTiles(minusTiles) {
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas dodawania wyłączonego kafelka do bazy: ", e);
-        }
-    });
-}
-
-function saveGoal(goal, position, advantages) {
-    goal.position = position;
-    goal.advantages = advantages;
-
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/calendar/requests/goals/save",
-        data: JSON.stringify(goal),
-        dataType: 'json',
-        success: function (goalek) {
-            console.log("Cel został pomyślnie dodany do bazy!")
-            getGoals(goalek.position);
-        },
-        error: function (e) {
-            console.log("Wystąpił błąd podczas dodawania celu do bazy: ", e);
-        }
-    });
-}
-
-function deleteGoal(goal) {
-
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/calendar/requests/goals/delete",
-        data: JSON.stringify(goal),
-        dataType: 'json',
-        success: function () {
-            console.log("Cel został pomyślnie usunięty z bazy!")
-        },
-        error: function (e) {
-            console.log("Wystąpił błąd podczas usuwania celu z bazy: ", e);
         }
     });
 }
@@ -150,8 +149,7 @@ function getCurrentScore(goal) {
 
 function getRecordScore(goal) {
     $.ajax({
-        type: "POST",
-        contentType: "application/json",
+        type: "POST",        contentType: "application/json",
         url: "/calendar/requests/tiles/scores/record",
         data: JSON.stringify(goal),
         dataType: 'json',

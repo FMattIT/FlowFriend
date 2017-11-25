@@ -79,15 +79,6 @@ public class CalendarController {
         return tileService.save(tile);
     }
 
-    @RequestMapping(value="/calendar/requests/minus/tiles/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    @ResponseBody
-    public MinusTile save(@RequestBody MinusTile minusTile, Principal principal) {
-        User user = usersService.getUserByUsername(principal.getName());
-        minusTile.setUserId(user);
-        minusTileService.save(minusTile);
-        return minusTile;
-    }
-
     @RequestMapping(value="/calendar/requests/minus/tiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Object getMinusTiles(@RequestBody Goal goal,Principal principal) {
@@ -108,6 +99,15 @@ public class CalendarController {
             minusTileService.save(minusTile);
         }
         return minusTileService.getMinusTile(goal);
+    }
+
+    @RequestMapping(value="/calendar/requests/minus/tiles/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @ResponseBody
+    public MinusTile save(@RequestBody MinusTile minusTile, Principal principal) {
+        User user = usersService.getUserByUsername(principal.getName());
+        minusTile.setUserId(user);
+        minusTileService.save(minusTile);
+        return minusTile;
     }
 
     @RequestMapping(value="/calendar/requests/tiles/scores/current", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
