@@ -1,8 +1,9 @@
 html, body {
-  margin: 0;
+  margin: 0 auto;
   height: 100%;
   width: 100%;
   font-family: Montserrat;
+  text-align: center;
 }
 
 @mixin display-flex() {
@@ -16,7 +17,8 @@ html, body {
   height: 82%;
   width: 92%;
   margin: 2%;
-  float: left;
+  display: inline-block;
+  text-align: center;
 }
 
 .fa {
