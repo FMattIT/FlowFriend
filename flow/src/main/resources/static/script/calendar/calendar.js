@@ -2,7 +2,7 @@
  * Created by Admin on 23.10.2017.
  */
 
-var calendarInstance = new Calendar(0, 10, 2017);
+var calendarInstance = new Calendar(0, 11, 2017);
 
 $( document ).ready(function() {
     getGoals(0);
