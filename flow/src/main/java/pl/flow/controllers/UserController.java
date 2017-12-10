@@ -27,7 +27,7 @@ public class UserController {
 
     @RequestMapping("/")
     public String home() {
-        return "home";
+        return "redirect:/calendar";
     }
 
     @RequestMapping(value="/register")
