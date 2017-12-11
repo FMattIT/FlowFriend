@@ -13,7 +13,6 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.ui.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/animate.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/sidebar.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/general.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/calendar.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/goals.css}" />
@@ -26,22 +25,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
 </head>
 <body>
-    <!--<div class="sidebar">-->
-        <!--<div class="sidebar__logo"><i class="fa fa-meetup" aria-hidden="true"></i></div>-->
-        <!--<div class="sidebar__options">-->
-            <!--<div class="sidebar__options_option"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>-->
-            <!--<div class="sidebar__options_option"><i class="fa fa-question-circle" aria-hidden="true"></i></div>-->
-            <!--<div class="sidebar__options_option"><i class="fa fa-question-circle" aria-hidden="true"></i></div>-->
-            <!--<div class="sidebar__options_option"><i class="fa fa-question-circle" aria-hidden="true"></i></div>-->
-        <!--</div>-->
-        <!--<div class="sidebar__pages">-->
-            <!--<div class="sidebar__pages_option"><i class="fa fa-times-circle" aria-hidden="true"></i></div>-->
-            <!--<div class="sidebar__pages_option"><i class="fa fa-times-circle" aria-hidden="true"></i></div>-->
-            <!--<div class="sidebar__pages_option"><i class="fa fa-times-circle" aria-hidden="true"></i></div>-->
-            <!--<div class="sidebar__pages_option"><i class="fa fa-times-circle" aria-hidden="true"></i></div>-->
-        <!--</div>-->
-        <!--<div class="sidebar__user_options"><i class="fa fa-user-o" aria-hidden="true"></i></div>-->
-    <!--</div>-->
+
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -58,7 +42,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a><i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+                    <li><a class="adder">Dodaj cel!</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">

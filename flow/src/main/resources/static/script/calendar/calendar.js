@@ -49,7 +49,7 @@ $( document ).ready(function() {
         calendarInstance.deleteGoal();
     });
 
-    $( ".fa-plus-circle" ).click(function() {
+    $( ".adder" ).click(function() {
         $('#add_goal__modal').modal('show');
     });
 

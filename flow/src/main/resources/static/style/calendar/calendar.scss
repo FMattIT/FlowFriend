@@ -1,10 +1,9 @@
 .block__calendar {
-  width: 29%;
+  width: 28%;
   height: 100%;
   min-width: 445px;
   min-height: 750px;
   display: inline-block;
-  //float: left;
   margin-right: 0.1%;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
   margin-bottom: 2%;
@@ -84,6 +83,11 @@
       line-height: 100%;
       font-weight: bold;
       text-transform: uppercase;
+      white-space: pre-wrap;      /* CSS3 */
+      white-space: -moz-pre-wrap; /* Firefox */
+      white-space: -o-pre-wrap;   /* Opera 7 */
+      word-wrap: break-word !important;
+      word-break: keep-all !important;
     }
 
     .goal_header__next_arrow {
