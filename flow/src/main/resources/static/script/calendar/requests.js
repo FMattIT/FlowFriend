@@ -20,7 +20,7 @@ function getGoals(initialPosition) {
     });
 }
 
-function saveGoal(goal, position, advantages) {
+function saveGoal(goal, position, advantages, reloadParam) {
     goal.position = position;
     goal.advantages = advantages;
 
@@ -32,6 +32,13 @@ function saveGoal(goal, position, advantages) {
         dataType: 'json',
         success: function (goalek) {
             console.log("Cel został pomyślnie dodany do bazy!")
+            if(reloadParam === "reloadAll") {
+                getGoals(goalek.position);
+            }
+            else if(reloadParam === "reloadName") {
+                $(".goal_bar__id:contains('" + calendarInstance.currentGoalId + "')").parent().find('.goal_bar__name').html(goalek.name);
+                $(".goal_header__goal_name").html(goalek.name);
+            }
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas dodawania celu do bazy: ", e);
@@ -49,6 +56,7 @@ function deleteGoal(goal) {
         dataType: 'json',
         success: function () {
             console.log("Cel został pomyślnie usunięty z bazy!")
+            getGoals(0);
         },
         error: function (e) {
             console.log("Wystąpił błąd podczas usuwania celu z bazy: ", e);

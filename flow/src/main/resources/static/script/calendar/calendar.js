@@ -80,6 +80,8 @@ $( document ).ready(function() {
 
     autosize(document.getElementsByClassName('information__goal_name__field_area'));
     autosize(document.getElementsByClassName("information__goal_advantages__field_area"));
+
+    $('.block__goals').perfectScrollbar();
 });
 
 function Calendar(currentGoalId, currentMonthId, currentYear) {
@@ -174,14 +176,14 @@ Calendar.prototype.updateTiles = function(tile) {
 Calendar.prototype.saveGoalName = function() {
     let goal = this.goals[this.currentGoalId];
     goal.name = $(".information__goal_name__field_area").val();
-    saveGoal(goal, goal.position, goal.advantages);
+    saveGoal(goal, goal.position, goal.advantages, "reloadName");
 }
 
 Calendar.prototype.saveGoalPosition = function() {
     let goal = {};
     goal["name"] = $('.add_goal__modal__form_name').val();
     goal["position"] = $('.block__goals').children().length;
-    saveGoal(goal, goal.position, goal.advantages);
+    saveGoal(goal, goal.position, goal.advantages, "reloadAll");
 }
 
 Calendar.prototype.saveGoalAdvantages = function() {
