@@ -21,20 +21,16 @@ $( document ).ready(function() {
         calendarInstance.setPreviousGoal();
     });
 
+    $( ".goal_header__next_arrow .fa-chevron-right" ).click(function() {
+        calendarInstance.setNextGoal();
+    });
+
     $( ".date_header__next_arrow .fa-chevron-right" ).click(function() {
         calendarInstance.setNextMonth();
     });
 
     $( ".date_header__previous_arrow .fa-chevron-left" ).click(function() {
         calendarInstance.setPreviousMonth();
-    });
-
-    $( ".goal_header__next_arrow .fa-chevron-right" ).click(function() {
-        calendarInstance.setNextGoal();
-    });
-
-    $( ".goal_header__previous_arrow .fa-chevron-left" ).click(function() {
-        calendarInstance.setPreviousGoal();
     });
 
     $( ".information__goal_name__buttons_save").click(function() {
@@ -70,7 +66,7 @@ $( document ).ready(function() {
 
     $('.block__goals').sortable({
         revert: false,
-        handle: '.fa.fa-arrows-v',
+        handle: '.goal_bar__grip',
         update: function (event, ui) {
             calendarInstance.updateGoalsList();
         }
@@ -224,11 +220,12 @@ Calendar.prototype.deleteGoal = function() {
 Calendar.prototype.showTilePicker = function(target) {
     this.clickedDay = target;
     let picker = $('.tile__picker');
+    let targetPosition = $(target).position();
 
     picker.removeClass('animated zoomOut');
     picker.addClass('animated zoomIn');
     picker.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
-    picker.css( {top:event.pageY - 60, left: event.pageX + 10});
+    picker.css( {top: targetPosition.top - 60, left: targetPosition.left + 20});
 }
 
 Calendar.prototype.hideTilePicker = function() {
@@ -341,10 +338,10 @@ Calendar.prototype.loadGoalsList = function() {
         goal_name.className = "goal_bar__name";
         goal_name.innerHTML = this.goals[goalId].name;
 
-        goal_bar.append(goal_position);
-        goal_bar.append(goal_id);
-        goal_bar.append(goal_grip);
-        goal_bar.append(goal_name);
+        goal_bar.appendChild(goal_position);
+        goal_bar.appendChild(goal_id);
+        goal_bar.appendChild(goal_grip);
+        goal_bar.appendChild(goal_name);
 
         $(".block__goals").append(goal_bar);
     }
