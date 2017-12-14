@@ -20,6 +20,36 @@ html, body {
   text-align: center;
 }
 
+.empty_block {
+  height: 90%;
+  width: 100%;
+  text-align: center;
+  display: none;
+
+  .empty_block__information {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 5vw;
+    font-family: Lato;
+    color: #555;
+    padding: 0 2%;
+
+    .empty_block__information_hyperlink {
+      outline: none;
+      text-decoration: none;
+      color: #337ab7;
+
+      &:hover {
+        cursor: pointer;
+        color: #337ab7;
+      }
+    }
+  }
+}
+
 .fa {
   cursor: pointer;
 }
@@ -33,7 +63,7 @@ html, body {
   color: #34495e;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .add_goal__modal__form {
@@ -48,6 +78,13 @@ html, body {
 .add_goal__modal__form_submit {
   display: block;
   outline: none;
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 3% 8%;
 }
 
 .adder:hover {

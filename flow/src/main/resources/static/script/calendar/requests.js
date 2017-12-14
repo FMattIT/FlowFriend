@@ -9,6 +9,15 @@ function getGoals(initialPosition) {
         url: "/calendar/requests/goals",
         dataType: 'json',
         success: function (goals) {
+            if (goals === undefined || goals.length == 0) {
+                $(".empty_block").css("display", "inline-block");
+                $(".block").css("display", "none");
+            }
+            else {
+                $(".empty_block").css("display", "none");
+                $(".block").css("display", "inline-block");
+            }
+
             calendarInstance.setGoals(goals);
             calendarInstance.currentGoalId = calendarInstance.getGoalIdByPosition(initialPosition);
             calendarInstance.loadGoalsList();

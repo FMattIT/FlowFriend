@@ -592,6 +592,9 @@ Calendar.prototype.generateCalendar = function() {
     this.loadOffDays();
     this.loadGoalAdvantages();
     this.createPieChart($(".block__others__chart__type_select").val());
+
+    autosize.update(document.getElementsByClassName('information__goal_name__field_area'));
+    autosize.update(document.getElementsByClassName("information__goal_advantages__field_area"));
 }
 
 

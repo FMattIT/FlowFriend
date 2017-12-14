@@ -63,6 +63,13 @@
         </div><!-- /.container-fluid -->
     </nav>
 
+    <div class="empty_block">
+        <span class="empty_block__information">
+            BRAK CELÓW DO WYŚWIETLENIA!
+            <a class="empty_block__information_hyperlink" onclick="$('#add_goal__modal').modal('show');"> KLIKNIJ TUTAJ </a>
+            ABY DODAĆ NOWY CEL!
+        </span>
+    </div>
     <div class="block">
         <div class="block__calendar">
             <div class="tile__picker">
@@ -154,10 +161,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="add_goal__modal__form_label"> Dodaj nowy cel! </div>
+                    <div class="add_goal__modal__form_label"> DODAJ NOWY CEL! </div>
                     <form class="add_goal__modal__form" method='post'>
                         <input class="add_goal__modal__form_name" type="text" />
-                        <input class="add_goal__modal__form_submit" type='submit' value='Dodaj cel'/>
+                        <input class="add_goal__modal__form_submit" type='submit' value='DODAJ CEL'/>
                     </form>
                 </div>
             </div>
