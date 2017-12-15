@@ -66,13 +66,19 @@ html, body {
   font-size: 24px;
 }
 
-.add_goal__modal__form {
-  @include display-flex();
-}
-
 .add_goal__modal__form_name {
-  outline: none;
-  border: 1px solid #34495e;
+  width: 80%;
+  max-height: 82px;
+  padding: 6px 6px;
+  resize: none;
+  overflow: hidden;
+  font-size: 14px;
+  border-radius: 1%;
+  outline: #202020;
+  border: 1px solid lightgray;
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 4px;
 }
 
 .add_goal__modal__form_submit {
@@ -85,8 +91,20 @@ html, body {
   font-size: 20px;
   font-weight: bold;
   padding: 3% 8%;
+  margin: 0 auto;
 }
 
 .adder:hover {
   cursor: pointer;
+}
+
+.tooltip-inner {
+  font-size: 17px !important;
+  font-family: Montserrat !important;
+  padding: 7px 10px !important;
+  background-color: #34495e !important;
+}
+
+.tooltip.left .tooltip-arrow {
+  border-left-color: #34495e !important;
 }

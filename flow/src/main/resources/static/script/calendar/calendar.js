@@ -5,6 +5,20 @@
 var calendarInstance = new Calendar(0, 11, 2017);
 
 $( document ).ready(function() {
+    $.widget.bridge('uibutton', $.ui.button);
+    $.widget.bridge('uitooltip', $.ui.tooltip);
+
+    $(".information__goal_name__field_area").keyup(function(e){
+
+        if($(this).val().length === 170) {
+            $('[data-toggle="tooltip"]').tooltip('show');
+        }
+        else {
+            $('[data-toggle="tooltip"]').tooltip('hide');
+        }
+
+    });
+
     getGoals(0);
 
     $( ".fa-info-circle" ).click(function() {
@@ -76,6 +90,7 @@ $( document ).ready(function() {
 
     autosize(document.getElementsByClassName('information__goal_name__field_area'));
     autosize(document.getElementsByClassName("information__goal_advantages__field_area"));
+    autosize(document.getElementsByClassName("add_goal__modal__form_name"));
 
     $('.block__goals').perfectScrollbar();
 });

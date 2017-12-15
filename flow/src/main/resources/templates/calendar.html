@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.ui.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/animate.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/general.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/calendar.css}" />
@@ -114,7 +114,7 @@
                 <div class="information__goal_name">
                     <div class="information__goal_name__label">NAZWA CELU:</div>
                     <div class="information__goal_name__field">
-                        <textarea class="information__goal_name__field_area" rows="1" maxlength="170"></textarea>
+                        <textarea data-toggle="tooltip" data-placement="left" title="Maksymalna ilość znaków wynosi 170!" class="information__goal_name__field_area" rows="1" maxlength="170"></textarea>
                     </div>
                     <div class="information__goal_name__buttons">
                         <input class="information__goal_name__buttons_save" type="button" value="ZAPISZ"/>
@@ -163,7 +163,7 @@
                 <div class="modal-body">
                     <div class="add_goal__modal__form_label"> DODAJ NOWY CEL! </div>
                     <form class="add_goal__modal__form" method='post'>
-                        <input class="add_goal__modal__form_name" type="text" />
+                        <textarea class="add_goal__modal__form_name" rows="1" maxlength="170"></textarea>
                         <input class="add_goal__modal__form_submit" type='submit' value='DODAJ CEL'/>
                     </form>
                 </div>
