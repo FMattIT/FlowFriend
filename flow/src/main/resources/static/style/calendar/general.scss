@@ -108,3 +108,17 @@ html, body {
 .tooltip.left .tooltip-arrow {
   border-left-color: #34495e !important;
 }
+
+.triangle {
+  color: #fff;
+  font-size: 32px;
+  text-shadow: 0 0 1px rgba(0, 0, 0, .08), 0 2px rgba(0, 0, 0, .15), 0px 0px 12px #90A09A;
+  position: absolute;
+  display: none;
+  z-index: 1000 !important;
+  -webkit-transform: scale(1.5,1);
+  -moz-transform: scale(1.5,1);
+  -ms-transform: scale(1.5,1);
+  -o-transform: scale(1.5,1);
+  transform: scale(1.5,1);
+}

@@ -39,6 +39,7 @@ function saveGoal(goal, position, advantages, reloadParam) {
         url: "/calendar/requests/goals/save",
         data: JSON.stringify(goal),
         dataType: 'json',
+        async: false,
         success: function (goalek) {
             console.log("Cel został pomyślnie dodany do bazy!")
             if(reloadParam === "reloadAll") {

@@ -193,7 +193,7 @@ Calendar.prototype.saveGoalName = function() {
 Calendar.prototype.saveGoalPosition = function() {
     let goal = {};
     goal["name"] = $('.add_goal__modal__form_name').val();
-    goal["position"] = $('.block__goals').children().length;
+    goal["position"] = $('.block__goals__goal_bar').length;
     saveGoal(goal, goal.position, goal.advantages, "reloadAll");
 }
 
@@ -233,19 +233,35 @@ Calendar.prototype.deleteGoal = function() {
 }
 
 Calendar.prototype.showTilePicker = function(target) {
+    this.hideTilePicker();
+
     this.clickedDay = target;
     let picker = $('.tile__picker');
+    let triangle = $(".triangle");
     let targetPosition = $(target).position();
+
+    triangle.removeClass('animated zoomOut');
+    triangle.addClass('animated zoomIn');
+    triangle.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
+    triangle.css( {top: targetPosition.top - 12, left: targetPosition.left + 24});
 
     picker.removeClass('animated zoomOut');
     picker.addClass('animated zoomIn');
     picker.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
-    picker.css( {top: targetPosition.top - 60, left: targetPosition.left + 20});
+    picker.css( {top: targetPosition.top - 70, left: targetPosition.left - 6});
+
 }
 
 Calendar.prototype.hideTilePicker = function() {
     this.clickedDay = null;
     let picker = $('.tile__picker');
+    let triangle = $(".triangle");
+
+    triangle.removeClass('zoomIn');
+    triangle.css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+        triangle.css("display", "none");
+    });
+    triangle.addClass('zoomOut');
 
     picker.removeClass('zoomIn');
     picker.css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
