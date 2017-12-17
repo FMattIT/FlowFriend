@@ -22,6 +22,10 @@
     border: 1px solid rgba(24, 24, 28, 0.45);
     color: #34495e;
 
+    &:last-of-type {
+      border-bottom: 2px solid rgba(24, 24, 28, 0.45) !important;
+    }
+
     &.selected {
       border: 2px solid #34495e !important;
     }

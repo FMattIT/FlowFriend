@@ -28,7 +28,7 @@ $( document ).ready(function() {
 
     $( ".fa-pie-chart" ).click(function() {
         $(".block__others__information").css("display", "none");
-        $(".block__others__chart").css("display", "block");
+        $(".block__others__chart").css("display", "flex");
     });
 
     $( ".goal_header__previous_arrow .fa-chevron-left" ).click(function() {
@@ -93,6 +93,12 @@ $( document ).ready(function() {
     autosize(document.getElementsByClassName("add_goal__modal__form_name"));
 
     $('.block__goals').perfectScrollbar();
+
+    $(document).click(function(e) {
+        if ( $(e.target).closest('.day_cell.enabled').length === 0 ) {
+            calendarInstance.hideTilePicker();
+        }
+    });
 });
 
 function Calendar(currentGoalId, currentMonthId, currentYear) {
@@ -243,13 +249,13 @@ Calendar.prototype.showTilePicker = function(target) {
     triangle.removeClass('animated zoomOut');
     triangle.addClass('animated zoomIn');
     triangle.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
-    triangle.css( {top: targetPosition.top - 12, left: targetPosition.left + 24});
+    triangle.css( {top: targetPosition.top - 12, left: targetPosition.left + 22});
 
     picker.removeClass('animated zoomOut');
     picker.addClass('animated zoomIn');
     picker.css("display", "block").css("opacity", "1").unbind('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend');
     picker.css( {top: targetPosition.top - 70, left: targetPosition.left - 6});
-
+    picker.css( {top: targetPosition.top - 70, left: targetPosition.left - 6});
 }
 
 Calendar.prototype.hideTilePicker = function() {
@@ -462,14 +468,16 @@ Calendar.prototype.countTilesToCreatePieChart = function(choice, type) {
 Calendar.prototype.createPieChart = function(type) {
     let canvas = document.getElementById('block__others__chart__chart_space');
     canvas.innerHTML = '';
-    canvas.innerHTML = "<canvas id='chart'></canvas>";
+    canvas.innerHTML = "<canvas id='chart' style='margin-top: 20px;'></canvas>";
     let ctx = document.getElementById('chart').getContext('2d');
     let myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         options:{
             legend:{
                 display: false
-            }
+            },
+            responsive: true,
+            maintainAspectRatio: false
         },
         data: {
             datasets: [{

@@ -115,10 +115,13 @@ html, body {
   text-shadow: 0 0 1px rgba(0, 0, 0, .08), 0 2px rgba(0, 0, 0, .15), 0px 0px 12px #90A09A;
   position: absolute;
   display: none;
-  z-index: 1000 !important;
+  z-index: 999 !important;
+  animation-duration: .3s !important;
   -webkit-transform: scale(1.5,1);
   -moz-transform: scale(1.5,1);
   -ms-transform: scale(1.5,1);
   -o-transform: scale(1.5,1);
   transform: scale(1.5,1);
 }
+
+
