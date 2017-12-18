@@ -46,7 +46,7 @@ public class CalendarController {
     @RequestMapping(value="/calendar/requests/goals/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal save(@RequestBody Goal goal, Principal principal) {
-        if(goal.getName().length() > 170){
+        if(goal.getName().length() > 170 || goal.getName().length() < 2){
             return null;
         }
         else {

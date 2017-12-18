@@ -33,7 +33,6 @@
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
@@ -43,11 +42,9 @@
                 </button>
                 <a class="navbar-brand" href="#">FlowFriend</a>
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a class="adder">Dodaj cel!</a></li>
+                    <li><a class="navbar-option">Dodaj cel!</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -59,8 +56,8 @@
                         </ul>
                     </li>
                 </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+            </div>
+        </div>
     </nav>
 
     <div class="empty_block">
@@ -70,6 +67,7 @@
             ABY DODAĆ NOWY CEL!
         </span>
     </div>
+
     <div class="block">
         <div class="block__calendar">
             <div class="tile__picker">
@@ -78,7 +76,7 @@
                 <div class="tile__picker__cross" onclick="calendarInstance.saveTile(this, event, 'CROSS')"></div>
                 <div class="tile__picker__minus" onclick="calendarInstance.saveTile(this, event, 'MINUS')"></div>
             </div>
-            <div class="triangle">▼</div>
+            <div class="tile__picker_triangle">▼</div>
             <div class="block__calendar__goal_header">
                 <div class="goal_header__previous_arrow"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
                 <div class="goal_header__goal_name"></div>
@@ -115,7 +113,7 @@
                 <div class="information__goal_name">
                     <div class="information__goal_name__label">NAZWA CELU:</div>
                     <div class="information__goal_name__field">
-                        <textarea data-toggle="tooltip" data-placement="left" title="Maksymalna ilość znaków wynosi 170!" class="information__goal_name__field_area" rows="1" maxlength="170"></textarea>
+                        <textarea data-toggle="tooltip" data-placement="top" title="Maksymalna ilość znaków wynosi 170!" class="information__goal_name__field_area" rows="1" maxlength="170"></textarea>
                     </div>
                     <div class="information__goal_name__buttons">
                         <input class="information__goal_name__buttons_save" type="button" value="ZAPISZ"/>
@@ -171,5 +169,6 @@
             </div>
         </div>
     </div>
+
 </body>
 </html>

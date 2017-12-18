@@ -466,38 +466,54 @@ Calendar.prototype.countTilesToCreatePieChart = function(choice, type) {
 }
 
 Calendar.prototype.createPieChart = function(type) {
-    let canvas = document.getElementById('block__others__chart__chart_space');
-    canvas.innerHTML = '';
-    canvas.innerHTML = "<canvas id='chart' style='margin-top: 20px;'></canvas>";
-    let ctx = document.getElementById('chart').getContext('2d');
-    let myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        options:{
-            legend:{
-                display: false
-            },
-            responsive: true,
-            maintainAspectRatio: false
-        },
-        data: {
-            datasets: [{
-                data: [this.countTilesToCreatePieChart("TICK", type), this.countTilesToCreatePieChart("YELLOWTICK", type), this.countTilesToCreatePieChart("CROSS", type), this.countTilesToCreatePieChart("MINUS", type)],
-                backgroundColor: [
-                    "#009966",
-                    "#f1c40f",
-                    "#e74c3c",
-                    "#7f8c8d"
-                ]
-            }],
+    let amountOfTicks = this.countTilesToCreatePieChart("TICK", type);
+    let amountOfYellowTicks = this.countTilesToCreatePieChart("YELLOWTICK", type);
+    let amountOfCrosses = this.countTilesToCreatePieChart("CROSS", type);
+    let amountOfMinuses = this.countTilesToCreatePieChart("MINUS", type);
 
-            labels: [
-                'TICK',
-                'YELLOWTICK',
-                'CROSS',
-                'MINUS'
-            ]
-        },
-    });
+    let block = $(".block__others__chart");
+
+    if(amountOfTicks === 0 || amountOfYellowTicks === 0 || amountOfCrosses === 0 || amountOfMinuses === 0) {
+        block.html("<select class='block__others__chart__type_select' onchange='calendarInstance.createPieChart($(this).val());'><option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select>" +
+            "BRAK DANYCH DO STWORZENIA WYKRESU! :)");
+    }
+    else {
+        block.html("<select class='block__others__chart__type_select' onchange='calendarInstance.createPieChart($(this).val());'><option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select><div id='block__others__chart__chart_space'></div>");
+
+        let canvas = document.getElementById('block__others__chart__chart_space');
+        canvas.innerHTML = '';
+        canvas.innerHTML = "<canvas id='chart' style='margin-top: 20px;'></canvas>";
+        let ctx = document.getElementById('chart').getContext('2d');
+        let myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            options:{
+                legend:{
+                    display: false
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            },
+            data: {
+                datasets: [{
+                    data: [amountOfTicks, amountOfYellowTicks, amountOfCrosses, amountOfMinuses],
+                    backgroundColor: [
+                        "#009966",
+                        "#f1c40f",
+                        "#e74c3c",
+                        "#7f8c8d"
+                    ]
+                }],
+
+                labels: [
+                    'TICK',
+                    'YELLOWTICK',
+                    'CROSS',
+                    'MINUS'
+                ]
+            },
+        });
+    }
+
 }
 
 

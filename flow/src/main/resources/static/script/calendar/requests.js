@@ -30,30 +30,35 @@ function getGoals(initialPosition) {
 }
 
 function saveGoal(goal, position, advantages, reloadParam) {
-    goal.position = position;
-    goal.advantages = advantages;
+    if(goal.name.length > 170 || goal.name.length < 2) {
+        alert("Błąd ilości znaków - cel nie może przekroczyć 170 znaków i musi mieć więcej niż 2!");
+    }
+    else {
+        goal.position = position;
+        goal.advantages = advantages;
 
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/calendar/requests/goals/save",
-        data: JSON.stringify(goal),
-        dataType: 'json',
-        async: false,
-        success: function (goalek) {
-            console.log("Cel został pomyślnie dodany do bazy!")
-            if(reloadParam === "reloadAll") {
-                getGoals(goalek.position);
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/calendar/requests/goals/save",
+            data: JSON.stringify(goal),
+            dataType: 'json',
+            async: false,
+            success: function (goalek) {
+                console.log("Cel został pomyślnie dodany do bazy!")
+                if(reloadParam === "reloadAll") {
+                    getGoals(goalek.position);
+                }
+                else if(reloadParam === "reloadName") {
+                    $(".goal_bar__id:contains('" + calendarInstance.currentGoalId + "')").parent().find('.goal_bar__name').html(goalek.name);
+                    $(".goal_header__goal_name").html(goalek.name);
+                }
+            },
+            error: function (e) {
+                console.log("Wystąpił błąd podczas dodawania celu do bazy: ", e);
             }
-            else if(reloadParam === "reloadName") {
-                $(".goal_bar__id:contains('" + calendarInstance.currentGoalId + "')").parent().find('.goal_bar__name').html(goalek.name);
-                $(".goal_header__goal_name").html(goalek.name);
-            }
-        },
-        error: function (e) {
-            console.log("Wystąpił błąd podczas dodawania celu do bazy: ", e);
-        }
-    });
+        });
+    }
 }
 
 function deleteGoal(goal) {
