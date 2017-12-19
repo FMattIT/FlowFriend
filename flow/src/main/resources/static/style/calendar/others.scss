@@ -17,9 +17,13 @@
 
 
   .block__others__information {
-    display: block;
     width: 100%;
     height: 80%;
+    display: flex;
+    margin: 0 auto;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
 
     .information__goal_name {
       width: 100%;
@@ -175,6 +179,9 @@
       height: 35%;
       margin: 0 auto;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
       .information__goal_advantages__label {
         font-size: 24px;
@@ -252,6 +259,18 @@
       height: 80%;
       width: 100%;
       position: relative;
+    }
+
+    .block__others__chart_information {
+      font-size: 2vw;
+      font-family: Lato;
+      font-weight: bold;
+      padding: 10%;
+      color: rgb(85, 85, 85);
+
+      @media (min-width: 120px) and (max-width: 1200px) {
+        font-size: 24px;
+      }
     }
   }
 

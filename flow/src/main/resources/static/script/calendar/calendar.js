@@ -59,7 +59,7 @@ $( document ).ready(function() {
         calendarInstance.deleteGoal();
     });
 
-    $( ".adder" ).click(function() {
+    $( ".navbar-option" ).click(function() {
         $('#add_goal__modal').modal('show');
     });
 
@@ -473,12 +473,12 @@ Calendar.prototype.createPieChart = function(type) {
 
     let block = $(".block__others__chart");
 
-    if(amountOfTicks === 0 || amountOfYellowTicks === 0 || amountOfCrosses === 0 || amountOfMinuses === 0) {
-        block.html("<select class='block__others__chart__type_select' onchange='calendarInstance.createPieChart($(this).val());'><option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select>" +
-            "BRAK DANYCH DO STWORZENIA WYKRESU! :)");
+    if(amountOfTicks === 0 && amountOfYellowTicks === 0 && amountOfCrosses === 0 && amountOfMinuses === 0) {
+        block.html("<select class='block__others__chart__type_select' onchange='calendarInstance.createPieChart($(this).val());'><option class='chart__type_select__first_option' value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option class='chart__type_select__second_option' value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select>" +
+            "<div class='block__others__chart_information'>BRAK DANYCH DO STWORZENIA WYKRESU!</div>");
     }
     else {
-        block.html("<select class='block__others__chart__type_select' onchange='calendarInstance.createPieChart($(this).val());'><option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select><div id='block__others__chart__chart_space'></div>");
+        block.html("<select class='block__others__chart__type_select' onchange='calendarInstance.createPieChart($(this).val());'><option class='chart__type_select__first_option' value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option class='chart__type_select__second_option' value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select><div id='block__others__chart__chart_space'></div>");
 
         let canvas = document.getElementById('block__others__chart__chart_space');
         canvas.innerHTML = '';
@@ -514,7 +514,15 @@ Calendar.prototype.createPieChart = function(type) {
         });
     }
 
+    if(type === "one"){
+        $(".chart__type_select__first_option").attr('selected', 'selected');
+    }
+    else {
+        $(".chart__type_select__second_option").attr('selected', 'selected');
+    }
+
 }
+
 
 
 // MAIN METHODS
