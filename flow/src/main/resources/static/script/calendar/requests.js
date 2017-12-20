@@ -30,8 +30,8 @@ function getGoals(initialPosition) {
 }
 
 function saveGoal(goal, position, advantages, reloadParam) {
-    if(goal.name.length > 170 || goal.name.length < 2) {
-        alert("Błąd ilości znaków - cel nie może przekroczyć 170 znaków i musi mieć więcej niż 2!");
+    if(goal.name.length > 170 || goal.name.length < 4) {
+        $('#error_modal').modal('show');
     }
     else {
         goal.position = position;
@@ -58,6 +58,9 @@ function saveGoal(goal, position, advantages, reloadParam) {
                 console.log("Wystąpił błąd podczas dodawania celu do bazy: ", e);
             }
         });
+
+        $('#add_goal__modal').modal('hide');
+        $('.add_goal__modal__form_name').val("");
     }
 }
 

@@ -8,17 +8,6 @@ $( document ).ready(function() {
     $.widget.bridge('uibutton', $.ui.button);
     $.widget.bridge('uitooltip', $.ui.tooltip);
 
-    $(".information__goal_name__field_area").keyup(function(e){
-
-        if($(this).val().length === 170) {
-            $('[data-toggle="tooltip"]').tooltip('show');
-        }
-        else {
-            $('[data-toggle="tooltip"]').tooltip('hide');
-        }
-
-    });
-
     getGoals(0);
 
     $( ".fa-info-circle" ).click(function() {
@@ -66,8 +55,6 @@ $( document ).ready(function() {
     $('body').on('submit', '.add_goal__modal__form', function(event) {
         event.preventDefault();
         calendarInstance.saveGoalPosition();
-        $('#add_goal__modal').modal('toggle');
-        $('.add_goal__modal__form_name').val("");
     });
 
     $( document ).on( "click", ".goal_bar__name" , function() {
@@ -98,6 +85,7 @@ $( document ).ready(function() {
         if ( $(e.target).closest('.day_cell.enabled').length === 0 ) {
             calendarInstance.hideTilePicker();
         }
+        $('[data-toggle="tooltip"]').tooltip('destroy');
     });
 });
 

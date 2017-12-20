@@ -113,9 +113,9 @@
                 <div class="information__goal_name">
                     <div class="information__goal_name__label">NAZWA CELU:</div>
                     <div class="information__goal_name__field">
-                        <textarea data-toggle="tooltip" data-placement="top" title="Maksymalna ilość znaków wynosi 170!" class="information__goal_name__field_area" rows="1" maxlength="170"></textarea>
+                        <textarea class="information__goal_name__field_area" rows="1" maxlength="170"></textarea>
                     </div>
-                    <div class="information__goal_name__buttons">
+                    <div data-toggle="tooltip" data-placement="bottom" title="Minimalna ilość znaków: 4! Maksymalna ilość znaków: 170!" class="information__goal_name__buttons">
                         <input class="information__goal_name__buttons_save" type="button" value="ZAPISZ"/>
                         <input class="information__goal_name__buttons_delete" type="button" value="USUŃ"/>
                     </div>
@@ -170,5 +170,20 @@
         </div>
     </div>
 
+    <div class="modal fade animated bounceIn" id="error_modal" tabindex="-1" role="dialog" aria-labelledby="error_modal__label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <i class="fa fa-info-circle error" aria-hidden="true"></i>
+                    <br />
+                    <br />
+                    <div class="error_modal__information"> Minimalna ilość znaków wynosi 4, a maksymalna ilość znaków wynosi 170! </div>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

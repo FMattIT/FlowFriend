@@ -58,6 +58,11 @@ html, body {
   font-size: 110px;
 }
 
+.fa-info-circle.error, .fa-info-circle.error:hover {
+  font-size: 80px;
+  cursor: default;
+}
+
 .add_goal__modal__form_label {
   @include display-flex();
   color: #34495e;
@@ -107,6 +112,11 @@ html, body {
 
 .tooltip.left .tooltip-arrow {
   border-left-color: #34495e !important;
+}
+
+.error_modal__information {
+  font-size: 24px;
+  font-weight: bold;
 }
 
 
