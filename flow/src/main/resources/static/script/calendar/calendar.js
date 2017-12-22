@@ -2,7 +2,7 @@
  * Created by Admin on 23.10.2017.
  */
 
-var calendarInstance = new Calendar(0, 11, 2017);
+var calendarInstance = new Calendar(0, new Date().getMonth(), new Date().getFullYear());
 
 $( document ).ready(function() {
     $.widget.bridge('uibutton', $.ui.button);
@@ -466,9 +466,9 @@ Calendar.prototype.createPieChart = function(type) {
             "<div class='block__others__chart_information'>BRAK DANYCH DO STWORZENIA WYKRESU!</div>");
     }
     else {
-        block.html("<select class='block__others__chart__type_select' onchange='calendarInstance.createPieChart($(this).val());'><option class='chart__type_select__first_option' value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option class='chart__type_select__second_option' value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select><div id='block__others__chart__chart_space'></div>");
+        block.html("<select class='block__others__chart__type_select' onchange='calendarInstance.createPieChart($(this).val());'><option class='chart__type_select__first_option' value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option><option class='chart__type_select__second_option' value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option></select><div class='block__others__chart__chart_space'></div>");
 
-        let canvas = document.getElementById('block__others__chart__chart_space');
+        let canvas = document.querySelector('.block__others__chart__chart_space');
         canvas.innerHTML = '';
         canvas.innerHTML = "<canvas id='chart' style='margin-top: 20px;'></canvas>";
         let ctx = document.getElementById('chart').getContext('2d');
