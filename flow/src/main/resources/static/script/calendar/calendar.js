@@ -637,6 +637,7 @@ Calendar.prototype.generateCalendar = function() {
             currentlyCreatingDay++;
         }
     }
+
     this.loadCurrentScore();
     this.loadRecordScore();
     this.loadGoalNameToEditField();
