@@ -103,6 +103,8 @@
       white-space: -o-pre-wrap;   /* Opera 7 */
       word-wrap: break-word !important;
       word-break: keep-all !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .goal_header__next_arrow {
@@ -249,6 +251,7 @@
       width: 65%;
       font-size: 20px;
       float: left;
+      color: #34495e;
 
       @media (min-width: 120px) and (max-width: 1200px) {
         font-size: 17px;
@@ -270,6 +273,7 @@
       width: 30%;
       font-size: 40px;
       float: left;
+      color: #34495e;
     }
   }
 
@@ -287,6 +291,7 @@
       width: 70%;
       font-size: 20px;
       float: left;
+      color: #34495e;
 
       @media (min-width: 120px) and (max-width: 1200px) {
         font-size: 17px;
@@ -308,6 +313,7 @@
       width: 30%;
       font-size: 40px;
       float: left;
+      color: #34495e;
     }
   }
 }

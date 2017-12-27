@@ -64,10 +64,10 @@ public class TileDao {
                 "(\n" +
                 "  CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT)  > (SELECT CAST(year AS TEXT) || CAST(month AS TEXT) || CAST(day AS TEXT) FROM public.tiles WHERE goal_id_id = :goal_id AND flag = 'CROSS' ORDER BY id DESC LIMIT 1)\n" +
                 ")\n" +
-                "AND goal_id_id = :goal_id AND (flag = 'TICK' OR flag = 'YELLOWTICK')\n" +
+                "AND goal_id_id = :goal_id AND (flag = 'TICK')\n" +
                 "OR NOT EXISTS (SELECT 1 FROM public.tiles WHERE goal_id_id = :goal_id AND flag = 'CROSS')\n" +
                 "AND goal_id_id = :goal_id\n" +
-                "AND (flag = 'TICK' OR flag = 'YELLOWTICK')\n" +
+                "AND (flag = 'TICK')\n" +
                 "\n")
                 .setParameter("goal_id", goal)
                 .getSingleResult();
