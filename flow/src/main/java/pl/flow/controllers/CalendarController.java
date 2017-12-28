@@ -10,8 +10,12 @@ import pl.flow.service.*;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Admin on 18.06.2017.
@@ -75,6 +79,10 @@ public class CalendarController {
     @ResponseBody
     public Tile save(@RequestBody Tile tile, Principal principal) {
         tile.setUserId(usersService.getUserByUsername(principal.getName()));
+        String str = tile.getYear() + "-" + tile.getMonth() + "-" + tile.getDay();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl"));
+        LocalDate date = LocalDate.parse(str, formatter);
+        tile.setDate(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         try{
             tile.setId(tileService.getTileToMerge(tile).getId());
         }

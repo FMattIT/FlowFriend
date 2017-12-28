@@ -581,6 +581,9 @@ Calendar.prototype.generateCalendar = function() {
         function createDisabledDay(td) {
             td.classList.add("day_cell");
             td.classList.add("disabled");
+            // td.classList.add("day_cell");
+            // td.classList.add("enabled");
+            // td.setAttribute('onclick', 'calendarInstance.showTilePicker(this)');
         }
 
         for(rowDayNumber=1; rowDayNumber <=7; rowDayNumber++) {
