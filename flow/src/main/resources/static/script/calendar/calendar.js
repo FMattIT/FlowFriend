@@ -49,7 +49,8 @@ $( document ).ready(function() {
     });
 
     $( ".navbar-option" ).click(function() {
-        $('#add_goal__modal').modal('show');
+        $('#add_goal__modal').modal('show')
+        $(".add_goal__modal__form_name").focus();
     });
 
     $('body').on('submit', '.add_goal__modal__form', function(event) {
@@ -231,7 +232,7 @@ Calendar.prototype.showTilePicker = function(target) {
 
     this.clickedDay = target;
     let picker = $('.tile__picker');
-    let triangle = $(".triangle");
+    let triangle = $(".tile__picker_triangle");
     let targetPosition = $(target).position();
 
     triangle.removeClass('animated zoomOut');
@@ -249,7 +250,7 @@ Calendar.prototype.showTilePicker = function(target) {
 Calendar.prototype.hideTilePicker = function() {
     this.clickedDay = null;
     let picker = $('.tile__picker');
-    let triangle = $(".triangle");
+    let triangle = $(".tile__picker_triangle");
 
     triangle.removeClass('zoomIn');
     triangle.css("opacity", "0").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
@@ -298,7 +299,6 @@ Calendar.prototype.monthChecker = function() {
 }
 
 Calendar.prototype.setNextMonth = function() {
-    this.clearTable();
     this.init(this.currentGoalId, this.currentMonthId + 1, this.currentYear);
     this.monthChecker();
     getTiles();
@@ -307,7 +307,6 @@ Calendar.prototype.setNextMonth = function() {
 }
 
 Calendar.prototype.setPreviousMonth = function() {
-    this.clearTable();
     this.init(this.currentGoalId, this.currentMonthId - 1, this.currentYear);
     this.monthChecker();
     getTiles();
@@ -316,7 +315,6 @@ Calendar.prototype.setPreviousMonth = function() {
 }
 
 Calendar.prototype.setNextGoal = function() {
-    this.clearTable();
     this.init(this.getNextGoalIdByPosition(), this.currentMonthId, this.currentYear);
     getTiles();
     this.updateGoalHeader();
@@ -324,7 +322,6 @@ Calendar.prototype.setNextGoal = function() {
 }
 
 Calendar.prototype.setPreviousGoal = function() {
-    this.clearTable();
     this.init(this.getPreviousGoalIdByPosition(), this.currentMonthId, this.currentYear);
     getTiles();
     this.updateGoalHeader();
@@ -518,16 +515,16 @@ Calendar.prototype.createPieChart = function(type) {
 Calendar.prototype.generateTile = function(td, currentlyCreatingDay) {
     for (let iterator = 0; iterator < this.tiles.length; iterator ++) {
         let tile = this.tiles[iterator];
-        if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "TICK") {
+        if (Number(tile.year) === this.currentYear && Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "TICK") {
             td.classList.add("tick");
         }
-        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "CROSS") {
+        else if (Number(tile.year) === this.currentYear && Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "CROSS") {
             td.classList.add("cross");
         }
-        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "YELLOWTICK") {
+        else if (Number(tile.year) === this.currentYear && Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "YELLOWTICK") {
             td.classList.add("yellow_tick");
         }
-        else if (Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "MINUS") {
+        else if (Number(tile.year) === this.currentYear && Number(tile.month) === this.currentMonthId && Number(tile.day) === currentlyCreatingDay && String(tile.flag) === "MINUS") {
             td.classList.add("minus");
         }
     }
