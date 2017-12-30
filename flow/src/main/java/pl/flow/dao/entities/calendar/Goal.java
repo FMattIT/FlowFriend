@@ -9,7 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+
+import static javax.persistence.CascadeType.ALL;
 
 /**
  * Created by Admin on 18.06.2017.
@@ -38,6 +41,14 @@ public class Goal {
 
     @Column
     private String advantages;
+
+    @OneToMany(targetEntity=Tile.class, mappedBy = "goalId", orphanRemoval=true)
+    private Set<Tile> tiles = new HashSet<Tile>();
+
+    @JsonIgnore
+    public Set<Tile> getTiles() {
+        return tiles;
+    }
 
     public Long getId() {
         return id;

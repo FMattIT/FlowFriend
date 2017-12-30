@@ -75,19 +75,19 @@ public class TileDao {
 
     public Object getRecordScore(Goal goal){
         try{
-            return entityManager.createNativeQuery("select cnt from(select distinct on (goal_id_id, user_id_id) scg.*\n" +
-                    "from (select goal_id_id, user_id_id, flag, count(*) as cnt,\n" +
-                    "             min(date), max(date)\n" +
-                    "      from (select public.tiles.*,\n" +
-                    "                   row_number() over (partition by goal_id_id, user_id_id, flag order by date) as seqnum_scg,\n" +
-                    "                   row_number() over (partition by goal_id_id, user_id_id order by date) as seqnum_sc\n" +
-                    "            from public.tiles\n" +
-                    "           ) t\n" +
-                    "      where flag = 'TICK'\n" +
-                    "      AND goal_id_id=:goal_id\n" +
-                    "      group by goal_id_id, user_id_id, flag, (seqnum_sc - seqnum_scg)\n" +
-                    "     ) scg\n" +
-                    "order by goal_id_id, user_id_id, cnt desc) as cnt")
+            return entityManager.createNativeQuery("SELECT max( score )\n" +
+                    "FROM (\n" +
+                    "   SELECT goal_id_id, grp_nbr, count(CASE WHEN flag = 'TICK' THEN 1 END) As score\n" +
+                    "   FROM (\n" +
+                    "      SELECT *,\n" +
+                    "             SUM (  CASE WHEN flag in ('CROSS')\n" +
+                    "                         THEN 1 ELSE 0\n" +
+                    "                    END \n" +
+                    "             ) OVER (Partition by goal_id_id Order By date ) As grp_nbr\n" +
+                    "      FROM public.tiles WHERE goal_id_id=:goal_id \n" +
+                    "   ) x\n" +
+                    "   GROUP BY goal_id_id, grp_nbr\n" +
+                    ") y")
                     .setParameter("goal_id", goal)
                     .getSingleResult();
         }

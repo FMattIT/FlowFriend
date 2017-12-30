@@ -63,7 +63,7 @@ public class CalendarController {
     @RequestMapping(value="/calendar/requests/goals/delete", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal delete(@RequestBody Goal goal, Principal principal) {
-        tileService.delete(goal);
+//        tileService.delete(goal);
         minusTileService.delete(goal);
         goalService.delete(goal);
         return goal;
@@ -132,6 +132,11 @@ public class CalendarController {
     @RequestMapping(value="/calendar/requests/tiles/scores/record", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Object getRecordScore(@RequestBody Goal goal, Principal principal) {
-        return tileService.getRecordScore(goal);
+        if (tileService.getRecordScore(goal) == null) {
+            return 0;
+        }
+        else {
+            return tileService.getRecordScore(goal);
+        }
     }
 }

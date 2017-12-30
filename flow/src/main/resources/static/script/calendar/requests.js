@@ -175,7 +175,8 @@ function getCurrentScore(goal) {
 
 function getRecordScore(goal) {
     $.ajax({
-        type: "POST",        contentType: "application/json",
+        type: "POST",
+        contentType: "application/json",
         url: "/calendar/requests/tiles/scores/record",
         data: JSON.stringify(goal),
         dataType: 'json',

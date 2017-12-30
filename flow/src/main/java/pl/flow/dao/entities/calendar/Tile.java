@@ -1,5 +1,6 @@
 package pl.flow.dao.entities.calendar;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 import pl.flow.dao.entities.User;
 
