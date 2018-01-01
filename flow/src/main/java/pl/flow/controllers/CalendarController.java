@@ -63,8 +63,6 @@ public class CalendarController {
     @RequestMapping(value="/calendar/requests/goals/delete", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Goal delete(@RequestBody Goal goal, Principal principal) {
-//        tileService.delete(goal);
-        minusTileService.delete(goal);
         goalService.delete(goal);
         return goal;
     }
@@ -78,11 +76,26 @@ public class CalendarController {
     @RequestMapping(value="/calendar/requests/tiles/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Tile save(@RequestBody Tile tile, Principal principal) {
+        int monthToDate = Integer.parseInt(tile.getMonth()) + 1;
         tile.setUserId(usersService.getUserByUsername(principal.getName()));
-        String str = tile.getYear() + "-" + tile.getMonth() + "-" + tile.getDay();
+        String str = tile.getYear() + "-" + monthToDate + "-" + tile.getDay();
+        if(tile.getMonth().length() == 1 && tile.getDay().length() == 1)
+        {
+            str = tile.getYear() + "-0" + monthToDate + "-0" + tile.getDay();
+        }
+        else{
+            if(tile.getMonth().length() == 1){
+                str = tile.getYear() + "-0" + monthToDate + "-" + tile.getDay();
+            }
+            if(tile.getDay().length() == 1) {
+                str = tile.getYear() + "-" + monthToDate + "-0" + tile.getDay();
+            }
+        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl"));
         LocalDate date = LocalDate.parse(str, formatter);
         tile.setDate(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
         try{
             tile.setId(tileService.getTileToMerge(tile).getId());
         }

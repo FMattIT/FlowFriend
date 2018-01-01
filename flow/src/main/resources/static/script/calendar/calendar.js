@@ -621,12 +621,24 @@ Calendar.prototype.generateCalendar = function() {
                     createDisabledDay(td);
                 }
 
-                if(this.currentYear === currentDateYear && this.currentMonthId === currentDateMonthId - 1 && today === 1 && (currentlyCreatingDay === lastDayOfPreviousMonth || currentlyCreatingDay === lastDayOfPreviousMonth - 1)) {
+                if(this.currentYear === currentDateYear && this.currentMonthId === currentDateMonthId - 1 && today === 1 && (currentlyCreatingDay === lastDayOfPreviousMonth || currentlyCreatingDay === lastDayOfPreviousMonth - 1))
+                {
                     createEnabledDay(td);
                 }
                 else if(this.currentYear === currentDateYear && this.currentMonthId === currentDateMonthId - 1 && today === 2 && currentlyCreatingDay === lastDayOfPreviousMonth)
                 {
                     createEnabledDay(td);
+                }
+                // W przypadku gdy mamy 1/2 stycznia aplikacja musi ustawic "enabled" tiles w grudniu poprzedniego roku
+                else if(this.currentYear === currentDateYear-1 && this.currentMonthId === 11 && today === 1 && (currentlyCreatingDay === 31 || currentlyCreatingDay === 30))
+                {
+                    createEnabledDay(td);
+                    td.classList.remove("disabled");
+                }
+                else if(this.currentYear === currentDateYear-1 && this.currentMonthId === 11 && today === 2 && (currentlyCreatingDay === 31))
+                {
+                    createEnabledDay(td);
+                    td.classList.remove("disabled");
                 }
 
                 td = this.generateTile(td, currentlyCreatingDay);

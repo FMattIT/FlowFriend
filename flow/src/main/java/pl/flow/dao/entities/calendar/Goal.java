@@ -50,6 +50,14 @@ public class Goal {
         return tiles;
     }
 
+    @OneToMany(targetEntity=MinusTile.class, mappedBy = "goalId", orphanRemoval=true)
+    private Set<MinusTile> minusTiles = new HashSet<MinusTile>();
+
+    @JsonIgnore
+    public Set<MinusTile> getMinusTiles() {
+        return minusTiles;
+    }
+
     public Long getId() {
         return id;
     }
