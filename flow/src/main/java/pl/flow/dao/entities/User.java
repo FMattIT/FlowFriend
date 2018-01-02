@@ -1,9 +1,12 @@
 package pl.flow.dao.entities;
 
+import org.springframework.data.annotation.*;
 import pl.flow.dao.entities.calendar.Goal;
 import pl.flow.dao.entities.calendar.Tile;
 
 import javax.persistence.*;
+import javax.persistence.AccessType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.List;
 
