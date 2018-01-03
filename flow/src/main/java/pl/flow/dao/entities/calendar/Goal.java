@@ -26,8 +26,8 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_goals__user_id"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_goals__user_id"), nullable = true)
     private User userId;
 
     @Column(nullable = false)
@@ -56,6 +56,16 @@ public class Goal {
     @JsonIgnore
     public Set<MinusTile> getMinusTiles() {
         return minusTiles;
+    }
+
+    public Goal() {}
+
+    public Goal(Long id, String advantages, String name, Date createDate, Long position) {
+        this.id = id;
+        this.advantages = advantages;
+        this.name = name;
+        this.createDate = createDate;
+        this.position = position;
     }
 
     public Long getId() {
