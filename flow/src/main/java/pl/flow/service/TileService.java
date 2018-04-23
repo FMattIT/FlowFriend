@@ -26,7 +26,6 @@ public class TileService {
         this.tileDao = tileDao;
     }
 
-
     public Tile save(Tile tile) {
         return tileDao.save(tile);
     }

@@ -60,7 +60,7 @@ public class Goal {
 
     public Goal() {}
 
-    public Goal(Long id, String advantages, String name, Date createDate, Long position) {
+    public Goal(Long id, String advantages, String name, Date createDate, Long position, Long userIdFk) {
         this.id = id;
         this.advantages = advantages;
         this.name = name;

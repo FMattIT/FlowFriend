@@ -33,7 +33,6 @@ public class GoalDao {
         return entityManager.createQuery("SELECT g FROM Goal g WHERE g.userId = :userId ORDER BY g.id ASC", Goal.class)
                 .setParameter("userId", user)
                 .getResultList(); }
-                //NEW pl.flow.dao.entities.calendar.Goal(g.id, g.advantages, g.name, g.createDate, g.position)
 
     public List<Goal> getGoalsList(){
         return entityManager.createQuery("SELECT g FROM Goal g ORDER BY g.id ASC", Goal.class).getResultList(); }

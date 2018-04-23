@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -54,10 +55,25 @@ public class CalendarController {
             return null;
         }
         else {
-            goal.setUserId(usersService.getUserByUsername(principal.getName()));
-            goalService.save(goal);
-            return goal;
+            List<Goal> list = goalService.getGoals(usersService.getUserByUsername(principal.getName()));
+            if (list.isEmpty() || list==null){
+                goal.setCreateDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                goal.setUserId(usersService.getUserByUsername(principal.getName()));
+            }
+            else {
+                for(Goal g : list){
+                    if(g.getId() == goal.getId()) {
+                        goal.setCreateDate(g.getCreateDate());
+                    }
+                    else {
+                        goal.setCreateDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                    }
+                    goal.setUserId(usersService.getUserByUsername(principal.getName()));
+                }
+            }
         }
+        goalService.save(goal);
+        return goal;
     }
 
     @RequestMapping(value="/calendar/requests/goals/delete", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
@@ -76,33 +92,46 @@ public class CalendarController {
     @RequestMapping(value="/calendar/requests/tiles/save", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
     public Tile save(@RequestBody Tile tile, Principal principal) {
-        int monthToDate = Integer.parseInt(tile.getMonth()) + 1;
         tile.setUserId(usersService.getUserByUsername(principal.getName()));
-        String str = tile.getYear() + "-" + monthToDate + "-" + tile.getDay();
+
+        int monthNumber = Integer.parseInt(tile.getMonth()) + 1;
+        String stringDate = tile.getYear() + "-" + monthNumber + "-" + tile.getDay();
         if(tile.getMonth().length() == 1 && tile.getDay().length() == 1)
         {
-            str = tile.getYear() + "-0" + monthToDate + "-0" + tile.getDay();
+            stringDate = tile.getYear() + "-0" + monthNumber + "-0" + tile.getDay();
         }
         else{
             if(tile.getMonth().length() == 1){
-                str = tile.getYear() + "-0" + monthToDate + "-" + tile.getDay();
+                stringDate = tile.getYear() + "-0" + monthNumber + "-" + tile.getDay();
             }
             if(tile.getDay().length() == 1) {
-                str = tile.getYear() + "-" + monthToDate + "-0" + tile.getDay();
+                stringDate = tile.getYear() + "-" + monthNumber + "-0" + tile.getDay();
             }
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", new Locale("pl"));
-        LocalDate date = LocalDate.parse(str, formatter);
+        LocalDate date = LocalDate.parse(stringDate, formatter);
         tile.setDate(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-        try{
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+        LocalDate dayBeforeYesterday = today.minusDays(2);
+
+        System.out.println(today);
+        System.out.println(yesterday);
+        System.out.println(dayBeforeYesterday);
+
+//        if(date.equals(today) || date.equals(yesterday) || date.equals(dayBeforeYesterday)){
+//            System.out.println("zly dzien, nie dodajemy :)");
+//        }
+
+        if(tileService.getTileToMerge(tile) == null) {
+            return tileService.save(tile);
+        }
+        else {
             tile.setId(tileService.getTileToMerge(tile).getId());
+            return tileService.save(tile);
         }
-        catch(Exception e) {
-            System.out.println("exception");
-        }
-        return tileService.save(tile);
     }
 
     @RequestMapping(value="/calendar/requests/minus/tiles", method= RequestMethod.POST, produces = "application/json", consumes = "application/json")

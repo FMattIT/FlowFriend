@@ -291,10 +291,20 @@ Calendar.prototype.loadRecordScore = function() {
 
 Calendar.prototype.monthChecker = function() {
     if(this.currentMonthId === 12) {
-        this.init(this.currentGoalId, 0, this.currentYear + 1);
+        if(this.years.includes(this.currentYear + 1)){
+            this.init(this.currentGoalId, 0, this.currentYear + 1);
+        }
+        else {
+            this.init(this.currentGoalId, 11, this.currentYear);
+        }
     }
     else if(this.currentMonthId === -1) {
-        this.init(this.currentGoalId, 11, this.currentYear - 1);
+        if(this.years.includes(this.currentYear - 1)){
+            this.init(this.currentGoalId, 11, this.currentYear - 1);
+        }
+        else {
+            this.init(this.currentGoalId, 0, this.currentYear);
+        }
     }
 }
 
@@ -578,9 +588,6 @@ Calendar.prototype.generateCalendar = function() {
         function createDisabledDay(td) {
             td.classList.add("day_cell");
             td.classList.add("disabled");
-            // td.classList.add("day_cell");
-            // td.classList.add("enabled");
-            // td.setAttribute('onclick', 'calendarInstance.showTilePicker(this)');
         }
 
         for(rowDayNumber=1; rowDayNumber <=7; rowDayNumber++) {

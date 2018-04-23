@@ -23,7 +23,6 @@ public class GoalService {
         this.goalDao = goalDao;
     }
 
-
     public void save(Goal goal) {
         goalDao.save(goal);
     }
