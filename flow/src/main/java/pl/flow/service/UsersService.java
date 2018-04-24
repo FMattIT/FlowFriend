@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.flow.dao.UsersDao;
 import pl.flow.dao.entities.User;
 
+import java.math.BigInteger;
+
 /**
  * Created by Admin on 03.04.2017.
  */
@@ -27,4 +29,11 @@ public class UsersService {
         return usersDao.getUserByUsername(username);
     }
 
+    public Object checkIfUserExistsByLogin(String login){
+        return usersDao.checkIfUserExistsByLogin(login);
+    }
+
+    public Object checkIfUserExistsByEmail(String email){
+        return usersDao.checkIfUserExistsByEmail(email);
+    }
 }

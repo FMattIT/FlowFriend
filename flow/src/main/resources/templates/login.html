@@ -1,20 +1,45 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example </title>
+    <title>Zaloguj się!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/home/login.css}" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans:400,700,900" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
+<div class="container">
+    <div class="row">
+        <div class="text-center col-lg-5 col-md-6 col-sm-8 col-xs-10 center-block error_wall" th:if="${param.error}">
+            Błędna nazwa użytkownika lub hasło!
+        </div>
+    </div>
 </div>
-<div th:if="${param.logout}">
-    You have been logged out.
+<div class="container">
+    <div class="row">
+        <div class="text-center col-lg-5 col-md-6 col-sm-8 col-xs-10 center-block error_wall" th:if="${param.logout}">
+            Zostałeś wylogowany!
+        </div>
+    </div>
 </div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-5 col-md-6 col-sm-8 col-xs-10 center-block">
+            <div class="login_wall">
+                <form class="text-center" th:action="@{/login}" method="post">
+                     <h1>FlowFriend</h1>
+                     <div><input class="form-control" type="text" name="username" placeholder="Login" required="true" autofocus="autofocus"/> </div>
+                     <div><input class="form-control" type="password" name="password" placeholder="Hasło" required="true"/> </div>
+                     <div><input class="btn btn-lg btn-primary btn-block" type="submit" value="Zaloguj się"/></div>
+                     <h3>Nie posiadasz konta? <a th:href="@{http://localhost:8080/register}">Zarejestruj się!</a></h3>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

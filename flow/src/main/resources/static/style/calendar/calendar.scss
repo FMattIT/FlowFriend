@@ -1,0 +1,320 @@
+.block__calendar {
+  width: 28%;
+  height: 100%;
+  min-width: 445px;
+  min-height: 750px;
+  display: inline-block;
+  margin-right: 0.1%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.15), 0px 1px 16px -3px rgba(24, 24, 28, 0.35) !important;
+  margin-bottom: 2%;
+
+  .tile__picker {
+    background-color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    height: 70px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 2px 2px rgba(0, 0, 0, .15), 0px 0px 80px -12px #90A09A;
+    width: 271px;
+    border-radius: 40px;
+    display: none;
+    animation-duration: .3s !important;
+    z-index: 1000 !important;
+    position: absolute;
+
+    .tile__picker__tick, .tile__picker__cross, .tile__picker__yellow_tick, .tile__picker__minus {
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      text-align: center;
+      vertical-align: middle;
+      display: inline-block !important;
+      margin: 5px 0 5px 1px;
+    }
+
+    .tile__picker__tick {
+      background: url(img/tick.png) no-repeat;
+      background-size: cover;
+    }
+
+    .tile__picker__cross {
+      background: url(img/cross.png) no-repeat;
+      background-size: cover;
+    }
+
+    .tile__picker__yellow_tick {
+      background: url(img/yellow_tick.png) no-repeat;
+      background-size: cover;
+    }
+
+    .tile__picker__minus {
+      background: url(img/minus.png) no-repeat;
+      background-size: cover;
+      margin-right: 1px;
+    }
+  }
+
+  .tile__picker_triangle {
+    color: #fff;
+    font-size: 32px;
+    text-shadow: 0 0 1px rgba(0, 0, 0, .08), 0 2px rgba(0, 0, 0, .15), 0px 0px 12px #90A09A;
+    position: absolute;
+    display: none;
+    z-index: 999 !important;
+    animation-duration: .3s !important;
+    -webkit-transform: scale(1.5,1);
+    -moz-transform: scale(1.5,1);
+    -ms-transform: scale(1.5,1);
+    -o-transform: scale(1.5,1);
+    transform: scale(1.5,1);
+  }
+
+  .block__calendar__goal_header {
+    width: 100%;
+    height: 18%;
+    border-bottom: 1px solid rgba(24, 24, 28, 0.45);
+    color: #34495e;
+
+    .goal_header__previous_arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
+    }
+
+    .goal_header__goal_name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      height: 100%;
+      float: left;
+      font-size: 17px;
+      text-align: center;
+      line-height: 100%;
+      font-weight: bold;
+      text-transform: uppercase;
+      white-space: pre-wrap;      /* CSS3 */
+      white-space: -moz-pre-wrap; /* Firefox */
+      white-space: -o-pre-wrap;   /* Opera 7 */
+      word-wrap: break-word !important;
+      word-break: keep-all !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .goal_header__next_arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
+    }
+  }
+
+  .block__calendar__date_header {
+    width: 100%;
+    height: 10%;
+    border-bottom: 1px solid rgba(24, 24, 28, 0.45);
+    color: #34495e;
+
+    .date_header__previous_arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
+    }
+
+    .date_header__date {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .date_header__next_arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15%;
+      height: 100%;
+      float: left;
+      font-size: 25px;
+      text-align: center;
+      line-height: 100%;
+    }
+  }
+
+  .block__calendar__days {
+    width: 100%;
+    height: 62%;
+    border-bottom: 1px solid rgba(24, 24, 28, 0.45);
+
+    .calendar__days__table {
+      width: 100%;
+      height: 100%;
+      border-spacing: 3px;
+      border-collapse: separate;
+
+      .calendar__days__table__row {
+        height: calc(100% / 7);
+        width: 100%;
+
+        .day_cell {
+          width: calc(100% / 7);
+          height: auto;
+          text-align: center;
+          font-size: 24px;
+          font-weight: bold;
+
+          &.enabled {
+            color: #34495e;
+            cursor: pointer;
+          }
+
+          &.disabled {
+            color: rgba(44, 44, 46, 0.4);
+          }
+
+          &.empty {
+            color: rgba(44, 44, 46, 0.2);
+          }
+
+          &.tick {
+            background-color: #009966;
+            background-size: cover;
+            border-radius: 50%;
+            border: 0;
+            color: white;
+          }
+
+          &.yellow_tick {
+            background-color: #f1c40f;
+            background-size: cover;
+            border-radius: 50%;
+            border: 0;
+            color: white;
+          }
+
+          &.cross {
+            background-color: #e74c3c;
+            background-size: cover;
+            border-radius: 50%;
+            border: 0;
+            color: white;
+          }
+
+          &.minus {
+            background-color: #7f8c8d;
+            background-size: cover;
+            border-radius: 50%;
+            border: 0;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .block__calendar__current_score {
+    width: 50%;
+    height: 10%;
+    float: left;
+    border-right: 1px solid rgba(24, 24, 28, 0.45);
+
+    .current_score_label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      width: 65%;
+      font-size: 20px;
+      float: left;
+      color: #34495e;
+
+      @media (min-width: 120px) and (max-width: 1200px) {
+        font-size: 17px;
+        padding-left: 4px;
+      }
+
+      @media (min-width: 1201px) and (max-width: 1550px) {
+        font-size: 17px;
+        padding-left: 4px;
+      }
+    }
+
+    .current_score_counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      width: 30%;
+      font-size: 40px;
+      float: left;
+      color: #34495e;
+    }
+  }
+
+  .block__calendar__record_score {
+    width: 50%;
+    height: 10%;
+    float: left;
+
+    .record_score_label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      width: 70%;
+      font-size: 20px;
+      float: left;
+      color: #34495e;
+
+      @media (min-width: 120px) and (max-width: 1200px) {
+        font-size: 17px;
+        padding-left: 4px;
+      }
+
+      @media (min-width: 1201px) and (max-width: 1550px) {
+        font-size: 17px;
+        padding-left: 4px;
+      }
+    }
+
+    .record_score_counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      width: 30%;
+      font-size: 40px;
+      float: left;
+      color: #34495e;
+    }
+  }
+}
+

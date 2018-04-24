@@ -2,21 +2,188 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/style/bar.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar.css}" />
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.78, maximum-scale=0.78, user-scalable=0'" />
+    <title>Kalendarz celów!</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/style/animate.css}" />
-    <script type="text/javascript" th:src="@{/js/calendar.js}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/script/calendar/calendar.js}"></script>
+    <script type="text/javascript" th:src="@{/script/calendar/requests.js}"></script>
+    <script type="text/javascript" th:src="@{/script/calendar/autosize.min.js}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/js/perfect-scrollbar.jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/script/calendar/jquery.ui.touch-punch.min.js}"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/animate.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/general.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/calendar.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/goals.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/others.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style/calendar/scrollbar.css}" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,900|Montserrat|Roboto:400,900" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/css/perfect-scrollbar.min.css" rel="stylesheet" />
 </head>
-<body onload="retrieveNewData(null, null, 0)" >
-<!--onselectstart="return false;"-->
+<body onselectstart="return false;">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">FlowFriend</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-option">Dodaj cel!</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Użytkownik <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a>Opcje</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a th:href="@{http://localhost:8080/logout}">Wyloguj</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="empty_block">
+        <span class="empty_block__information">
+            BRAK CELÓW DO WYŚWIETLENIA!
+            <a class="empty_block__information_hyperlink" onclick="$('#add_goal__modal').modal('show');"> KLIKNIJ TUTAJ </a>
+            ABY DODAĆ NOWY CEL!
+        </span>
+    </div>
+
+    <div class="block">
+        <div class="block__calendar">
+            <div class="tile__picker">
+                <div class="tile__picker__tick" onclick="calendarInstance.saveTile(this, event, 'TICK')"></div>
+                <div class="tile__picker__yellow_tick" onclick="calendarInstance.saveTile(this, event, 'YELLOWTICK')"></div>
+                <div class="tile__picker__cross" onclick="calendarInstance.saveTile(this, event, 'CROSS')"></div>
+                <div class="tile__picker__minus" onclick="calendarInstance.saveTile(this, event, 'MINUS')"></div>
+            </div>
+            <div class="tile__picker_triangle">▼</div>
+            <div class="block__calendar__goal_header">
+                <div class="goal_header__previous_arrow"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+                <div class="goal_header__goal_name"></div>
+                <div class="goal_header__next_arrow"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+            </div>
+            <div class="block__calendar__date_header">
+                <div class="date_header__previous_arrow"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+                <div class="date_header__date"></div>
+                <div class="date_header__next_arrow"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+            </div>
+            <div class="block__calendar__days">
+                <table class="calendar__days__table">
+                    <tr class="calendar__days__table__row">
+                        <td class="day_cell disabled">PN</td>
+                        <td class="day_cell disabled">WT</td>
+                        <td class="day_cell disabled">ŚR</td>
+                        <td class="day_cell disabled">CZ</td>
+                        <td class="day_cell disabled">PT</td>
+                        <td class="day_cell disabled">SO</td>
+                        <td class="day_cell disabled">ND</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="block__calendar__current_score">
+                <span class="current_score_label">TWÓJ WYNIK</span> <span class="current_score_counter">0</span>
+            </div>
+            <div class="block__calendar__record_score">
+                <span class="record_score_label">TWÓJ REKORD</span> <span class="record_score_counter">0</span>
+            </div>
+        </div>
+        <div class="block__goals"></div>
+        <div class="block__others">
+            <div class="block__others__information">
+                <div class="information__goal_name">
+                    <div class="information__goal_name__label">NAZWA CELU:</div>
+                    <div class="information__goal_name__field">
+                        <textarea class="information__goal_name__field_area" rows="1" maxlength="170"></textarea>
+                    </div>
+                    <div class="information__goal_name__buttons">
+                        <input class="information__goal_name__buttons_save" type="button" value="ZAPISZ"/>
+                        <input class="information__goal_name__buttons_delete" type="button" value="USUŃ"/>
+                    </div>
+                </div>
+                <div class="information__goal_off_days">
+                    <div class="information__goal_off_days__label">DNI, W KTÓRYCH CEL NIE OBOWIĄZUJE:</div>
+                    <div class="information__goal_off_days__blocks">
+                        <div class="goal_off_days__blocks_block disabled" id="firstDay" onclick="calendarInstance.toggleClassInOffDayBlock(this); calendarInstance.saveOffDays(this);">PN</div>
+                        <div class="goal_off_days__blocks_block disabled" id="secondDay" onclick="calendarInstance.toggleClassInOffDayBlock(this); calendarInstance.saveOffDays(this);">WT</div>
+                        <div class="goal_off_days__blocks_block disabled" id="thirdDay" onclick="calendarInstance.toggleClassInOffDayBlock(this); calendarInstance.saveOffDays(this);">ŚR</div>
+                        <div class="goal_off_days__blocks_block disabled" id="fourthDay" onclick="calendarInstance.toggleClassInOffDayBlock(this); calendarInstance.saveOffDays(this);">CZ</div>
+                        <div class="goal_off_days__blocks_block disabled" id="fifthDay" onclick="calendarInstance.toggleClassInOffDayBlock(this); calendarInstance.saveOffDays(this);">PT</div>
+                        <div class="goal_off_days__blocks_block disabled" id="sixthDay" onclick="calendarInstance.toggleClassInOffDayBlock(this); calendarInstance.saveOffDays(this);">SO</div>
+                        <div class="goal_off_days__blocks_block disabled" id="seventhDay" onclick="calendarInstance.toggleClassInOffDayBlock(this); calendarInstance.saveOffDays(this);">ND</div>
+                    </div>
+                </div>
+                <div class="information__goal_advantages">
+                    <div class="information__goal_advantages__label">KORZYŚCI Z REALIZACJI CELU:</div>
+                    <div class="information__goal_advantages__field">
+                        <textarea class="information__goal_advantages__field_area" rows="1"></textarea>
+                    </div>
+                    <div class="information__goal_advantages__button">
+                        <input class="information__goal_advantages__button_save" type="button" value="ZAPISZ"/>
+                    </div>
+                </div>
+            </div>
+            <div class="block__others__chart">
+                <select class="block__others__chart__type_select" onchange="calendarInstance.createPieChart($(this).val());">
+                    <option value='one'>POKAŻ DLA WYBRANEGO MIESIĄCA</option>
+                    <option value='all'>POKAŻ DLA WSZYSTKICH MIESIĘCY</option>
+                </select>
+                <div class="block__others__chart__chart_space"></div>
+            </div>
+            <div class="block__others__changer">
+                <div class="block__others__changer_info"> <i class="fa fa-info-circle" aria-hidden="true"></i> </div>
+                <div class="block__others__changer_chart"> <i class="fa fa-pie-chart" aria-hidden="true"></i> </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal animated fadeIn" id="add_goal__modal" tabindex="-1" role="dialog" aria-labelledby="add_goal__modal__label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="add_goal__modal__form_label"> DODAJ NOWY CEL! </div>
+                    <form class="add_goal__modal__form" method='post'>
+                        <textarea class="add_goal__modal__form_name" rows="1" maxlength="170"></textarea>
+                        <input class="add_goal__modal__form_submit" type='submit' value='DODAJ CEL'/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade animated bounceIn" id="error_modal" tabindex="-1" role="dialog" aria-labelledby="error_modal__label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <i class="fa fa-info-circle error" aria-hidden="true"></i>
+                    <br />
+                    <br />
+                    <div class="error_modal__information"> Minimalna ilość znaków wynosi 4, a maksymalna ilość znaków wynosi 170! </div>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -23,18 +23,20 @@ public class GoalService {
         this.goalDao = goalDao;
     }
 
-    public Goal getGoal(Long id){
-        return goalDao.getGoal(id);
-    }
-
     public void save(Goal goal) {
         goalDao.save(goal);
     }
 
-    public List<Goal> getGoalsList(){
-        return goalDao.getGoalsList(); }
-
     public void delete(Goal goal){
         goalDao.delete(goal);
     }
+
+    public List<Goal> getGoals(User user){
+        return goalDao.getGoals(user);
+    }
+
+    public List<Goal> getGoalsList() {
+        return goalDao.getGoalsList();
+    }
+
 }

@@ -1,8 +1,15 @@
 package pl.flow.dao.entities.calendar;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.*;
 import pl.flow.dao.entities.User;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * Created by Admin on 18.06.2017.
@@ -35,6 +42,9 @@ public class Tile {
 
     @Column(nullable = false)
     private String flag;
+
+    @Column(nullable = true)
+    private Date date;
 
     public Long getId() {
         return id;
@@ -90,5 +100,13 @@ public class Tile {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
