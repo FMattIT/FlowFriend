@@ -18,13 +18,13 @@ Aplikacja pomagająca trzymać się swoich celów/postanowień. Zawiera takie fu
 ![alt text](https://zapodaj.net/images/1a7d613e5abba.png)
 
 ### Oznaczanie postanowień i statystyki
-![alt text](http://fotserv.pl/upload/1525966215-4-ff.png)
+![alt text](https://zapodaj.net/images/e95d4b087abd0.png)
 
 ### Dodawanie nowych postanowień
-![alt text](http://fotserv.pl/upload/1525966254-5-ff.png)
+![alt text](https://zapodaj.net/images/cde133289c862.png)
 
 ### Wygląd kalendarza na urządzeniach mobilnych
-![alt text](http://fotserv.pl/upload/1525966281-6-ff.png)
+![alt text](https://zapodaj.net/images/892502740c27b.png)
 
 ## Użyte technologie i pluginy
 + Java: Spring Boot, Hibernate, Thymeleaf
