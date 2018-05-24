@@ -15,7 +15,7 @@ Aplikacja pomagająca trzymać się swoich celów/postanowień. Zawiera takie fu
 
 ## Wygląd aplikacji
 ### Logowanie
-![alt text](http://fotserv.pl/upload/1525966185-3-ff.png)
+![alt text](https://zapodaj.net/images/1a7d613e5abba.png)
 
 ### Oznaczanie postanowień i statystyki
 ![alt text](http://fotserv.pl/upload/1525966215-4-ff.png)
